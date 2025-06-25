@@ -1,2 +1,2 @@
-# swimdom-service
+# ORS-service
 Internship project on swimming topic

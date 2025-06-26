@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="adapter" target="17" />
+      <module name="config" target="17" />
+      <module name="domain" target="17" />
+      <module name="ors-service" target="17" />
+      <module name="report" target="17" />
+      <module name="service" target="17" />
+      <module name="service-api" target="17" />
+      <module name="service-impl" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

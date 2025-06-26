@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: "4"
+      author: DimSelyutin
+      changes:
+        - createTable:
+            tableName: pool_working_hours
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: pool_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_pool_working_hours_pool
+                    references: pool(id)
+              - column:
+                  name: weekday
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: open_time
+                  type: TIME
+                  constraints:
+                    nullable: false
+              - column:
+                  name: close_time
+                  type: TIME
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: pool_working_hours
+            columnNames: pool_id, weekday
+            constraintName: uq_pool_working_hours_pool_weekday
+      rollback:
+        - dropTable:
+            tableName: pool_working_hours

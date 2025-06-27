@@ -28,6 +28,8 @@ databaseChangeLog:
               - column:
                   name: price
                   type: DECIMAL(10,2)
+                  constraints:
+                    checkConstraint: "price > 0"
               - column:
                   name: created_at
                   type: TIMESTAMP

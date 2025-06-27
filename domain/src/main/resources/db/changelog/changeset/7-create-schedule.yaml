@@ -29,6 +29,7 @@ databaseChangeLog:
                   type: TIMESTAMP
                   constraints:
                     nullable: false
+                    checkConstraint: "end_datetime>start_datetime"
               - column:
                   name: created_at
                   type: TIMESTAMP

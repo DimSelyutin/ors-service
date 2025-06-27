@@ -19,28 +19,32 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: fk_user_subscription_users
                     references: users(id)
+                    deleteCascade: true
               - column:
-                  name: membership_id
+                  name: subscription_id
                   type: UUID
                   constraints:
                     nullable: false
                     foreignKeyName: fk_user_subscription_subscription
                     references: subscription(id)
+                    deleteCascade: true
               - column:
                   name: estimate
                   type: INT
                   constraints:
                     nullable: false
+                    checkConstraint: "estimate > 0"
               - column:
                   name: start_date
-                  type: DATE
+                  type: TIMESTAMP
                   constraints:
                     nullable: false
               - column:
                   name: end_date
-                  type: DATE
+                  type: TIMESTAMP
                   constraints:
                     nullable: false
+                    checkConstraint: "end_date > start_date"
               - column:
                   name: created_at
                   type: TIMESTAMP

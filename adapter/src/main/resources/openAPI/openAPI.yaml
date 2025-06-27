@@ -1,0 +1,46 @@
+openapi: 3.0.3
+
+info:
+  title: SWimmong Service
+  description: Service for buying tickets at swimmingpool.
+  version: 1.0.0
+
+tags:
+  - name: Controller for work with swimming pools
+paths:
+  /auth/register:
+    post:
+      summary: Registration for user
+      operationId: register
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorDto'
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '400':
+          description: Error validation data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '401':
+          description: Invalid email or password
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+
+components:
+  schemas:
+    ErrorDto:
+      $ref: './error-dto.yaml#/components/schemas/ErrorDto'

@@ -1,0 +1,9 @@
+openapi: 3.0.3
+
+info:
+  title: Swimming Service
+  description: Service for buying tickets at swimmingpool.
+  version: 1.0.0
+
+tags:
+  - name: Controller for work with swimming pools

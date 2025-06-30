@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: "7"
+      author: DimSelyutin
+      changes:
+        - createTable:
+            tableName: schedule
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: pool_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_schedule_pool
+                    references: pool(id)
+              - column:
+                  name: start_datetime
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_datetime
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+                    checkConstraint: "end_datetime>start_datetime"
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: schedule
+            columnNames: pool_id, start_datetime
+            constraintName: uq_schedule_pool_start
+      rollback:
+        - dropTable:
+            tableName: schedule

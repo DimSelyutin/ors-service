@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>ors-service</artifactId>
+        <groupId>com.innowise.swimdom</groupId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>report</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.innowise.swimdom</groupId>
+            <artifactId>adapter</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.innowise.swimdom</groupId>
+            <artifactId>service-api</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.innowise.swimdom</groupId>
+            <artifactId>service-impl</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.innowise.swimdom</groupId>
+            <artifactId>config</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.innowise.swimdom</groupId>
+            <artifactId>domain</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-class-files</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target name="copy-class-files ">
+                                <copy todir="${project.build.directory}/classes"
+                                      overwrite="false">
+                                    <fileset dir="${project.basedir}/../adapter/target/classes"/>
+                                </copy>
+                                <copy todir="${project.build.directory}/classes"
+                                      overwrite="false">
+                                    <fileset dir="${project.basedir}/../config/target/classes"/>
+                                </copy>
+<!--                                <copy todir="${project.build.directory}/classes"-->
+<!--                                      overwrite="false">-->
+<!--                                    <fileset dir="${project.basedir}/../service/service-api/target/classes"/>-->
+<!--                                </copy>-->
+<!--                                <copy todir="${project.build.directory}/classes"-->
+<!--                                      overwrite="false">-->
+<!--                                    <fileset dir="${project.basedir}/../service/service-impl/target/classes"/>-->
+<!--                                </copy>-->
+                                <copy todir="${project.build.directory}/classes"
+                                      overwrite="false">
+                                    <fileset dir="${project.basedir}/../domain/target/classes"/>
+                                </copy>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>report-aggregate</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report-aggregate</goal>
+                        </goals>
+
+                        <configuration>
+                            <dataFileIncludes>
+                                <dataFileInclude>**/jacoco.exec</dataFileInclude>
+                                <dataFileInclude>**/merged.exec</dataFileInclude>
+                            </dataFileIncludes>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>merge-module</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>merge</goal>
+                        </goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${project.basedir}/../adapter</directory>
+                                    <include>**/jacoco.exec</include>
+                                </fileSet>
+                                <fileSet>
+                                    <directory>${project.basedir}/../config</directory>
+                                    <include>**/jacoco.exec</include>
+                                </fileSet>
+                                <fileSet>
+                                    <directory>${project.basedir}/../service-api</directory>
+                                    <include>**/jacoco.exec</include>
+                                </fileSet>
+                                <fileSet>
+                                    <directory>${project.basedir}/../service-impl</directory>
+                                    <include>**/jacoco.exec</include>
+                                </fileSet>
+                                <fileSet>
+                                    <directory>${project.basedir}/../domain</directory>
+                                    <include>**/jacoco.exec</include>
+                                </fileSet>
+                            </fileSets>
+                            <destFile>${project.build.directory}/jacoco-output/merged.exec</destFile>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>check-code-coverage</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>${project.build.directory}/jacoco-output/merged.exec</dataFile>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <includes>
+                                        <include>com.innowise.swimdom.**</include>
+                                    </includes>
+                                    <limits>
+                                        <limit>
+                                            <counter>INSTRUCTION</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.8</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.9</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.8</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>METHOD</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.9</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+
+                                <rule>
+                                    <element>CLASS</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>INSTRUCTION</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.7</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.7</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.7</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

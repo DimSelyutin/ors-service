@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: ors-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/db_swimdom}
+    username: ${DB_USERNAME:swimdom_admin}
+    password: ${DB_PASSWORD:swimdom_pwd}
+  liquibase:
+    change-log: db/changelog/changelog-master.yml
+management:
+  endpoints:
+    enabled-by-default: false
+    web.exposure.include: health, prometheus, loggers
+  endpoint:
+    health.enabled: true
+    prometheus.enabled: true
+    loggers.enabled: true

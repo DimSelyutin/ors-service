@@ -39,6 +39,8 @@ databaseChangeLog:
                   type: VARCHAR(15)
                   constraints:
                     nullable: false
+                    unique: true
+                    checkConstraint: "LENGTH(phone) > 9 AND LENGTH(phone) < 15"
               - column:
                   name: role
                   type: user_role
@@ -54,10 +56,6 @@ databaseChangeLog:
                   defaultValueComputed: CURRENT_TIMESTAMP
                   constraints:
                     nullable: false
-        - addUniqueConstraint:
-            tableName: users
-            columnNames: phone, email
-            constraintName: uq_users_phone_email
       rollback:
         - dropTable:
             tableName: users

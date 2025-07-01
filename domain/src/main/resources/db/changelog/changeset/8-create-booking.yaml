@@ -10,6 +10,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: UUID
+                  defaultValueComputed: gen_random_uuid()
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -51,6 +52,7 @@ databaseChangeLog:
                   defaultValueComputed: CURRENT_TIMESTAMP
                   constraints:
                     nullable: false
+
               - column:
                   name: notification_sent
                   type: boolean

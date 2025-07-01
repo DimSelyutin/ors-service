@@ -9,6 +9,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: UUID
+                  defaultValueComputed: gen_random_uuid()
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -18,7 +19,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     unique: true
-                    checkConstraint: "email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'"
+                    checkConstraint: "email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,}$'"
               - column:
                   name: password
                   type: VARCHAR(255)

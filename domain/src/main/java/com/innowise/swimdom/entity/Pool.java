@@ -41,7 +41,6 @@ public class Pool {
     private Integer capacity;
 
     @CreatedDate
-    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate

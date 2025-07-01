@@ -9,6 +9,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: uuid
+                  defaultValueComputed: gen_random_uuid()
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -21,7 +22,7 @@ databaseChangeLog:
                     references: pool(id)
               - column:
                   name: weekday
-                  type: range 1-7
+                  type: integer
                   constraints:
                     nullable: false
                     checkConstraint: "weekday BETWEEN 1 AND 7"

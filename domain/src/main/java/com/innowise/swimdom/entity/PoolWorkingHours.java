@@ -48,7 +48,6 @@ public class PoolWorkingHours {
     @Column(name = "weekday", nullable = false)
     private Short weekday;
 
-
     @Column(name = "open_time", nullable = false)
     private LocalTime openTime;
 
@@ -56,7 +55,6 @@ public class PoolWorkingHours {
     private LocalTime closeTime;
 
     @CreatedDate
-    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate

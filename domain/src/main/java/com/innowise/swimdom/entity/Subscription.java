@@ -48,11 +48,11 @@ public class Subscription {
     @Column(name = "price", precision = 10, scale = 2)
     @NotNull(message = "Price is mandatory")
     @DecimalMin(value = "0.00", inclusive = false, message = "Price must be greater than zero")
-    @Digits(integer = 8, fraction = 2, message = "Price must have up to 8 digits in integer part and 2 digits in fractional part")
+    @Digits(integer = 8, fraction = 2, message = "Price must have up to 8 digits in integer "
+        + "part and 2 digits in fractional part")
     private BigDecimal price;
 
     @CreatedDate
-    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate

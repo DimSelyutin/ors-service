@@ -45,7 +45,6 @@ public class Schedule {
     private LocalDateTime endDatetime;
 
     @CreatedDate
-    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate

@@ -63,7 +63,6 @@ public class Booking  {
     private Boolean notificationSent;
 
     @CreatedDate
-    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate

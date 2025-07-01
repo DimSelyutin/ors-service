@@ -68,7 +68,6 @@ public class UserSubscription {
     }
 
     @CreatedDate
-    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate

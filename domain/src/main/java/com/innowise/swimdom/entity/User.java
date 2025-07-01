@@ -65,7 +65,6 @@ public class User {
     private UserRole role;
 
     @CreatedDate
-    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate

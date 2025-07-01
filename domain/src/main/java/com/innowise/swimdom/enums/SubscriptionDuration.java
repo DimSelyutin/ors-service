@@ -23,7 +23,7 @@ public enum SubscriptionDuration {
     YEAR(365);
 
     /**
-     * Subscription constructor with params on year
+     * Subscription constructor with params on year.
      *
      * @param days count days.
      */
@@ -44,10 +44,12 @@ public enum SubscriptionDuration {
     private Integer days;
 
     /**
+     * For use: SubscriptionDuration.MONTH.getDurationInDays(month, year).
+     *
      * @param month number of month
+     *
      * @param year  number of year
      * @return count days.
-     * For use: SubscriptionDuration.MONTH.getDurationInDays(month, year).
      */
     public int getDurationInDays(int month, int year) {
         if (this == MONTH) {

@@ -5,23 +5,48 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.UuidGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Entity for User.
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
+public class User {
+
+    @Id
+    @GeneratedValue
+    @UuidGenerator
+    @Column(updatable = false, nullable = false)
+    private UUID id;
 
     @Column(nullable = false, unique = true, length = 100)
+    @NotBlank(message = "Email is mandatory")
+    @Email(message = "Email should be valid")
+    @Size(max = 100)
     private String email;
 
     @Column(nullable = false, length = 255)
+    @Size(min = 8, max = 255, message = "Password length must be between 8 and 255 characters")
+    @Pattern(
+        regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).+$",
+        message = "Password must contain at least one uppercase letter, one lowercase letter, and one special character"
+    )
     private String password;
 
     @Column(nullable = false, length = 30)
@@ -30,10 +55,19 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 30)
     private String surname;
 
+    @Min(9)
+    @Max(15)
     @Column(nullable = false, unique = true, length = 15)
     private String phone;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 }

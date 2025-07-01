@@ -4,26 +4,37 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import org.hibernate.annotations.UuidGenerator;
+import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.UUID;
+import org.springframework.data.annotation.CreatedDate;
 
 /**
  * Class of entity UserSubscription.
  */
+@Data
 @Entity
 @Table(name = "user_subscription",
        uniqueConstraints = @UniqueConstraint(
            name = "uq_user_subscription_user_start_end",
            columnNames = {"user_id", "start_date", "end_date"}))
-@Getter
-@Setter
-public class UserSubscription extends BaseEntity {
+public class UserSubscription {
+
+    @Id
+    @GeneratedValue
+    @UuidGenerator
+    @Column(updatable = false, nullable = false)
+    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false,
@@ -45,10 +56,21 @@ public class UserSubscription extends BaseEntity {
     private LocalDate endDate;
 
     @PrePersist
-    public void onStartDate() {
+    public void onStartAndEndDate() {
         if (startDate == null) {
-            startDate = LocalDate.now();
+            LocalDate now = LocalDate.now();
+            int month = now.getMonth().getValue();
+            int year = now.getYear();
+            startDate = now;
+            endDate = now.plusDays(subscription.getDuration()
+                .getDurationInDays(month,year));
         }
     }
 
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 }

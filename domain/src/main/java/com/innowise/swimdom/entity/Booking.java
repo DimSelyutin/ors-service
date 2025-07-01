@@ -7,28 +7,34 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-
+import org.hibernate.annotations.UuidGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
- * Entity for pools.
+ * Entity for booking.
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "booking",
        uniqueConstraints = @UniqueConstraint(name = "uq_booking_user_schedule",
                                              columnNames = {"user_id", "schedule_id"}))
-public class Booking extends BaseEntity {
+public class Booking  {
+
+    @Id
+    @GeneratedValue
+    @UuidGenerator
+    @Column(updatable = false, nullable = false)
+    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false,
@@ -56,11 +62,12 @@ public class Booking extends BaseEntity {
     @Column(name = "notification_sent", nullable = false)
     private Boolean notificationSent;
 
-    @PrePersist
-    public void onNotification_sent() {
-        if (notificationSent == null) {
-            notificationSent = false;
-        }
-    }
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
 }
 

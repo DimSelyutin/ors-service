@@ -1,5 +1,6 @@
 package com.innowise.swimdom.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.innowise.swimdom.util.ValidOpenCloseTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,6 +39,7 @@ public class PoolWorkingHours {
     @Column(updatable = false, nullable = false)
     private UUID id;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pool_id", nullable = false,
                 foreignKey = @ForeignKey(name = "fk_pool_working_hours_pool"))

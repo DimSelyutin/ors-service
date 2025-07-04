@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>com.innowise.swimdom</groupId>
 			<artifactId>service-impl</artifactId>
-			<version>${project.version}</version>
+			<version>${revision}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.testcontainers</groupId>

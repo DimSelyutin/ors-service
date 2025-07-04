@@ -12,30 +12,30 @@
     <artifactId>report</artifactId>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>com.innowise.swimdom</groupId>-->
-<!--            <artifactId>adapter</artifactId>-->
-<!--            <version>${project.version}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.innowise.swimdom</groupId>
+            <artifactId>adapter</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <dependency>
             <groupId>com.innowise.swimdom</groupId>
             <artifactId>service-api</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.innowise.swimdom</groupId>-->
-<!--            <artifactId>service-impl</artifactId>-->
-<!--            <version>${project.version}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.innowise.swimdom</groupId>
+            <artifactId>service-impl</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <dependency>
             <groupId>com.innowise.swimdom</groupId>
             <artifactId>config</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.innowise.swimdom</groupId>
             <artifactId>domain</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
     <build>

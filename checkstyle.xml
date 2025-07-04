@@ -1,0 +1,737 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+<!--
+  Модуль Checker - основной контейнер для конфигурации Checkstyle.
+  Он содержит набор модулей, каждый из которых выполняет определенную проверку кода.
+-->
+<module name="Checker">
+
+    <!--
+      Модуль SupressWarningsFilter предоставляет функциональность подавления предупреждений
+      на основе указанных аннотаций в коде.
+    -->
+    <module name="SuppressWarningsFilter"/>
+
+    <!--
+      Устанавливает кодировку символов для проверки - UTF-8.
+      -->
+    <property name="charset"
+              value="UTF-8"/>
+
+    <!--
+      Устанавливает уровень серьезности для выявления проблем в коде на "error".
+    -->
+    <property name="severity"
+              value="error"/>
+
+    <!--
+      Указывает расширения файлов для проверки: Java, properties, xml.
+    -->
+    <property name="fileExtensions"
+              value="java, properties, xml"/>
+
+
+    <!--
+      Модуль BeforeExecutionExclusionFileFilter исключает файл module-info.java из проверки кода.
+    -->
+    <module name="BeforeExecutionExclusionFileFilter">
+        <property name="fileNamePattern" value="module\-info\.java$"/>
+    </module>
+
+    <!--
+      Модуль SuppressionFilter использует файл подавления, который содержит правила подавления
+      для конкретных предупреждений.
+    -->
+    <module name="SuppressionFilter">
+        <property name="file"
+                  value="suppressions.xml"/>
+        <property name="optional" value="false"/>
+    </module>
+
+    <!--
+      Модуль FileTabCharacter проверяет отсутствие символов табуляции в файлах.
+    -->
+    <module name="FileTabCharacter">
+        <property name="eachLine" value="false"/>
+    </module>
+
+    <!--
+      Модуль LineLength устанавливает максимальную длину строки для Java-файлов в 120 символов.
+      Также, игнорирует строки, начинающиеся с "package", "import", "a href", "href", "http://", "https://", "ftp://".
+    -->
+    <module name="LineLength">
+        <property name="fileExtensions" value="java"/>
+        <property name="max" value="120"/>
+        <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
+        <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity"
+                  value="inherit"/>
+    </module>
+
+    <!--
+     Модуль TreeWalker - это контейнер для различных модулей Checkstyle, которые анализируют структуру кода.
+     Он выполняет проверки в процессе обхода дерева абстрактного синтаксического дерева (AST) вашего кода.
+    -->
+    <module name="TreeWalker">
+
+        <!--
+               Этот модуль анализирует импорты в Java-классах и предоставляет предупреждение,
+               если какие-либо из них не используются в коде.
+           -->
+        <module name="UnusedImports">
+            <property name="severity" value="error"/>
+        </module>
+
+        <!--
+          Модуль OuterTypeFilename проверяет, имеет ли внешний тип тот же самый файл.
+        -->
+        <module name="OuterTypeFilename"/>
+
+        <!--
+          Модуль IllegalImport проверяет недопустимые импорты, соответствующие заданному регулярному выражению.
+        -->
+        <module name="IllegalImport">
+            <property name="regexp" value="true"/>
+            <property name="illegalPkgs" value=".*\.shaded\..*"/>
+        </module>
+
+        <!--
+          Модуль IllegalTokenText проверяет недопустимый текст токена,
+          особенно в отношении восьмеричных значений и последовательностей Unicode.
+        -->
+        <module name="IllegalTokenText">
+            <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>
+            <property name="format"
+                      value="\\u00(09|0(a|A)|0(c|C)|0(d|D)|22|27|5(C|c))|\\(0(10|11|12|14|15|42|47)|134)"/>
+            <property name="message"
+                      value="Consider using special escape sequence instead of octal value or Unicode escaped value."/>
+        </module>
+
+        <!--
+          Модуль ConstantName проверяет наименование констант и требует их начинаться с заглавной буквы
+          и следовать соглашению camel case.
+        -->
+        <module name="ConstantName">
+            <property name="severity" value="warning"/>
+            <property name="format" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>
+        </module>
+
+        <!--
+          Модуль AvoidEscapedUnicodeCharacters проверяет наличие экранированных символов Unicode,
+          предупреждает о необходимости использования специальных последовательностей экранирования.
+        -->
+        <module name="AvoidEscapedUnicodeCharacters">
+            <property name="allowEscapesForControlCharacters" value="true"/>
+            <property name="allowByTailComment" value="true"/>
+            <property name="allowNonPrintableEscapes" value="true"/>
+        </module>
+
+        <!--
+          Модуль AvoidStarImport предупреждает о звездочном импорте,
+          который может привести к конфликтам имен.
+        -->
+        <module name="AvoidStarImport"/>
+
+        <!--
+          Модуль OneTopLevelClass требует, чтобы в файле был только один класс верхнего уровня.
+        -->
+        <module name="OneTopLevelClass"/>
+
+        <!--
+          Модуль NoLineWrap запрещает перенос строки для определенных токенов (пакет, импорт, статический импорт).
+        -->
+        <module name="NoLineWrap">
+            <property name="tokens" value="PACKAGE_DEF, IMPORT, STATIC_IMPORT"/>
+        </module>
+
+        <!--
+          Модуль EmptyBlock проверяет наличие пустых блоков кода,
+          таких как try, finally, if, else, switch.
+        -->
+        <module name="EmptyBlock">
+            <property name="option" value="TEXT"/>
+            <property name="tokens" value="LITERAL_TRY, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_SWITCH"/>
+        </module>
+
+        <!--
+          Модуль NeedBraces проверяет использование фигурных скобок вокруг блока кода в условии if.
+        -->
+        <module name="NeedBraces">
+            <property name="tokens" value="LITERAL_IF"/>
+            <property name="allowSingleLineStatement" value="true"/>
+        </module>
+
+        <!--
+          Модуль LeftCurly проверяет наличие открывающей фигурной скобки в правильном месте.
+        -->
+        <module name="LeftCurly">
+            <property name="tokens"
+                      value="ANNOTATION_DEF, CLASS_DEF, CTOR_DEF, ENUM_CONSTANT_DEF, ENUM_DEF,
+                    INTERFACE_DEF, LAMBDA, LITERAL_CASE, LITERAL_CATCH, LITERAL_DEFAULT,
+                    LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF,
+                   LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE, METHOD_DEF,
+                    OBJBLOCK, STATIC_INIT, RECORD_DEF, COMPACT_CTOR_DEF"/>
+        </module>
+
+        <!--
+         Модуль RightCurly определяет правила для расположения закрывающей фигурной скобки.
+         В данном случае, скобка должна находиться на отдельной строке для указанных токенов.
+         -->
+        <module name="RightCurly">
+            <property name="id" value="RightCurlyAlone"/>
+            <property name="option"
+                      value="alone"/>
+            <property name="tokens"
+                      value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, STATIC_INIT,
+                      INSTANCE_INIT, ANNOTATION_DEF, ENUM_DEF, INTERFACE_DEF, RECORD_DEF, COMPACT_CTOR_DEF,
+                      LITERAL_FINALLY, LITERAL_ELSE, LITERAL_DO"/>
+        </module>
+
+        <!--
+          Модуль SuppressionXpathSingleFilter используется для подавления предупреждений о пустых блоках кода,
+          которые представляют собой закрывающую фигурную скобку на отдельной строке.
+        -->
+        <module name="SuppressionXpathSingleFilter">
+            <property name="id" value="RightCurlyAlone"/>
+            <property name="query" value="//RCURLY[parent::SLIST[count(./*)=1]
+                                     or preceding-sibling::*[last()][self::LCURLY]]"/>
+        </module>
+
+        <!--
+          Модуль WhitespaceAround определяет правила для пробелов вокруг определенных токенов.
+        -->
+        <module name="WhitespaceAround">
+            <property name="allowEmptyConstructors" value="true"/>
+            <property name="allowEmptyLambdas" value="true"/>
+            <property name="allowEmptyMethods" value="true"/>
+            <property name="allowEmptyTypes" value="true"/>
+            <property name="allowEmptyLoops" value="true"/>
+            <property name="ignoreEnhancedForColon" value="true"/>
+            <property name="tokens"
+                      value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR,
+                    BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, DO_WHILE, EQUAL, GE, GT, LAMBDA, LAND,
+                    LCURLY, LE, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY,
+                    LITERAL_FOR, LITERAL_IF, LITERAL_RETURN, LITERAL_SYNCHRONIZED,
+                    LITERAL_TRY, LITERAL_WHILE, LOR, LT, MINUS, MINUS_ASSIGN, MOD, MOD_ASSIGN,
+                    NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, RCURLY, SL, SLIST, SL_ASSIGN, SR,
+                    SR_ASSIGN, STAR, STAR_ASSIGN, LITERAL_ASSERT, TYPE_EXTENSION_AND"/>
+            <message key="ws.notFollowed"
+                     value="WhitespaceAround: ''{0}'' is not followed by whitespace. Empty blocks
+               may only be represented as '{}' when not part of a multi-block statement (4.1.3)"/>
+            <message key="ws.notPreceded"
+                     value="WhitespaceAround: ''{0}'' is not preceded with whitespace."/>
+        </module>
+
+        <!--
+          Модуль OneStatementPerLine требует, чтобы каждое выражение в коде находилось на отдельной строке.
+        -->
+        <module name="OneStatementPerLine"/>
+
+        <!--
+          Модуль MultipleVariableDeclarations устанавливает правила для объявления нескольких переменных на одной строке.
+        -->
+        <module name="MultipleVariableDeclarations"/>
+
+        <!--
+          Модуль ArrayTypeStyle проверяет стиль объявления массивов.
+        -->
+        <module name="ArrayTypeStyle"/>
+
+        <!--
+          Модуль MissingSwitchDefault проверяет наличие блока default в операторе switch.
+        -->
+        <module name="MissingSwitchDefault">
+            <property name="severity" value="ignore"/>
+            <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+        </module>
+
+        <!--
+          Модуль FallThrough предупреждает о потенциальных случаях "проброса" через операторы в операторе switch.
+        -->
+        <module name="FallThrough"/>
+
+        <!--
+          Модуль UpperEll проверяет использование символа 'ell' вместо 'L' для литералов типа long.
+        -->
+        <module name="UpperEll"/>
+
+        <!--
+          Модуль ModifierOrder проверяет порядок модификаторов в объявлении элементов.
+        -->
+        <module name="ModifierOrder"/>
+
+        <!--
+          Модуль EmptyLineSeparator устанавливает правила для разделителя пустой строки между элементами кода.
+        -->
+        <module name="EmptyLineSeparator">
+            <property name="tokens"
+                      value="PACKAGE_DEF, IMPORT, STATIC_IMPORT, CLASS_DEF, INTERFACE_DEF, ENUM_DEF,
+                    STATIC_INIT, INSTANCE_INIT, METHOD_DEF, CTOR_DEF, VARIABLE_DEF, RECORD_DEF,
+                    COMPACT_CTOR_DEF"/>
+            <property name="allowNoEmptyLineBetweenFields"
+                      value="true"/> <!-- допускается отсутствие пустых строк между полями класса. -->
+            <property name="allowMultipleEmptyLines" value="false"/>
+            <property name="allowMultipleEmptyLinesInsideClassMembers" value="false"/>
+        </module>
+
+        <!--
+          Модуль SeparatorWrap определяет стиль обертывания для точек.
+        -->
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapDot"/>
+            <property name="tokens" value="DOT"/>
+            <property name="option" value="nl"/>
+        </module>
+
+        <!-- Модуль SeparatorWrap определяет стиль обертывания для запятых.
+        -->
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapComma"/>
+            <property name="tokens" value="COMMA"/>
+            <property name="option" value="EOL"/>
+        </module>
+
+        <!--
+          Модуль SeparatorWrap определяет стиль обертывания для многоточия (ELLIPSIS).
+        -->
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapEllipsis"/>
+            <property name="tokens" value="ELLIPSIS"/>
+            <property name="option" value="EOL"/>
+        </module>
+
+        <!--
+          Модуль SeparatorWrap определяет стиль обертывания для деклараторов массива (ARRAY_DECLARATOR).
+        -->
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapArrayDeclarator"/>
+            <property name="tokens" value="ARRAY_DECLARATOR"/>
+            <property name="option" value="EOL"/>
+        </module>
+
+        <!--
+          Модуль SeparatorWrap определяет стиль обертывания для ссылок на методы (METHOD_REF).
+        -->
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapMethodRef"/>
+            <property name="tokens" value="METHOD_REF"/>
+            <property name="option" value="nl"/>
+        </module>
+
+        <!--
+          Модуль PackageName проверяет формат имен пакетов в соответствии с указанным паттерном.
+          Параметры лямбда-выражений должны начинаться с буквы, за которой следуют буквы, цифры и/или символы.
+        -->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+            <message key="name.invalidPattern"
+                     value="Package name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+          Модуль TypeName проверяет формат имен типов (классов, интерфейсов, перечислений и т.д.) в соответствии с указанным паттерном.
+        -->
+        <module name="TypeName">
+            <property name="tokens" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF,
+                    ANNOTATION_DEF, RECORD_DEF"/>
+            <message key="name.invalidPattern"
+                     value="Type name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+          Модуль MemberName проверяет формат имен членов (переменных, методов и т.д.) в соответствии с указанным паттерном.
+        -->
+        <module name="MemberName">
+            <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>
+            <message key="name.invalidPattern"
+                     value="Member name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+          Модуль ParameterName проверяет формат имен параметров методов в соответствии с указанным паттерном.
+        -->
+        <module name="ParameterName">
+            <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+            <message key="name.invalidPattern"
+                     value="Parameter name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+        Модуль LambdaParameterName проверяет формат имен параметров лямбда-выражений в соответствии с указанным паттерном.
+          -->
+        <module name="LambdaParameterName">
+            <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+            <message key="name.invalidPattern"
+                     value="Lambda parameter name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+          Модуль CatchParameterName проверяет формат имен параметров блока catch в соответствии с указанным паттерном.
+        -->
+        <module name="CatchParameterName">
+            <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+            <message key="name.invalidPattern"
+                     value="Catch parameter name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+          Модуль LocalVariableName проверяет формат имен локальных переменных в соответствии с указанным паттерном.
+          Имена локальных переменных должны начинаться с буквы, за которой следуют буквы, цифры и/или символы.
+        -->
+        <module name="LocalVariableName">
+            <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+            <message key="name.invalidPattern"
+                     value="Local variable name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+          Модуль PatternVariableName проверяет формат имен переменных шаблона (введенных в switch)
+          в соответствии с указанным паттерном. Имена переменных шаблона должны начинаться с буквы,
+          за которой следуют буквы, цифры и/или символы.
+        -->
+        <module name="PatternVariableName">
+            <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+            <message key="name.invalidPattern"
+                     value="Pattern variable name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+          Модуль ClassTypeParameterName проверяет формат имен параметров типа класса в соответствии с указанным паттерном.
+          Имена параметров типа класса могут быть одиночной буквой (A, B, ..., Z),
+          либо заканчиваться на 'T' и содержать буквы, цифры и/или символы.
+        -->
+        <module name="ClassTypeParameterName">
+            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
+            <message key="name.invalidPattern"
+                     value="Class type name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+          Модуль RecordComponentName проверяет формат имен компонентов записи (record) в соответствии с указанным паттерном.
+          Имена компонентов записи должны начинаться с буквы, за которой следуют буквы, цифры и/или символы.
+        -->
+        <module name="RecordComponentName">
+            <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+            <message key="name.invalidPattern"
+                     value="Record component name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+          Модуль RecordTypeParameterName проверяет формат имен параметров типа записи (record)
+          в соответствии с указанным паттерном. Имена параметров типа записи могут быть
+          одиночной буквой (A, B, ..., Z), либо заканчиваться на 'T' и содержать буквы, цифры и/или символы.
+        -->
+        <module name="RecordTypeParameterName">
+            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
+            <message key="name.invalidPattern"
+                     value="Record type name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+         Модуль MethodTypeParameterName проверяет формат имен параметров типа метода в соответствии с указанным паттерном.
+         Имена параметров типа метода могут быть одиночной буквой (A, B, ..., Z), либо заканчиваться на 'T'
+         и содержать буквы, цифры и/или символы.
+         -->
+        <module name="MethodTypeParameterName">
+            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
+            <message key="name.invalidPattern"
+                     value="Method type name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+          Модуль InterfaceTypeParameterName проверяет формат имен параметров типа интерфейса в соответствии с указанным паттерном.
+          Имена параметров типа интерфейса могут быть одиночной буквой (A, B, ..., Z), либо заканчиваться на 'T'
+          и содержать буквы, цифры и/или символы.
+        -->
+        <module name="InterfaceTypeParameterName">
+            <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
+            <message key="name.invalidPattern"
+                     value="Interface type name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+          Модуль GenericWhitespace проверяет пробелы вокруг параметров шаблонов.
+          Уведомления генерируются, если пробелы не соответствуют ожиданиям.
+        -->
+        <module name="GenericWhitespace">
+            <message key="ws.followed"
+                     value="GenericWhitespace ''{0}'' is followed by whitespace."/>
+            <message key="ws.preceded"
+                     value="GenericWhitespace ''{0}'' is preceded with whitespace."/>
+            <message key="ws.illegalFollow"
+                     value="GenericWhitespace ''{0}'' should be followed by whitespace."/>
+            <message key="ws.notPreceded"
+                     value="GenericWhitespace ''{0}'' is not preceded with whitespace."/>
+        </module>
+
+        <!--
+          Модуль Indentation определяет стиль отступов в коде и устанавливает правила для различных элементов.
+          Например, базовый отступ, отступ для фигурных скобок, отступ для оператора case в switch, и так далее.
+        -->
+        <module name="Indentation">
+            <property name="basicOffset" value="4"/>
+            <property name="braceAdjustment" value="2"/>
+            <property name="caseIndent" value="4"/>
+            <property name="throwsIndent" value="4"/>
+            <property name="arrayInitIndent" value="4"/>
+            <property name="lineWrappingIndentation" value="4"/>
+        </module>
+
+        <!--
+          Модуль AbbreviationAsWordInName проверяет использование сокращений в именах классов, интерфейсов,
+          перечислений, аннотаций, полей аннотаций, параметров методов, переменных, методов,
+          переменных шаблона, записей и их компонентов. Если сокращение разрешено и имеет
+          допустимую длину, уведомление не генерируется.
+        -->
+        <module name="AbbreviationAsWordInName">
+            <property name="ignoreFinal" value="false"/>
+            <property name="allowedAbbreviationLength" value="3"/>
+            <property name="tokens"
+                      value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, ANNOTATION_DEF, ANNOTATION_FIELD_DEF,
+            PARAMETER_DEF, VARIABLE_DEF, METHOD_DEF, PATTERN_VARIABLE_DEF, RECORD_DEF,
+            RECORD_COMPONENT_DEF"/>
+        </module>
+
+        <!--
+          Модуль NoWhitespaceBeforeCaseDefaultColon проверяет отсутствие пробелов перед символами ":"
+          в операторах case и default внутри конструкции switch.
+        -->
+        <module name="NoWhitespaceBeforeCaseDefaultColon"/>
+
+        <!--
+          Модуль OverloadMethodsDeclarationOrder проверяет порядок объявления перегруженных методов
+          в классах и интерфейсах. Он проверяет, что методы упорядочены по их типу (обычные,
+          конструкторы, статические) и их относительному порядку в этих группах.
+        -->
+        <module name="OverloadMethodsDeclarationOrder"/>
+
+        <!--
+          Модуль VariableDeclarationUsageDistance проверяет расстояние между объявлением переменной и ее использованием.
+        -->
+        <module name="VariableDeclarationUsageDistance"/>
+
+        <!--
+          Модуль MethodParamPad определяет стиль отступов для параметров метода.
+          Например, отступы могут быть установлены для конструктора, вызова метода,
+          определения метода, вызова статического конструктора, перечисления и записи.
+        -->
+        <module name="MethodParamPad">
+            <property name="tokens"
+                      value="CTOR_DEF, LITERAL_NEW, METHOD_CALL, METHOD_DEF,
+            SUPER_CTOR_CALL, ENUM_CONSTANT_DEF, RECORD_DEF"/>
+        </module>
+
+        <!--
+          Модуль NoWhitespaceBefore определяет токены, перед которыми не должно быть пробелов.
+        -->
+        <module name="NoWhitespaceBefore">
+            <property name="tokens"
+                      value="COMMA, SEMI, POST_INC, POST_DEC, DOT, LABELED_STAT, METHOD_REF"/>
+            <property name="allowLineBreaks" value="true"/>
+        </module>
+
+        <!--
+          Модуль ParenPad определяет стиль отступов для различных элементов, таких как
+          аннотации, аннотационные поля, вызов конструктора, определение конструктора,
+          оператор ".", перечисление, запись и другие.
+        -->
+        <module name="ParenPad">
+            <property name="tokens"
+                      value="ANNOTATION, ANNOTATION_FIELD_DEF, CTOR_CALL, CTOR_DEF, DOT, ENUM_CONSTANT_DEF,
+            EXPR, LITERAL_CATCH, LITERAL_DO, LITERAL_FOR, LITERAL_IF, LITERAL_NEW,
+            LITERAL_SYNCHRONIZED, LITERAL_WHILE, METHOD_CALL,
+            METHOD_DEF, QUESTION, RESOURCE_SPECIFICATION, SUPER_CTOR_CALL, LAMBDA, RECORD_DEF"/>
+        </module>
+
+        <!--
+          Модуль OperatorWrap определяет стиль размещения операторов.
+          В данном случае, операторы могут быть разделены новой строкой.
+        -->
+        <module name="OperatorWrap">
+            <property name="option" value="NL"/>
+            <property name="tokens"
+                      value="BAND, BOR, BSR, BXOR, DIV, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR,
+              LT, MINUS, MOD, NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR, METHOD_REF,
+              TYPE_EXTENSION_AND "/>
+        </module>
+
+        <!--
+          Модуль AnnotationLocation определяет местоположение аннотаций в классах, интерфейсах, перечислениях,
+          методах, конструкторах, записях и их компактных конструкторах.
+        -->
+        <module name="AnnotationLocation">
+            <property name="id" value="AnnotationLocationMostCases"/>
+            <property name="tokens"
+                      value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF,
+              RECORD_DEF, COMPACT_CTOR_DEF"/>
+        </module>
+
+        <!--
+          Модуль AnnotationLocation определяет местоположение аннотаций для переменных.
+          Допускается наличие нескольких аннотаций на одной строке.
+        -->
+        <module name="AnnotationLocation">
+            <property name="id" value="AnnotationLocationVariables"/>
+            <property name="tokens" value="VARIABLE_DEF"/>
+            <property name="allowSamelineMultipleAnnotations" value="true"/>
+        </module>
+
+        <!--
+          Модуль NonEmptyAtclauseDescription проверяет наличие описания в at-тегах Javadoc.
+        -->
+        <module name="NonEmptyAtclauseDescription"/>
+
+        <!--
+          Модуль SummaryJavadoc проверяет корректность секции @return в Javadoc-комментариях.
+          Запрещает определенные фрагменты в описании возвращаемого значения.
+        -->
+        <module name="SummaryJavadoc">
+            <property name="forbiddenSummaryFragments"
+                      value="^@return the *|^This method returns |^A [{]@code [a-zA-Z0-9]+[}]( is a )"/>
+            <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+        </module>
+
+        <!--
+          Модуль JavadocParagraph проверяет наличие абзацев в Javadoc-комментариях.
+        -->
+        <!--        <module name="JavadocParagraph"/>-->
+
+        <!--
+          Модуль RequireEmptyLineBeforeBlockTagGroup проверяет наличие пустой строки перед группой
+          блочных тегов в Javadoc-комментариях.
+        -->
+        <module name="RequireEmptyLineBeforeBlockTagGroup"/>
+
+        <!--
+          Модуль AtclauseOrder проверяет порядок тегов в Javadoc-комментариях.
+        -->
+        <module name="AtclauseOrder">
+            <property name="tagOrder" value="@param, @return, @throws, @deprecated"/>
+            <property name="target"
+                      value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF, VARIABLE_DEF"/>
+        </module>
+
+        <!--
+          Модуль JavadocMethod проверяет наличие Javadoc-комментариев для методов и конструкторов.
+          Позволяет отсутствие тегов @param и @return для публичных методов, конструкторов,
+          полей-аннотаций и компактных конструкторов с определенными аннотациями.
+        -->
+        <module name="JavadocMethod">
+            <property name="accessModifiers" value="public"/>
+            <property name="allowMissingParamTags" value="true"/>
+            <property name="allowMissingReturnTag" value="true"/>
+            <property name="allowedAnnotations" value="Override, Test"/>
+            <property name="tokens" value="METHOD_DEF, CTOR_DEF, ANNOTATION_FIELD_DEF, COMPACT_CTOR_DEF"/>
+        </module>
+
+        <!--
+          Модуль MissingJavadocMethod проверяет отсутствие Javadoc-комментариев для методов и конструкторов.
+          Позволяет отсутствие тегов @param и @return для публичных методов, конструкторов,
+          полей-аннотаций и компактных конструкторов с определенными аннотациями.
+        -->
+        <!--<module name="MissingJavadocMethod">
+            <property name="scope" value="public"/>
+            <property name="minLineCount" value="2"/>
+            <property name="allowedAnnotations" value="Override, Test"/>
+            <property name="tokens" value="METHOD_DEF, CTOR_DEF, ANNOTATION_FIELD_DEF, COMPACT_CTOR_DEF"/>
+        </module>-->
+
+        <!--
+          Модуль MissingJavadocType проверяет отсутствие Javadoc-комментариев для типов.
+          Игнорирует отсутствие для типов с защищенным доступом.
+        -->
+        <module name="MissingJavadocType">
+            <property name="scope" value="protected"/>
+            <property name="tokens"
+                      value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, RECORD_DEF, ANNOTATION_DEF"/>
+            <property name="excludeScope" value="nothing"/>
+        </module>
+
+        <!--
+          Модуль MethodName проверяет формат имен методов согласно указанному паттерну.
+          Имена методов должны начинаться с маленькой буквы, затем содержать маленькие буквы,
+          цифры и символ подчеркивания.
+        -->
+        <module name="MethodName">
+            <property name="format" value="^[a-z][a-z0-9]\w*$"/>
+            <message key="name.invalidPattern"
+                     value="Method name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+
+        <!--
+          Модуль EmptyCatchBlock проверяет отсутствие пустых блоков catch.
+          Если используется переменная exceptionVariableName (в данном случае 'expected'),
+          блоки catch с этой переменной считаются допустимыми.
+        -->
+        <module name="EmptyCatchBlock">
+            <property name="exceptionVariableName" value="expected"/>
+        </module>
+
+        <!--
+        Этот модуль проверяет соблюдение стиля оформления Javadoc-комментариев.
+        'false' - проверка первого предложения в Javadoc-комментариях отключена.
+        Проверка HTML-разметки в Javadoc-комментариях отключена.
+        -->
+        <module name="JavadocStyle">
+            <property name="checkHtml" value="false"/>
+            <property name="checkFirstSentence" value="false"/>
+            <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+        </module>
+
+        <!--
+          Модуль SuppressionXpathFilter определяет фильтр подавления Checkstyle-проверок на основе XPath.
+          Опциональный файл, указанный в параметре file, содержит XPath-выражения для подавления конкретных проверок.
+        -->
+        <module name="SuppressionXpathFilter">
+            <property name="file" value="${org.checkstyle.google.suppressionxpathfilter.config}"
+                      default="checkstyle-xpath-suppressions.xml"/>
+            <property name="optional" value="true"/>
+        </module>
+
+        <!--
+          Модуль SuppressWarningsHolder определяет возможность использования аннотации @SuppressWarnings.
+        -->
+        <module name="SuppressWarningsHolder"/>
+
+        <!--
+          Модуль SuppressionCommentFilter определяет фильтр подавления Checkstyle-проверок на основе комментариев.
+          Определенные комментарии вида CHECKSTYLE.OFF и CHECKSTYLE.ON используются для подавления и восстановления проверок.
+        -->
+        <module name="SuppressionCommentFilter">
+            <property name="offCommentFormat" value="CHECKSTYLE.OFF\: ([\w\|]+)"/>
+            <property name="onCommentFormat" value="CHECKSTYLE.ON\: ([\w\|]+)"/>
+            <property name="checkFormat" value="$1"/>
+        </module>
+
+        <!--
+          Модуль SuppressWithNearbyCommentFilter определяет фильтр подавления Checkstyle-проверок на основе комментариев.
+          Определенные комментарии вида CHECKSTYLE.SUPPRESS используются для подавления проверок.
+          Параметр influenceFormat указывает на количество строк, на которые влияет комментарий подавления.
+        -->
+        <module name="SuppressWithNearbyCommentFilter">
+            <property name="commentFormat" value="CHECKSTYLE.SUPPRESS\: ([\w\|]+)"/>
+            <property name="checkFormat" value="$1"/>
+            <property name="influenceFormat" value="1"/>
+        </module>
+
+        <!--
+         Этот модуль проверяет, что в Java-коде не используется метод finalize().
+       -->
+        <module name="NoFinalizer"/>
+
+        <!--
+         Этот модуль проверяет, что продолжение Javadoc-тегов имеет правильные отступы.
+       -->
+        <module name="JavadocTagContinuationIndentation">
+            <property name="offset" value="0"/>
+        </module>
+
+
+    </module>
+
+    <!--
+     Этот модуль проверяет, что в каждом файле Java-кода присутствует пустая строка в конце файла.
+    -->
+    <module name="NewlineAtEndOfFile"/>
+</module>

@@ -2,6 +2,7 @@ HELP.md
 target/
 .mvn
 **/src/main/**/target/
+!adapter/target/generated-sources/src/gen/java/main
 **/src/test/**/target/
 
 ### STS ###

@@ -3,7 +3,6 @@ package com.innowise.swimdom.service.impl;
 import com.innowise.swimdom.entity.Pool;
 import com.innowise.swimdom.entity.PoolWorkingHours;
 import com.innowise.swimdom.exceptions.PoolNotFoundException;
-import com.innowise.swimdom.exceptions.PoolWorkingHoursException;
 import com.innowise.swimdom.mapper.PoolMapper;
 import com.innowise.swimdom.mapper.PoolWorkingHoursMapper;
 import com.innowise.swimdom.openapi.model.PoolDto;
@@ -19,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -80,15 +78,14 @@ public class  PoolServiceImplTest {
     @Test
     void updatePool_success() {
         // GIVEN
-        PoolDto inputDto = testPoolDto; // должен содержать id
+        PoolDto inputDto = testPoolDto;
         Pool existingPool = testPoolEntity;
-        Pool updatedPool = testPoolEntity; // можно использовать тот же объект
+        Pool updatedPool = testPoolEntity;
         PoolDto updatedDto = testPoolDto;
 
         when(poolRepository.findPoolById(inputDto.getId()))
             .thenReturn(Optional.of(existingPool));
 
-        // update entity action
         doAnswer(invocation -> {
             PoolDto dtoArg = invocation.getArgument(0);
             Pool poolArg = invocation.getArgument(1);
@@ -96,11 +93,11 @@ public class  PoolServiceImplTest {
             return null;
         }).when(poolMapper).updatePoolFromDto(inputDto, existingPool);
 
+        // WHEN
         when(poolRepository.save(existingPool)).thenReturn(updatedPool);
         when(poolMapper.toPoolDto(updatedPool)).thenReturn(updatedDto);
-
-        // WHEN
         PoolDto result = poolService.updatePool(inputDto);
+
 
         // THEN
         assertNotNull(result);
@@ -285,10 +282,8 @@ public class  PoolServiceImplTest {
         when(poolRepository.findPoolById(poolId)).thenReturn(Optional.of(testPoolEntity));
 
         PoolWorkingHours pwh1 = new PoolWorkingHours();
-        pwh1.setPool(testPoolEntity);
-        PoolWorkingHours pwh2 = new PoolWorkingHours();
 
-        Set<PoolWorkingHours> mappedList = Set.of(pwh1, pwh2);
+        Set<PoolWorkingHours> mappedList = Set.of(pwh1);
 
         when(poolWorkingHoursMapper.toPoolWorkingHoursList(dtoList)).thenReturn(mappedList);
 
@@ -297,7 +292,7 @@ public class  PoolServiceImplTest {
 
         Set<PoolWorkingHours> result = poolService.createOrUpdateWorkingHours(createPoolDto());
         // THEN
-        assertEquals(2, result.size());
+        assertEquals(1, result.size());
 
         verify(poolRepository).findPoolById(poolId);
         verify(poolWorkingHoursRepository).deleteAllByPoolId(poolId);

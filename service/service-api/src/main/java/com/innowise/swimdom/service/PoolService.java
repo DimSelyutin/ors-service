@@ -62,13 +62,6 @@ public interface PoolService {
     Set<PoolWorkingHours> createOrUpdateWorkingHours(PoolDto poolDto);
 
     /**
-     * Deletes the schedule entry for a pool on a specific day of the week.
-     *
-     * @param poolDto the PoolDto representing the pool
-     */
-    void deleteWorkingHoursByDay(PoolDto poolDto);
-
-    /**
      * Retrieves all schedule entries for the specified pool.
      *
      * @param dto the PoolDto representing the pool

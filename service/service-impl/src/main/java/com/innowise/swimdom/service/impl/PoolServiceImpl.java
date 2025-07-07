@@ -96,7 +96,7 @@ public class PoolServiceImpl implements PoolService {
     public void deleteWorkingHours(PoolDto poolDto) {
         log.debug("deleteWorkingHours - start for poolId: {}", poolDto.getId());
         poolWorkingHoursRepository.deleteAllByPoolId(poolDto.getId());
-        log.debug("deleteWorkingHours - end for poolId: {}",  poolDto.getId());
+        log.debug("deleteWorkingHours - end for poolId: {}", poolDto.getId());
     }
 
     /**
@@ -123,37 +123,13 @@ public class PoolServiceImpl implements PoolService {
     }
 
     /**
-     * Deletes the schedule entry for a pool on a specific day of the week.
-     *
-     * @param poolDto the PoolDto representing the pool
-     */
-    @Transactional
-    @Override
-    public void deleteWorkingHoursByDay(PoolDto poolDto) {
-        UUID poolId = poolDto.getId();
-
-        List<Integer> daysToDelete = poolDto.getPoolWorkingHours().stream()
-            .map(PoolWorkingHoursDto::getWeekday)
-            .distinct()
-            .toList();
-
-        for (Integer day : daysToDelete) {
-            poolWorkingHoursRepository.deleteByPoolIdAndWeekday(poolId, day);
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public Set<PoolWorkingHoursDto> getWorkingHoursForPool(PoolDto dto) {
         log.debug("getSchedulesForPool - start, poolId: {}", dto.getId());
-        Set<PoolWorkingHoursDto> poolWorkingHours = poolWorkingHoursRepository.findByPoolId(dto.getId())
-            .map(poolWorkingHoursMapper::toPoolWorkingHoursDtoList)
-            .orElseThrow(() -> {
-                log.error("getSchedulesForPool - Pool with id {} not found", dto.getId());
-                return new PoolNotFoundException("PoolWorkingHoursDto not found with poolId: " + dto.getId());
-            });
+        Set<PoolWorkingHoursDto> poolWorkingHours = poolWorkingHoursMapper.toPoolWorkingHoursDtoList(
+            poolWorkingHoursRepository.findByPoolId(dto.getId()));
 
         log.debug("getSchedulesForPool - found {} schedules", poolWorkingHours.size());
         return poolWorkingHours;

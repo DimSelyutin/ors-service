@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,7 +16,7 @@ import java.util.UUID;
 @Repository
 public interface PoolWorkingHoursRepository extends JpaRepository<UUID, PoolWorkingHours> {
 
-    Optional<Set<PoolWorkingHours>> findByPoolId(UUID poolId);
+    Set<PoolWorkingHours> findByPoolId(UUID poolId);
 
     List<PoolWorkingHours> findByDayOfWeek(Short dayOfWeek);
 

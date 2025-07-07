@@ -20,13 +20,13 @@ public interface PoolWorkingHoursMapper {
 
     /**
      * Mapping PoolWorkingHoursDto to PoolWorkingHours entity.
-     * Creat poolId в объект Pool с этим id.
+     * Creat poolId in object with id.
      */
     PoolWorkingHours toPoolWorkingHours(PoolWorkingHoursDto dto);
 
     /**
      * Mapping PoolWorkingHours entity to PoolWorkingHoursDto.
-     * Extracts pool.id в поле poolId.
+     * Extracts pool.id in field poolId.
      */
     PoolWorkingHoursDto toPoolWorkingHoursDto(PoolWorkingHours entity);
 

@@ -1,6 +1,5 @@
 package com.innowise.swimdom.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,7 +31,6 @@ public class Pool {
     @Column(updatable = false, nullable = false)
     private UUID id;
 
-    @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PoolWorkingHours> poolWorkingHours;
 

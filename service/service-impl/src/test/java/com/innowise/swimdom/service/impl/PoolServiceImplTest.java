@@ -142,7 +142,7 @@ public class  PoolServiceImplTest {
         when(poolDto.getId()).thenReturn(poolId);
         when(poolRepository.existsById(poolId)).thenReturn(true);
 
-        poolService.deletePool(poolDto.getId());
+        poolService.deletePoolById(poolDto.getId());
 
         // THEN
         verify(poolDto).getId();
@@ -159,7 +159,7 @@ public class  PoolServiceImplTest {
         when(poolDto.getId()).thenReturn(poolId);
         when(poolRepository.existsById(poolId)).thenReturn(false);
 
-        poolService.deletePool(poolDto.getId());
+        poolService.deletePoolById(poolDto.getId());
 
         // THEN
         verify(poolDto).getId();

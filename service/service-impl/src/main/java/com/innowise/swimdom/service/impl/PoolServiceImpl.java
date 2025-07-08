@@ -60,7 +60,6 @@ public class PoolServiceImpl implements PoolService {
      * {@inheritDoc}
      * `
      */
-    @Transactional
     @Override
     public PoolDto updatePool(PoolDto poolDto) {
         log.debug("updatePool - start, poolDto: {}", poolDto);
@@ -81,7 +80,7 @@ public class PoolServiceImpl implements PoolService {
      * {@inheritDoc}
      */
     @Override
-    public void deletePool(UUID poolId) {
+    public void deletePoolById(UUID poolId) {
         log.debug("deletePool - start, poolDto: {}", poolId);
 
         poolRepository.existsById(poolId);
@@ -93,10 +92,10 @@ public class PoolServiceImpl implements PoolService {
      * {@inheritDoc}
      */
     @Transactional
-    public void deleteWorkingHours(PoolDto poolDto) {
-        log.debug("deleteWorkingHours - start for poolId: {}", poolDto.getId());
-        poolWorkingHoursRepository.deleteAllByPoolId(poolDto.getId());
-        log.debug("deleteWorkingHours - end for poolId: {}", poolDto.getId());
+    public void deleteWorkingHoursById(UUID poolId) {
+        log.debug("deleteWorkingHours - start for poolId: {}", poolId);
+        poolWorkingHoursRepository.deleteAllByPoolId(poolId);
+        log.debug("deleteWorkingHours - end for poolId: {}", poolId);
     }
 
     /**
@@ -111,10 +110,10 @@ public class PoolServiceImpl implements PoolService {
             log.debug("createOrUpdateWorkingHours - empty dtoList, nothing to save");
             return Collections.emptySet();
         }
-
+        UUID poolId = poolDto.getId();
         poolRepository.findPoolById(poolDto.getId())
-            .orElseThrow(() -> new PoolNotFoundException("Pool not found with id " + poolDto.getId()));
-        deleteWorkingHours(poolDto);
+            .orElseThrow(() -> new PoolNotFoundException("Pool not found with id " + poolId));
+        deleteWorkingHoursById(poolId);
 
         Set<PoolWorkingHours> newHours = poolWorkingHoursMapper.toPoolWorkingHoursList(poolDto.getPoolWorkingHours());
 

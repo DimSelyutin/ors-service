@@ -44,14 +44,14 @@ public interface PoolService {
      *
      * @param poolId the PoolDto with updated data
      */
-    void deletePool(UUID poolId);
+    void deletePoolById(UUID poolId);
 
     /**
      * Deletes the specified pool.
      *
-     * @param poolDto the PoolDto representing the pool to delete
+     * @param poolId the id representing the pool to delete
      */
-    void deleteWorkingHours(PoolDto poolDto);
+    void deleteWorkingHoursById(UUID poolId);
 
     /**
      * Creates or updates the schedule for a pool.

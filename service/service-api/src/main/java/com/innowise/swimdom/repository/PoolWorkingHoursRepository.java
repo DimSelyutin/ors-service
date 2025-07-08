@@ -23,8 +23,4 @@ public interface PoolWorkingHoursRepository extends JpaRepository<UUID, PoolWork
     Set<PoolWorkingHours> saveAll(Set<PoolWorkingHours> poolWorkingHours);
 
     void deleteAllByPoolId(UUID poolId);
-
-    @Modifying
-    @Query("delete from PoolWorkingHours pwh where pwh.pool.id = :poolId and pwh.weekday = :dayOfWeek")
-    void deleteByPoolIdAndWeekday(UUID poolId, Integer dayOfWeek);
 }

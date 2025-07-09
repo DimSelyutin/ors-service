@@ -69,6 +69,10 @@
                   value="inherit"/>
     </module>
 
+    <module name="RegexpMultiline">
+        <property name="format" value="[а-яА-ЯёЁ]"/>
+        <property name="message" value="Russian symbols are prohibited!"/>
+    </module>
     <!--
      Модуль TreeWalker - это контейнер для различных модулей Checkstyle, которые анализируют структуру кода.
      Он выполняет проверки в процессе обхода дерева абстрактного синтаксического дерева (AST) вашего кода.

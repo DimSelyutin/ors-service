@@ -3,12 +3,8 @@ package com.innowise.swimdom.entity;
 import com.innowise.swimdom.util.ValidOpenCloseTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Max;
@@ -37,11 +33,6 @@ public class PoolWorkingHours {
     @UuidGenerator
     @Column(updatable = false, nullable = false)
     private UUID id;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "pool_id", nullable = false,
-                foreignKey = @ForeignKey(name = "fk_pool_working_hours_pool"))
-    private Pool pool;
 
     @Min(1)
     @Max(7)

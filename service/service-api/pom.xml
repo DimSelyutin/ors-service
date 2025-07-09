@@ -16,8 +16,14 @@
     <dependencies>
         <dependency>
             <groupId>com.innowise.swimdom</groupId>
+            <artifactId>adapter</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.innowise.swimdom</groupId>
             <artifactId>domain</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 </project>

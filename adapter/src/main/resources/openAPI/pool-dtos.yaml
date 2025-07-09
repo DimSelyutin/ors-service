@@ -1,0 +1,93 @@
+openapi: 3.0.3
+info:
+  title: DTOs for pool
+  description: Schema for system errors.
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    PoolDto:
+      type: object
+      description: Represents a swimming pool entity.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the pool.
+        poolWorkingHours:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/PoolWorkingHoursDto'
+        name:
+          type: string
+          maxLength: 150
+          description: Name of the pool.
+        description:
+          type: string
+          maxLength: 255
+          description: Description of the pool.
+          nullable: true
+        location:
+          type: string
+          maxLength: 255
+          description: Location of the pool.
+          nullable: true
+        capacity:
+          type: integer
+          format: int32
+          description: Capacity of the pool.
+          minimum: 1
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the pool was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the pool was last updated.
+      required:
+        - id
+        - name
+        - capacity
+        - created_at
+        - updated_at
+    PoolWorkingHoursDto:
+        type: object
+        description: Working times
+        properties:
+          weekday:
+            type: integer
+            format: int32
+            x-java-type: Short
+            description: Week of days (1 — monday, 7 — sunday)
+            minimum: 1
+            maximum: 7
+            example: 1
+          openTime:
+            type: string
+            format: time
+            description: Opening time
+            example: "08:00:00"
+          closeTime:
+            type: string
+            format: time
+            description: Close time
+            example: "22:00:00"
+        required:
+          - weekday
+          - openTime
+          - closeTime
+    DeletePoolByDay:
+      type: object
+      description: Represents a swimming pool entity.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the pool.
+        weekday:
+          type: integer
+          format: int32
+          description: Week of days (1 — monday, 7 — sunday)
+          example: 1

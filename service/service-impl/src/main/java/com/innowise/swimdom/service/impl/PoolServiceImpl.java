@@ -91,7 +91,7 @@ public class PoolServiceImpl implements PoolService {
     /**
      * {@inheritDoc}
      */
-    @Transactional
+    @Override
     public void deleteWorkingHoursById(UUID poolId) {
         log.debug("deleteWorkingHours - start for poolId: {}", poolId);
         poolWorkingHoursRepository.deleteAllByPoolId(poolId);

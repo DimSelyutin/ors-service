@@ -11,90 +11,14 @@ tags:
 
 paths:
   /api/v1/pools:
-    post:
-      tags:
-        - Pools
-      summary: Create a new pool
-      description: Adds a new swimming pool to the system.
-      operationId: createPool
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PoolDto'
-      responses:
-        '201':
-          description: Pool created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PoolDto'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '409':
-          $ref: '#/components/responses/Conflict'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-
-    get:
-      tags:
-        - Pools
-      summary: Retrieve all available pools
-      description: Returns a list of all swimming pools available for ticket purchase.
-      operationId: getPools
-      responses:
-        '200':
-          description: A list of pools
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PoolDto'
-        '204':
-          description: No pools found
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '409':
-          $ref: '#/components/responses/Conflict'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+    $ref: './pool-dtos.yaml#/pools'
+  /api/v1/subscriptions:
+    $ref: './subscriptions-dtos.yaml#/subscriptions'
+  /api/v1/subscriptions/{id}:
+    $ref: './subscriptions-dtos.yaml#/subscriptionById'
+  /api/v1/user-subscriptions:
+    $ref: './subscriptions-dtos.yaml#/userSubscriptions'
+  /api/v1/user-subscriptions/{id}:
+    $ref: './subscriptions-dtos.yaml#/userSubscriptionById'
 
 
-components:
-  schemas:
-    PoolDto:
-      $ref: './pool-dtos.yaml#/components/schemas/PoolDto'
-    ErrorDto:
-      $ref: './error-dto.yaml#/components/schemas/ErrorDto'
-    PoolWorkingHoursDto:
-      $ref: './pool-dtos.yaml#/components/schemas/PoolWorkingHoursDto'
-
-  responses:
-    BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorDto'
-    NotFound:
-      description: Resource Not Found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorDto'
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorDto'
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorDto'

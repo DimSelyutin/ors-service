@@ -3,9 +3,6 @@ package com.innowise.swimdom.repository;
 import com.innowise.swimdom.entity.Pool;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,9 +23,5 @@ public interface PoolRepository
     Optional<List<Pool>> findPoolsByDayOfWeek(Short weekday);
 
     boolean existsById(UUID poolId);
-
-    @Modifying
-    @Query("delete from PoolWorkingHours pwh where pwh. = :poolId and pwh.dayOfWeek = :dayOfWeek")
-    void deleteByPoolIdAndDayOfWeek(@Param("poolId") UUID poolId, @Param("dayOfWeek") Integer dayOfWeek);
 
 }

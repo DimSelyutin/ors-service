@@ -10,7 +10,6 @@ import com.innowise.swimdom.openapi.model.PoolWorkingHoursDto;
 import com.innowise.swimdom.repository.PoolRepository;
 import com.innowise.swimdom.repository.PoolWorkingHoursRepository;
 import com.innowise.swimdom.service.util.TestData;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -34,7 +33,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-@Slf4j
 @ExtendWith(value = MockitoExtension.class)
 public class  PoolServiceImplTest {
 

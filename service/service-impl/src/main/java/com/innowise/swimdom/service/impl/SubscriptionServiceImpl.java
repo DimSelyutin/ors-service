@@ -1,0 +1,96 @@
+package com.innowise.swimdom.service.impl;
+
+import com.innowise.swimdom.entity.Subscription;
+import com.innowise.swimdom.exceptions.SubscriptionNotFoundException;
+import com.innowise.swimdom.mapper.SubscriptionMapper;
+import com.innowise.swimdom.openapi.model.SubscriptionCreateDTO;
+import com.innowise.swimdom.openapi.model.SubscriptionDTO;
+import com.innowise.swimdom.openapi.model.SubscriptionUpdateDTO;
+import com.innowise.swimdom.repository.SubscriptionRepository;
+import com.innowise.swimdom.service.SubscriptionService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * Subscription management service.
+ * Provides methods for creating, receiving, updating, and deleting subscriptions.
+ */
+@Slf4j
+@RequiredArgsConstructor
+@Service
+public class SubscriptionServiceImpl implements SubscriptionService {
+
+    private final SubscriptionRepository subscriptionRepository;
+
+    private final SubscriptionMapper subscriptionMapper;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<SubscriptionDTO> getAllSubscriptions() {
+        log.debug("getAllSubscriptions - start");
+        List<Subscription> subscriptions = subscriptionRepository.findAll();
+        List<SubscriptionDTO> subscriptionDTOs = subscriptionMapper.toSubscriptionDTOList(subscriptions);
+        log.debug("getAllSubscriptions - end, found {} subscriptions", subscriptionDTOs.size());
+        return subscriptionDTOs;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SubscriptionDTO getSubscriptionById(UUID id) {
+        log.debug("getSubscriptionById - start, id: {}", id);
+        Subscription subscription = subscriptionRepository.findById(id)
+            .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found with id: " + id));
+        SubscriptionDTO subscriptionDTO = subscriptionMapper.toSubscriptionDTO(subscription);
+        log.debug("getSubscriptionById - end, subscriptionDTO: {}", subscriptionDTO);
+        return subscriptionDTO;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SubscriptionDTO createSubscription(SubscriptionCreateDTO createDTO) {
+        log.debug("createSubscription - start, createDTO: {}", createDTO);
+        Subscription savedSubscription = subscriptionRepository.save(subscriptionMapper.toSubscriptionEntity(createDTO));
+        SubscriptionDTO subscriptionDTO = subscriptionMapper.toSubscriptionDTO(savedSubscription);
+        log.debug("createSubscription - end, subscriptionDTO: {}", subscriptionDTO);
+        return subscriptionDTO;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SubscriptionDTO updateSubscription(UUID id, SubscriptionUpdateDTO updateDTO) {
+        log.debug("updateSubscription - start, id: {}, updateDTO: {}", id, updateDTO);
+        Subscription subscription = subscriptionRepository.findById(id)
+            .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found with id: " + id));
+        subscriptionMapper.updateSubscriptionFromDTO(updateDTO, subscription);
+        Subscription savedSubscription = subscriptionRepository.save(subscription);
+        SubscriptionDTO subscriptionDTO = subscriptionMapper.toSubscriptionDTO(savedSubscription);
+        log.debug("updateSubscription - end, subscriptionDTO: {}", subscriptionDTO);
+        return subscriptionDTO;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deleteSubscription(UUID id) {
+        log.debug("deleteSubscription - start, id: {}", id);
+        if (!subscriptionRepository.existsById(id)) {
+            throw new SubscriptionNotFoundException("Subscription not found with id: " + id);
+        }
+        subscriptionRepository.deleteById(id);
+        log.debug("deleteSubscription - end, deleted id: {}", id);
+    }
+}

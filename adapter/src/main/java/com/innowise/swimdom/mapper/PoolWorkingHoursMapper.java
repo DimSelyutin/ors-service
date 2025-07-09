@@ -13,6 +13,8 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**
  * Mapper for entity {@link PoolWorkingHours}.
+ *
+ * @author DimSelyutin
  */
 @Mapper(componentModel = SPRING, injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

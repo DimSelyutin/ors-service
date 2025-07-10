@@ -1,6 +1,7 @@
 package com.innowise.swimdom.service;
 
 import com.innowise.swimdom.openapi.model.SubscriptionDTO;
+import com.innowise.swimdom.openapi.model.SubscriptionFilterDTO;
 import com.innowise.swimdom.openapi.model.SubscriptionCreateDTO;
 import com.innowise.swimdom.openapi.model.SubscriptionUpdateDTO;
 
@@ -18,7 +19,7 @@ public interface SubscriptionService {
      *
      * @return list of DTO subscriptions; empty list if there are no subscriptions
      */
-    List<SubscriptionDTO> getAllSubscriptions(SubscriptionDTO subscriptionDTO);
+    List<SubscriptionDTO> getAllSubscriptions(SubscriptionFilterDTO subscriptionDTO);
 
     /**
      * Get a subscription using a unique identifier.

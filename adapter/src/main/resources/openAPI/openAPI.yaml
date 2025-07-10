@@ -16,9 +16,9 @@ paths:
     $ref: './subscriptions-dtos.yaml#/subscriptions'
   /api/v1/subscriptions/{id}:
     $ref: './subscriptions-dtos.yaml#/subscriptionById'
-  /api/v1/user-subscriptions:
+  /api/v1/subscriptions/filter:
+    $ref: './subscriptions-dtos.yaml#/getSubscriptionByFilter'
+  /api/v1/user/subscriptions:
     $ref: './subscriptions-dtos.yaml#/userSubscriptions'
-  /api/v1/user-subscriptions/{id}:
+  /api/v1/user/subscriptions/{id}:
     $ref: './subscriptions-dtos.yaml#/userSubscriptionById'
-
-

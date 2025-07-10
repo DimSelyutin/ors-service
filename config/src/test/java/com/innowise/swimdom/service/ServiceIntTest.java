@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
-
+import com.innowise.swimdom.openapi.model.SubscriptionFilterDTO;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,7 +22,7 @@ public class ServiceIntTest {
 
     @Test
     void testGetAllSubscriptions_withRealDb() {
-        SubscriptionDTO filter = new SubscriptionDTO();
+        SubscriptionFilterDTO filter = new SubscriptionFilterDTO();
         filter.setDescription("Monthly");
         List<SubscriptionDTO> result = subscriptionService.getAllSubscriptions(filter);
 

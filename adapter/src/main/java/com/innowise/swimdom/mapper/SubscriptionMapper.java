@@ -20,7 +20,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * @author DimSelyutin
  */
 @Mapper(componentModel = SPRING, injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        unmappedTargetPolicy = ReportingPolicy.WARN)
+        unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface SubscriptionMapper {
 
     /**
@@ -31,6 +31,8 @@ public interface SubscriptionMapper {
      * @return Subscription entity
      */
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     Subscription toSubscriptionEntity(SubscriptionCreateDTO createDTO);
 
     /**
@@ -40,6 +42,9 @@ public interface SubscriptionMapper {
      * @param updateDTO            update data
      * @param existingSubscription existingSubscription entity to update
      */
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     void updateSubscriptionFromDTO(SubscriptionUpdateDTO updateDTO, @MappingTarget Subscription existingSubscription);
 
     /**

@@ -4,6 +4,7 @@ import com.innowise.swimdom.entity.Subscription;
 import com.innowise.swimdom.exceptions.SubscriptionNotFoundException;
 import com.innowise.swimdom.mapper.SubscriptionMapper;
 import com.innowise.swimdom.openapi.model.SubscriptionCreateDTO;
+import com.innowise.swimdom.openapi.model.SubscriptionFilterDTO;
 import com.innowise.swimdom.openapi.model.SubscriptionDTO;
 import com.innowise.swimdom.openapi.model.SubscriptionUpdateDTO;
 import com.innowise.swimdom.repository.SubscriptionRepository;
@@ -34,9 +35,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
      * {@inheritDoc}
      */
     @Override
-    public List<SubscriptionDTO> getAllSubscriptions(SubscriptionDTO subscriptionDTO) {
+    public List<SubscriptionDTO> getAllSubscriptions(SubscriptionFilterDTO subscriptionFilter) {
         log.debug("getAllSubscriptions - start");
-        Specification<Subscription> spec = SubscriptionSpecification.byFilter(subscriptionDTO);
+        Specification<Subscription> spec = SubscriptionSpecification.byFilter(subscriptionFilter);
         List<Subscription> subscriptions = subscriptionRepository.findAll(spec);
         List<SubscriptionDTO> subscriptionDTOs = subscriptionMapper.toSubscriptionDTOList(subscriptions);
         log.debug("getAllSubscriptions - end, found {} subscriptions", subscriptionDTOs.size());
@@ -51,7 +52,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         log.debug("getSubscriptionById - start, id: {}", id);
         Subscription subscription = subscriptionRepository.findById(id)
             .orElseThrow(() -> {
-                log.debug("getSubscriptionById - subscription with id:{} not found", id);
+                log.warn("getSubscriptionById - subscription with id:{} not found", id);
                 return new SubscriptionNotFoundException("Subscription not found with id: " + id);
             });
         SubscriptionDTO subscriptionDTO = subscriptionMapper.toSubscriptionDTO(subscription);
@@ -80,7 +81,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         log.debug("updateSubscription - start, id: {}, updateDTO: {}", id, updateDTO);
         Subscription subscription = subscriptionRepository.findById(id)
             .orElseThrow(() -> {
-                log.debug("getSubscriptionById - subscription with id:{} not found", id);
+                log.warn("getSubscriptionById - subscription with id:{} not found", id);
                 return new SubscriptionNotFoundException("Subscription not found with id: " + id);
             });
         subscriptionMapper.updateSubscriptionFromDTO(updateDTO, subscription);
@@ -97,6 +98,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public void deleteSubscription(UUID id) {
         log.debug("deleteSubscription - start, id: {}", id);
         if (!subscriptionRepository.existsById(id)) {
+            log.warn("getSubscriptionById - subscription with id:{} not found", id);
             throw new SubscriptionNotFoundException("Subscription not found with id: " + id);
         }
         subscriptionRepository.deleteById(id);

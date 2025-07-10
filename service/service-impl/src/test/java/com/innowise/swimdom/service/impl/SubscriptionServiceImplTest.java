@@ -5,6 +5,7 @@ import com.innowise.swimdom.exceptions.SubscriptionNotFoundException;
 import com.innowise.swimdom.mapper.SubscriptionMapper;
 import com.innowise.swimdom.openapi.model.SubscriptionCreateDTO;
 import com.innowise.swimdom.openapi.model.SubscriptionDTO;
+import com.innowise.swimdom.openapi.model.SubscriptionFilterDTO;
 import com.innowise.swimdom.openapi.model.SubscriptionUpdateDTO;
 import com.innowise.swimdom.repository.SubscriptionRepository;
 import org.junit.jupiter.api.Test;
@@ -73,7 +74,7 @@ public class SubscriptionServiceImplTest {
     @Test
     public void testGetAllSubscriptions() {
         // GIVEN
-        SubscriptionDTO filterDTO = new SubscriptionDTO();
+        SubscriptionFilterDTO filterDTO = new SubscriptionFilterDTO();
         filterDTO.setPrice(3000d);
 
         Subscription subscription1 = new Subscription();

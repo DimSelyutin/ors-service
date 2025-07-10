@@ -1,4 +1,3 @@
-
 subscriptions:
   get:
     summary: Get all subscriptions
@@ -206,7 +205,30 @@ userSubscriptionById:
         description: User subscription deleted
       '404':
         description: User subscription not found
-
+getSubscriptionByFilter:
+  post:
+    summary: Get all subscriptions with filter
+    operationId: getAllSubscription
+    tags:
+      - Subscription
+    requestBody:
+      description: Filter criteria for subscriptions
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SubscriptionFilterDTO'
+    responses:
+      '200':
+        description: List of subscriptions matching filter
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SubscriptionDTO'
+      '400':
+        description: Invalid filter supplied
 components:
   schemas:
     SubscriptionDTO:
@@ -224,7 +246,7 @@ components:
           example: "Access to all premium features"
         duration:
           type: string
-          enum: [WEEK, MONTH, YEAR]
+          enum: [ WEEK, MONTH, YEAR ]
           example: MONTH
         price:
           type: number
@@ -254,7 +276,7 @@ components:
           example: "Access to all premium features"
         duration:
           type: string
-          enum: [WEEK, MONTH, YEAR]
+          enum: [ WEEK, MONTH, YEAR ]
           example: MONTH
         price:
           type: number
@@ -272,7 +294,7 @@ components:
           example: "Access to all premium features"
         duration:
           type: string
-          enum: [WEEK, MONTH, YEAR]
+          enum: [ WEEK, MONTH, YEAR ]
           example: MONTH
         price:
           type: number
@@ -342,7 +364,23 @@ components:
           type: string
           format: date
           example: "2024-06-30"
-
+    SubscriptionFilterDTO:
+        type: object
+        properties:
+          name:
+            type: string
+            example: "Premium Plan"
+          description:
+            type: string
+            example: "Access to all premium features"
+          duration:
+            type: string
+            enum: [ WEEK, MONTH, YEAR ]
+            example: MONTH
+          price:
+            type: number
+            format: double
+            example: 29.99
     UserSubscriptionUpdateDTO:
       type: object
       properties:

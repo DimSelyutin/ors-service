@@ -2,6 +2,7 @@ package com.innowise.swimdom.repository.specification;
 
 import com.innowise.swimdom.entity.Subscription;
 import com.innowise.swimdom.openapi.model.SubscriptionDTO;
+import com.innowise.swimdom.openapi.model.SubscriptionFilterDTO;
 import jakarta.persistence.criteria.Predicate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,13 +19,9 @@ public class SubscriptionSpecification {
      * @param filter SubscriptionDTO
      * @return class specification of subscriptions
      */
-    public static Specification<Subscription> byFilter(SubscriptionDTO filter) {
+    public static Specification<Subscription> byFilter(SubscriptionFilterDTO filter) {
         return (root, query, cb) -> {
             Predicate p = cb.conjunction();
-
-            if (filter.getId() != null) {
-                p = cb.and(p, cb.equal(root.get("id"), filter.getId()));
-            }
             if (filter.getName() != null && !filter.getName().isEmpty()) {
                 p = cb.and(p, cb.like(cb.lower(root.get("name")), "%" + filter.getName().toLowerCase() + "%"));
             }
@@ -42,12 +39,6 @@ public class SubscriptionSpecification {
             }
             if (filter.getPrice() != null) {
                 p = cb.and(p, cb.equal(root.get("price"), filter.getPrice()));
-            }
-            if (filter.getCreatedAt() != null) {
-                p = cb.and(p, cb.greaterThanOrEqualTo(root.get("createdAt"), filter.getCreatedAt()));
-            }
-            if (filter.getUpdatedAt() != null) {
-                p = cb.and(p, cb.lessThanOrEqualTo(root.get("updatedAt"), filter.getUpdatedAt()));
             }
 
             return p;

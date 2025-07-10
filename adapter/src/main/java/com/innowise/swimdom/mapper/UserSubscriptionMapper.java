@@ -20,7 +20,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * @author DimSelyutin
  */
 @Mapper(componentModel = SPRING, injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        unmappedTargetPolicy = ReportingPolicy.WARN)
+        unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface UserSubscriptionMapper {
 
     /**
@@ -29,6 +29,8 @@ public interface UserSubscriptionMapper {
      * @param userSubscription entity
      * @return DTO
      */
+    @Mapping(target = "userId", source = "userSubscription.user.id")
+    @Mapping(target = "subscriptionId", source = "userSubscription.subscription.id")
     UserSubscriptionDTO toUserSubscriptionDto(UserSubscription userSubscription);
 
     /**
@@ -46,6 +48,8 @@ public interface UserSubscriptionMapper {
      * @return DTO
      */
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user.id", source = "userSubscriptionDTO.userId")
+    @Mapping(target = "subscription.id", source = "userSubscriptionDTO.subscriptionId")
     UserSubscription toUserSubscription(UserSubscriptionDTO userSubscriptionDTO);
 
     /**
@@ -54,6 +58,11 @@ public interface UserSubscriptionMapper {
      * @param userSubscriptionDTO dto
      * @return DTO
      */
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user.id", source = "userSubscriptionDTO.userId")
+    @Mapping(target = "subscription.id", source = "userSubscriptionDTO.subscriptionId")
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     UserSubscription toUserSubscription(UserSubscriptionCreateDTO userSubscriptionDTO);
 
     /**
@@ -61,5 +70,10 @@ public interface UserSubscriptionMapper {
      *
      * @params entity, updateDTO
      */
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "entity.user.id", ignore = true)
+    @Mapping(target = "entity.subscription.id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     void updateUserSubscriptionFromDto(UserSubscriptionUpdateDTO updateDTO, @MappingTarget UserSubscription entity);
 }

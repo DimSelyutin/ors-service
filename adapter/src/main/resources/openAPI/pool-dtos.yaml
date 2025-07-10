@@ -102,6 +102,10 @@ components:
         type: object
         description: Working times
         properties:
+          poolId:
+            type: string
+            format: uuid
+            example: "2c963f66afa6-5717-4562-b3fc-3fa85f64"
           weekday:
             type: integer
             format: int32

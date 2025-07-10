@@ -15,7 +15,5 @@ public interface PoolWorkingHoursRepository extends JpaRepository<PoolWorkingHou
 
     Set<PoolWorkingHours> findByPoolId(UUID poolId);
 
-    Set<PoolWorkingHours> saveAll(Set<PoolWorkingHours> poolWorkingHours);
-
     void deleteAllByPoolId(UUID poolId);
 }

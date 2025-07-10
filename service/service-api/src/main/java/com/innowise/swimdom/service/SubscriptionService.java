@@ -18,7 +18,7 @@ public interface SubscriptionService {
      *
      * @return list of DTO subscriptions; empty list if there are no subscriptions
      */
-    List<SubscriptionDTO> getAllSubscriptions();
+    List<SubscriptionDTO> getAllSubscriptions(SubscriptionDTO subscriptionDTO);
 
     /**
      * Get a subscription using a unique identifier.

@@ -103,19 +103,19 @@ public class PoolServiceImpl implements PoolService {
      */
     @Transactional
     @Override
-    public Set<PoolWorkingHours> createOrUpdateWorkingHours(PoolDto poolDto) {
+    public List<PoolWorkingHours> createOrUpdateWorkingHours(PoolDto poolDto) {
         log.debug("createOrUpdateWorkingHours - start, dtoList size: {}", poolDto.getPoolWorkingHours().size());
 
         if (poolDto.getPoolWorkingHours().isEmpty()) {
             log.debug("createOrUpdateWorkingHours - empty dtoList, nothing to save");
-            return Collections.emptySet();
+            return Collections.emptyList();
         }
         UUID poolId = poolDto.getId();
         poolRepository.findPoolById(poolDto.getId())
             .orElseThrow(() -> new PoolNotFoundException("Pool not found with id " + poolId));
         deleteWorkingHoursById(poolId);
 
-        Set<PoolWorkingHours> newHours = poolWorkingHoursMapper.toPoolWorkingHoursList(poolDto.getPoolWorkingHours());
+        List<PoolWorkingHours> newHours = poolWorkingHoursMapper.toPoolWorkingHoursList(poolDto.getPoolWorkingHours());
 
         log.debug("createOrUpdateWorkingHours - saving newHours size: {}", newHours.size());
         return poolWorkingHoursRepository.saveAll(newHours);
@@ -140,7 +140,7 @@ public class PoolServiceImpl implements PoolService {
     @Override
     public List<PoolDto> getPoolsByDayOfWeek(Short dayOfWeek) {
         log.debug("getPoolsByDayOfWeek - start, dayOfWeek: {}", dayOfWeek);
-        List<PoolDto> pools = poolRepository.findPoolsByDayOfWeek(dayOfWeek)
+        List<PoolDto> pools = poolRepository.findPoolsByPoolWorkingHoursWeekday(dayOfWeek)
             .map(poolMapper::toPoolsDto)
             .orElseThrow(() -> {
                 log.warn("getPoolsByDayOfWeek - Pool with weekday {} not found", dayOfWeek);

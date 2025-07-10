@@ -7,13 +7,16 @@ import com.innowise.swimdom.openapi.model.SubscriptionCreateDTO;
 import com.innowise.swimdom.openapi.model.SubscriptionDTO;
 import com.innowise.swimdom.openapi.model.SubscriptionUpdateDTO;
 import com.innowise.swimdom.repository.SubscriptionRepository;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.jpa.domain.Specification;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -54,20 +58,45 @@ public class SubscriptionServiceImplTest {
         subscriptionEntity = new Subscription();
         subscriptionEntity.setId(existingId);
         subscriptionEntity.setName("Test Subscription");
-        // заполните другие поля сущности, если есть
 
         subscriptionDTO = new SubscriptionDTO();
         subscriptionDTO.setId(existingId);
         subscriptionDTO.setName("Test Subscription");
-        // заполните другие поля DTO
 
         createDTO = new SubscriptionCreateDTO();
         createDTO.setName("New Subscription");
-        // заполните поля для создания
 
         updateDTO = new SubscriptionUpdateDTO();
         updateDTO.setName("Updated Subscription");
-        // заполните поля для обновления
+    }
+
+    @Test
+    public void testGetAllSubscriptions() {
+        // GIVEN
+        SubscriptionDTO filterDTO = new SubscriptionDTO();
+        filterDTO.setPrice(3000d);
+
+        Subscription subscription1 = new Subscription();
+        Subscription subscription2 = new Subscription();
+        List<Subscription> subscriptionList = Arrays.asList(subscription1, subscription2);
+
+        SubscriptionDTO dto1 = new SubscriptionDTO();
+        SubscriptionDTO dto2 = new SubscriptionDTO();
+        List<SubscriptionDTO> dtoList = Arrays.asList(dto1, dto2);
+
+        when(subscriptionRepository.findAll(any(Specification.class))).thenReturn(subscriptionList);
+        when(subscriptionMapper.toSubscriptionDTOList(subscriptionList)).thenReturn(dtoList);
+
+        // WHEN
+        List<SubscriptionDTO> result = subscriptionService.getAllSubscriptions(filterDTO);
+
+        // THEN
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals(dtoList, result);
+
+        verify(subscriptionRepository, times(1)).findAll(any(Specification.class));
+        verify(subscriptionMapper, times(1)).toSubscriptionDTOList(subscriptionList);
     }
 
     @Test

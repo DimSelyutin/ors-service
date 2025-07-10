@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
@@ -35,7 +36,7 @@ public interface PoolWorkingHoursMapper {
     /**
      * Mapping list of PoolWorkingHoursDto to list of PoolWorkingHours.
      */
-    Set<PoolWorkingHours> toPoolWorkingHoursList(Set<PoolWorkingHoursDto> dto);
+    List<PoolWorkingHours> toPoolWorkingHoursList(Set<PoolWorkingHoursDto> dto);
 
     /**
      * Mapping list of PoolWorkingHours to list of PoolWorkingHoursDto.

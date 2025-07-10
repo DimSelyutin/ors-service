@@ -14,14 +14,13 @@ import java.util.UUID;
  */
 @Repository
 public interface PoolRepository
-    extends JpaRepository<JpaSpecificationExecutor<Pool>, UUID>, JpaSpecificationExecutor<Pool> {
+    extends JpaRepository<Pool, UUID>, JpaSpecificationExecutor<Pool> {
 
     Pool save(Pool pool);
 
     Optional<Pool> findPoolById(UUID id);
 
-    Optional<List<Pool>> findPoolsByDayOfWeek(Short weekday);
+    Optional<List<Pool>> findPoolsByPoolWorkingHoursWeekday(Short weekday);
 
     boolean existsById(UUID poolId);
-
 }

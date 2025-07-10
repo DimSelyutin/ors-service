@@ -43,21 +43,13 @@ class UserSubscriptionServiceImplTest {
 
         userSubscriptionEntity = new UserSubscription();
         userSubscriptionEntity.setId(existingId);
-        // userSubscriptionEntity.setSubscription("Test Des");
-        // заполните остальные поля сущности, если есть
 
         userSubscriptionDTO = new UserSubscriptionDTO();
         userSubscriptionDTO.setId(existingId);
-        // userSubscriptionDTO.setName("Test UserSubscription");
-        // заполните остальные поля DTO
 
         createDTO = new UserSubscriptionCreateDTO();
-        // createDTO.setName("New UserSubscription");
-        // заполните поля создания
 
         updateDTO = new UserSubscriptionUpdateDTO();
-        // updateDTO.setName("Updated UserSubscription");
-        // заполните поля обновления
     }
 
     @Test

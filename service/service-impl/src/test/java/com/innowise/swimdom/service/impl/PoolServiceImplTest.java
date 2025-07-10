@@ -191,7 +191,7 @@ public class  PoolServiceImplTest {
     @Test
     void createOrUpdateWorkingHours_validInput_deletesOldAndSavesNew() {
         // GIVEN
-        Set<PoolWorkingHours> newSet = Set.of(testPoolWorkingHours);
+        List<PoolWorkingHours> newSet = List.of(testPoolWorkingHours);
         Set<PoolWorkingHoursDto> newSetDto = Set.of(testPoolWorkingHoursDto);
 
         when(poolRepository.findPoolById(testPoolEntity.getId())).thenReturn(Optional.of(testPoolEntity));
@@ -199,7 +199,7 @@ public class  PoolServiceImplTest {
         when(poolWorkingHoursRepository.saveAll(eq(newSet))).thenReturn(newSet);
 
         // WHEN
-        Set<PoolWorkingHours> result = poolService.createOrUpdateWorkingHours(testPoolDto);
+        List<PoolWorkingHours> result = poolService.createOrUpdateWorkingHours(testPoolDto);
 
         // THEN
         assertEquals(newSet, result);
@@ -219,13 +219,13 @@ public class  PoolServiceImplTest {
         List<Pool> pools = List.of(testPoolEntity, testPoolEntity);
         List<PoolDto> poolDtos = List.of(testPoolDto, testPoolDto);
         // WHEN
-        when(poolRepository.findPoolsByDayOfWeek(dayOfWeek)).thenReturn(Optional.of(pools));
+        when(poolRepository.findPoolsByPoolWorkingHoursWeekday(dayOfWeek)).thenReturn(Optional.of(pools));
         when(poolMapper.toPoolsDto(pools)).thenReturn(poolDtos);
 
         List<PoolDto> result = poolService.getPoolsByDayOfWeek(dayOfWeek);
         // THEN
         assertEquals(poolDtos, result);
-        verify(poolRepository).findPoolsByDayOfWeek(dayOfWeek);
+        verify(poolRepository).findPoolsByPoolWorkingHoursWeekday(dayOfWeek);
         verify(poolMapper).toPoolsDto(pools);
     }
 
@@ -234,13 +234,13 @@ public class  PoolServiceImplTest {
         // GIVEN
         Short dayOfWeek = 5;
         // WHEN
-        when(poolRepository.findPoolsByDayOfWeek(dayOfWeek)).thenReturn(Optional.empty());
+        when(poolRepository.findPoolsByPoolWorkingHoursWeekday(dayOfWeek)).thenReturn(Optional.empty());
 
         PoolNotFoundException exception = assertThrows(PoolNotFoundException.class,
             () -> poolService.getPoolsByDayOfWeek(dayOfWeek));
         // THEN
         assertTrue(exception.getMessage().contains(dayOfWeek.toString()));
-        verify(poolRepository).findPoolsByDayOfWeek(dayOfWeek);
+        verify(poolRepository).findPoolsByPoolWorkingHoursWeekday(dayOfWeek);
         verifyNoInteractions(poolMapper);
     }
 
@@ -281,14 +281,14 @@ public class  PoolServiceImplTest {
 
         PoolWorkingHours pwh1 = new PoolWorkingHours();
 
-        Set<PoolWorkingHours> mappedList = Set.of(pwh1);
+        List<PoolWorkingHours> mappedList = List.of(pwh1);
 
         when(poolWorkingHoursMapper.toPoolWorkingHoursList(dtoList)).thenReturn(mappedList);
 
         when(poolWorkingHoursRepository.saveAll(mappedList)).thenAnswer(
             invocation -> invocation.getArgument(0));
 
-        Set<PoolWorkingHours> result = poolService.createOrUpdateWorkingHours(createPoolDto());
+        List<PoolWorkingHours> result = poolService.createOrUpdateWorkingHours(createPoolDto());
         // THEN
         assertEquals(1, result.size());
 

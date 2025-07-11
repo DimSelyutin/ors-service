@@ -87,4 +87,32 @@ class PoolMapperTest {
         assertEquals(dto.getName(), pool.getName());
         assertEquals(dto.getCapacity(), pool.getCapacity());
     }
+
+    @Test
+    void testToPool_NullInput() {
+        assertNull(poolMapper.toPool(null));
+    }
+
+    @Test
+    void testToPoolDto_NullInput() {
+        assertNull(poolMapper.toPoolDto(null));
+    }
+
+    @Test
+    void testToPools_NullInput() {
+        assertNull(poolMapper.toPools(null));
+    }
+
+    @Test
+    void testToPoolsDto_NullInput() {
+        assertNull(poolMapper.toPoolsDto(null));
+    }
+
+    @Test
+    void testUpdatePoolFromDto_NullInput() {
+        Pool pool = new Pool();
+        poolMapper.updatePoolFromDto(null, pool);
+        assertNull(pool.getId());
+    }
+
 } 

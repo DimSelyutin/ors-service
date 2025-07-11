@@ -68,6 +68,7 @@ public class SubscriptionServiceImplTest {
         createDTO.setName("New Subscription");
 
         updateDTO = new SubscriptionUpdateDTO();
+        updateDTO.setId(existingId);
         updateDTO.setName("Updated Subscription");
     }
 
@@ -86,6 +87,7 @@ public class SubscriptionServiceImplTest {
         List<SubscriptionDTO> dtoList = Arrays.asList(dto1, dto2);
 
         when(subscriptionRepository.findAll(any(Specification.class))).thenReturn(subscriptionList);
+
         when(subscriptionMapper.toSubscriptionDTOList(subscriptionList)).thenReturn(dtoList);
 
         // WHEN
@@ -122,6 +124,7 @@ public class SubscriptionServiceImplTest {
             () -> subscriptionService.getSubscriptionById(nonExistingId));
 
         verify(subscriptionRepository).findById(nonExistingId);
+        verify(subscriptionRepository, times(1)).findById(nonExistingId);
         verifyNoInteractions(subscriptionMapper);
     }
 
@@ -140,6 +143,8 @@ public class SubscriptionServiceImplTest {
 
         when(subscriptionMapper.toSubscriptionEntity(createDTO)).thenReturn(newEntity);
         when(subscriptionRepository.save(newEntity)).thenReturn(savedEntity);
+
+
         when(subscriptionMapper.toSubscriptionDTO(savedEntity)).thenReturn(savedDTO);
 
         SubscriptionDTO result = subscriptionService.createSubscription(createDTO);
@@ -149,7 +154,7 @@ public class SubscriptionServiceImplTest {
         assertEquals(savedDTO.getName(), result.getName());
 
         verify(subscriptionMapper).toSubscriptionEntity(createDTO);
-        verify(subscriptionRepository).save(newEntity);
+        verify(subscriptionRepository, times(1)).save(newEntity);
         verify(subscriptionMapper).toSubscriptionDTO(savedEntity);
     }
 
@@ -159,8 +164,7 @@ public class SubscriptionServiceImplTest {
         doNothing().when(subscriptionMapper).updateSubscriptionFromDTO(updateDTO, subscriptionEntity);
         when(subscriptionRepository.save(subscriptionEntity)).thenReturn(subscriptionEntity);
         when(subscriptionMapper.toSubscriptionDTO(subscriptionEntity)).thenReturn(subscriptionDTO);
-
-        SubscriptionDTO result = subscriptionService.updateSubscription(existingId, updateDTO);
+        SubscriptionDTO result = subscriptionService.updateSubscription(updateDTO);
 
         assertNotNull(result);
         assertEquals(subscriptionDTO.getId(), result.getId());
@@ -175,9 +179,11 @@ public class SubscriptionServiceImplTest {
     public void updateSubscription_nonExistingId_throwsException() {
         UUID nonExistingId = UUID.randomUUID();
         when(subscriptionRepository.findById(nonExistingId)).thenReturn(Optional.empty());
-
+        SubscriptionUpdateDTO subscriptionUpdateDTO = new SubscriptionUpdateDTO();
+        subscriptionUpdateDTO.setId(nonExistingId);
+        subscriptionUpdateDTO.setName("Pool");
         assertThrows(SubscriptionNotFoundException.class,
-            () -> subscriptionService.updateSubscription(nonExistingId, updateDTO));
+            () -> subscriptionService.updateSubscription(subscriptionUpdateDTO));
 
         verify(subscriptionRepository).findById(nonExistingId);
         verifyNoMoreInteractions(subscriptionMapper);

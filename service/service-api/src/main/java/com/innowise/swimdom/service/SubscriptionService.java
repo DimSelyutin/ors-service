@@ -40,11 +40,10 @@ public interface SubscriptionService {
     /**
      * Update your existing subscription.
      *
-     * @param id subscription for renewal
      * @param updateDTO DTO with updated subscription data
      * @return DTO of the renewed subscription
      */
-    SubscriptionDTO updateSubscription(UUID id, SubscriptionUpdateDTO updateDTO);
+    SubscriptionDTO updateSubscription(SubscriptionUpdateDTO updateDTO);
 
     /**
      * Delete a subscription by ID.

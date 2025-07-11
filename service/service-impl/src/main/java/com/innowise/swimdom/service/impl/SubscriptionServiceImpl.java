@@ -77,12 +77,12 @@ public class SubscriptionServiceImpl implements SubscriptionService {
      * {@inheritDoc}
      */
     @Override
-    public SubscriptionDTO updateSubscription(UUID id, SubscriptionUpdateDTO updateDTO) {
-        log.debug("updateSubscription - start, id: {}, updateDTO: {}", id, updateDTO);
-        Subscription subscription = subscriptionRepository.findById(id)
+    public SubscriptionDTO updateSubscription(SubscriptionUpdateDTO updateDTO) {
+        log.debug("updateSubscription - start, id: {}, updateDTO: {}", updateDTO.getId());
+        Subscription subscription = subscriptionRepository.findById(updateDTO.getId())
             .orElseThrow(() -> {
-                log.warn("getSubscriptionById - subscription with id:{} not found", id);
-                return new SubscriptionNotFoundException("Subscription not found with id: " + id);
+                log.warn("getSubscriptionById - subscription with id:{} not found", updateDTO.getId());
+                return new SubscriptionNotFoundException("Subscription not found with id: " + updateDTO.getId());
             });
         subscriptionMapper.updateSubscriptionFromDTO(updateDTO, subscription);
         Subscription savedSubscription = subscriptionRepository.save(subscription);

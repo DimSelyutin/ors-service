@@ -271,21 +271,29 @@ components:
         name:
           type: string
           example: "Premium Plan"
+          nullable: false
         description:
           type: string
           example: "Access to all premium features"
+          nullable: true
         duration:
           type: string
           enum: [ WEEK, MONTH, YEAR ]
           example: MONTH
+          nullable: false
         price:
           type: number
           format: double
           example: 29.99
-
+          nullable: false
     SubscriptionUpdateDTO:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
+          example: "e7e6f9b9-1f4a-4a9e-8b6f-123456789abc"
+          nullable: false
         name:
           type: string
           example: "Premium Plan"

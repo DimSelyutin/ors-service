@@ -1,9 +1,55 @@
-openapi: 3.0.3
-info:
-  title: DTOs for pool
-  description: Schema for system errors.
-  version: 1.0.0
-paths: {}
+pools:
+  post:
+    tags:
+      - Pools
+    summary: Create a new pool
+    description: Adds a new swimming pool to the system.
+    operationId: createPool
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PoolDto'
+    responses:
+      '201':
+        description: Pool created successfully
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PoolDto'
+      '400':
+        $ref: './error-dto.yaml#/components/responses/BadRequest'
+      '409':
+        $ref: './error-dto.yaml#/components/responses/Conflict'
+      '500':
+        $ref: './error-dto.yaml#/components/responses/InternalServerError'
+
+  get:
+    tags:
+      - Pools
+    summary: Retrieve all available pools
+    description: Returns a list of all swimming pools available for ticket purchase.
+    operationId: getPools
+    responses:
+      '200':
+        description: A list of pools
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PoolDto'
+      '204':
+        description: No pools found
+      '400':
+        $ref: './error-dto.yaml#/components/responses/BadRequest'
+      '404':
+        $ref: './error-dto.yaml#/components/responses/NotFound'
+      '409':
+        $ref: './error-dto.yaml#/components/responses/Conflict'
+      '500':
+        $ref: './error-dto.yaml#/components/responses/InternalServerError'
 components:
   schemas:
     PoolDto:
@@ -56,6 +102,10 @@ components:
         type: object
         description: Working times
         properties:
+          poolId:
+            type: string
+            format: uuid
+            example: "2c963f66afa6-5717-4562-b3fc-3fa85f64"
           weekday:
             type: integer
             format: int32

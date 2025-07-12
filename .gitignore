@@ -3,6 +3,10 @@ target/
 .mvn
 **/src/main/**/target/
 **/src/test/**/target/
+!adapter/target/generated-sources/
+
+!adapter/target/generated-sources/
+!adapter/target/generated-sources/**
 
 ### STS ###
 .apt_generated

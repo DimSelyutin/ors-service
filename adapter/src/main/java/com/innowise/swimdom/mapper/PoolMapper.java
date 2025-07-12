@@ -17,8 +17,8 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  *
  * @author DimSelyutin
  */
-@Mapper(componentModel = SPRING, injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-         unmappedTargetPolicy = ReportingPolicy.WARN)
+@Mapper(componentModel = SPRING, uses = PoolWorkingHoursMapper.class, injectionStrategy = InjectionStrategy.CONSTRUCTOR,
+        unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface PoolMapper {
 
     /**

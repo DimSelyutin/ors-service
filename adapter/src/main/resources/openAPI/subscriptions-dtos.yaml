@@ -1,0 +1,405 @@
+subscriptions:
+  get:
+    summary: Get all subscriptions
+    operationId: getSubscriptions
+    tags:
+      - Subscription
+    responses:
+      '200':
+        description: List of subscriptions
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SubscriptionDTO'
+  post:
+    summary: Create a new subscription
+    operationId: createSubscription
+    tags:
+      - Subscription
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SubscriptionCreateDTO'
+    responses:
+      '201':
+        description: Subscription created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionDTO'
+
+subscriptionById:
+  get:
+    summary: Get subscription by ID
+    operationId: getSubscriptionById
+    tags:
+      - Subscription
+    parameters:
+      - name: id
+        in: path
+        description: Subscription UUID
+        required: true
+        schema:
+          type: string
+          format: uuid
+    responses:
+      '200':
+        description: Subscription found
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionDTO'
+      '404':
+        description: Subscription not found
+  put:
+    summary: Update subscription by ID
+    operationId: updateSubscription
+    tags:
+      - Subscription
+    parameters:
+      - name: id
+        in: path
+        description: Subscription UUID
+        required: true
+        schema:
+          type: string
+          format: uuid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SubscriptionUpdateDTO'
+    responses:
+      '200':
+        description: Subscription updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionDTO'
+      '404':
+        description: Subscription not found
+  delete:
+    summary: Delete subscription by ID
+    operationId: deleteSubscription
+    tags:
+      - Subscription
+    parameters:
+      - name: id
+        in: path
+        description: Subscription UUID
+        required: true
+        schema:
+          type: string
+          format: uuid
+    responses:
+      '204':
+        description: Subscription deleted
+      '404':
+        description: Subscription not found
+
+userSubscriptions:
+  get:
+    summary: Get all user subscriptions
+    operationId: getUserSubscriptions
+    tags:
+      - UserSubscription
+    responses:
+      '200':
+        description: List of user subscriptions
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UserSubscriptionDTO'
+  post:
+    summary: Create a new user subscription
+    operationId: createUserSubscription
+    tags:
+      - UserSubscription
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserSubscriptionCreateDTO'
+    responses:
+      '201':
+        description: User subscription created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSubscriptionDTO'
+
+userSubscriptionById:
+  get:
+    summary: Get user subscription by ID
+    operationId: getUserSubscriptionById
+    tags:
+      - UserSubscription
+    parameters:
+      - name: id
+        in: path
+        description: UserSubscription UUID
+        required: true
+        schema:
+          type: string
+          format: uuid
+    responses:
+      '200':
+        description: User subscription found
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSubscriptionDTO'
+      '404':
+        description: User subscription not found
+  put:
+    summary: Update user subscription by ID
+    operationId: updateUserSubscription
+    tags:
+      - UserSubscription
+    parameters:
+      - name: id
+        in: path
+        description: UserSubscription UUID
+        required: true
+        schema:
+          type: string
+          format: uuid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserSubscriptionUpdateDTO'
+    responses:
+      '200':
+        description: User subscription updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSubscriptionDTO'
+      '404':
+        description: User subscription not found
+  delete:
+    summary: Delete user subscription by ID
+    operationId: deleteUserSubscription
+    tags:
+      - UserSubscription
+    parameters:
+      - name: id
+        in: path
+        description: UserSubscription UUID
+        required: true
+        schema:
+          type: string
+          format: uuid
+    responses:
+      '204':
+        description: User subscription deleted
+      '404':
+        description: User subscription not found
+getSubscriptionByFilter:
+  post:
+    summary: Get all subscriptions with filter
+    operationId: getAllSubscription
+    tags:
+      - Subscription
+    requestBody:
+      description: Filter criteria for subscriptions
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SubscriptionFilterDTO'
+    responses:
+      '200':
+        description: List of subscriptions matching filter
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SubscriptionDTO'
+      '400':
+        description: Invalid filter supplied
+components:
+  schemas:
+    SubscriptionDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        name:
+          type: string
+          example: "Premium Plan"
+        description:
+          type: string
+          example: "Access to all premium features"
+        duration:
+          type: string
+          enum: [ WEEK, MONTH, YEAR ]
+          example: MONTH
+        price:
+          type: number
+          format: double
+          example: 29.99
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-06-01T12:00:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2024-06-05T15:30:00Z"
+
+    SubscriptionCreateDTO:
+      type: object
+      required:
+        - name
+        - duration
+        - price
+      properties:
+        name:
+          type: string
+          example: "Premium Plan"
+          nullable: false
+        description:
+          type: string
+          example: "Access to all premium features"
+          nullable: true
+        duration:
+          type: string
+          enum: [ WEEK, MONTH, YEAR ]
+          example: MONTH
+          nullable: false
+        price:
+          type: number
+          format: double
+          example: 29.99
+          nullable: false
+    SubscriptionUpdateDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "e7e6f9b9-1f4a-4a9e-8b6f-123456789abc"
+          nullable: false
+        name:
+          type: string
+          example: "Premium Plan"
+        description:
+          type: string
+          example: "Access to all premium features"
+        duration:
+          type: string
+          enum: [ WEEK, MONTH, YEAR ]
+          example: MONTH
+        price:
+          type: number
+          format: double
+          example: 29.99
+
+    UserSubscriptionDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "e7e6f9b9-1f4a-4a9e-8b6f-123456789abc"
+        userId:
+          type: string
+          format: uuid
+          example: "a1b2c3d4-e5f6-7890-abcd-1234567890ab"
+        subscriptionId:
+          type: string
+          format: uuid
+          example: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        estimate:
+          type: integer
+          example: 5
+        startDate:
+          type: string
+          format: date
+          example: "2024-06-01"
+        endDate:
+          type: string
+          format: date
+          example: "2024-06-30"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-06-01T12:00:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2024-06-05T15:30:00Z"
+
+    UserSubscriptionCreateDTO:
+      type: object
+      required:
+        - userId
+        - subscriptionId
+        - estimate
+        - startDate
+        - endDate
+      properties:
+        userId:
+          type: string
+          format: uuid
+          example: "a1b2c3d4-e5f6-7890-abcd-1234567890ab"
+        subscriptionId:
+          type: string
+          format: uuid
+          example: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        estimate:
+          type: integer
+          example: 5
+        startDate:
+          type: string
+          format: date
+          example: "2024-06-01"
+        endDate:
+          type: string
+          format: date
+          example: "2024-06-30"
+    SubscriptionFilterDTO:
+        type: object
+        properties:
+          name:
+            type: string
+            example: "Premium Plan"
+          description:
+            type: string
+            example: "Access to all premium features"
+          duration:
+            type: string
+            enum: [ WEEK, MONTH, YEAR ]
+            example: MONTH
+          price:
+            type: number
+            format: double
+            example: 29.99
+    UserSubscriptionUpdateDTO:
+      type: object
+      properties:
+        estimate:
+          type: integer
+          example: 5
+        startDate:
+          type: string
+          format: date
+          example: "2024-06-01"
+        endDate:
+          type: string
+          format: date
+          example: "2024-06-30"

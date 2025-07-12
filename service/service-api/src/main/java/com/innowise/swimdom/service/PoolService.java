@@ -59,7 +59,7 @@ public interface PoolService {
      * @param poolDto the poolDto containing schedule details
      * @return the created or updated PoolWorkingHoursDto
      */
-    Set<PoolWorkingHours> createOrUpdateWorkingHours(PoolDto poolDto);
+    List<PoolWorkingHours> createOrUpdateWorkingHours(PoolDto poolDto);
 
     /**
      * Retrieves all schedule entries for the specified pool.

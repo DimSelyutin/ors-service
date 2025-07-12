@@ -31,7 +31,7 @@ public class Pool {
     @Column(updatable = false, nullable = false)
     private UUID id;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "pool", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PoolWorkingHours> poolWorkingHours;
 
     @Column(nullable = false, length = 150, unique = true)

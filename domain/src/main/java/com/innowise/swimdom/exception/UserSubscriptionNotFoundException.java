@@ -1,18 +1,18 @@
-package com.innowise.swimdom.exceptions;
+package com.innowise.swimdom.exception;
 
 /**
  * An exception indicating that the user sent wrong request.
  * Error code: 400.
  *
  */
-public class SubscriptionNotFoundException extends RuntimeException {
+public class UserSubscriptionNotFoundException extends RuntimeException {
 
     /**
      * Constructor exception.
      *
      * @param message message
      */
-    public SubscriptionNotFoundException(String message) {
+    public UserSubscriptionNotFoundException(String message) {
         super(message);
     }
 }

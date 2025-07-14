@@ -1,4 +1,4 @@
-package com.innowise.swimdom.exceptions;
+package com.innowise.swimdom.exception;
 
 /**
  * An exception indicating that the resource requested by the client was not found on the server.

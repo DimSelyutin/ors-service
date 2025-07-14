@@ -2,7 +2,7 @@ package com.innowise.swimdom.service.impl;
 
 import com.innowise.swimdom.entity.Pool;
 import com.innowise.swimdom.entity.PoolWorkingHours;
-import com.innowise.swimdom.exceptions.PoolNotFoundException;
+import com.innowise.swimdom.exception.PoolNotFoundException;
 import com.innowise.swimdom.mapper.PoolMapper;
 import com.innowise.swimdom.mapper.PoolWorkingHoursMapper;
 import com.innowise.swimdom.openapi.model.PoolDto;

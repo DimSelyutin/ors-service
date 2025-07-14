@@ -1,18 +1,18 @@
-package com.innowise.swimdom.exceptions;
+package com.innowise.swimdom.exception;
 
 /**
  * An exception indicating that the user sent wrong request.
  * Error code: 400.
  *
  */
-public class PoolWorkingHoursException extends RuntimeException {
+public class SubscriptionNotFoundException extends RuntimeException {
 
     /**
      * Constructor exception.
      *
      * @param message message
      */
-    public PoolWorkingHoursException(String message) {
+    public SubscriptionNotFoundException(String message) {
         super(message);
     }
 }

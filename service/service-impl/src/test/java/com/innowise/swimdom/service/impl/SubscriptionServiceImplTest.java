@@ -1,7 +1,7 @@
 package com.innowise.swimdom.service.impl;
 
 import com.innowise.swimdom.entity.Subscription;
-import com.innowise.swimdom.exceptions.SubscriptionNotFoundException;
+import com.innowise.swimdom.exception.SubscriptionNotFoundException;
 import com.innowise.swimdom.mapper.SubscriptionMapper;
 import com.innowise.swimdom.openapi.model.SubscriptionCreateDTO;
 import com.innowise.swimdom.openapi.model.SubscriptionDTO;

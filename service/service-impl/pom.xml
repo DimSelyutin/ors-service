@@ -19,13 +19,21 @@
             <groupId>com.innowise.swimdom</groupId>
             <artifactId>service-api</artifactId>
             <version>${revision}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.innowise.swimdom</groupId>
             <artifactId>adapter</artifactId>
             <version>${revision}</version>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.12.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.innowise.swimdom</groupId>
+            <artifactId>dto</artifactId>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 </project>

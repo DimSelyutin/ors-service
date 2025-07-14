@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>ors-service</artifactId>
         <groupId>com.innowise.swimdom</groupId>
+        <artifactId>ors-service</artifactId>
         <version>${revision}</version>
     </parent>
 
@@ -20,22 +20,25 @@
             <version>${revision}</version>
         </dependency>
         <dependency>
+            <groupId>com.innowise.swimdom</groupId>
+            <artifactId>dto</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.innowise.swimdom</groupId>
+            <artifactId>service-api</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
             <version>3.0.0</version>
         </dependency>
-
-        <!--		<dependency>-->
-        <!--			<groupId>com.innowise.swimdom</groupId>-->
-        <!--			<artifactId>service</artifactId>-->
-        <!--			<version>${revision}</version>-->
-        <!--		</dependency>-->
 
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -53,44 +56,4 @@
             <version>0.2.1</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>7.12.0</version>
-                <executions>
-                    <execution>
-                        <id>generate-sources</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/openAPI/openAPI.yaml</inputSpec>
-                            <output>${project.build.directory}/generated-sources</output>
-                            <generatorName>spring</generatorName>
-                            <apiPackage>com.innowise.swimdom.openapi.api</apiPackage>
-                            <modelPackage>com.innowise.swimdom.openapi.model</modelPackage>
-                            <typeMappings>
-                                <typeMapping>OffsetDateTime=LocalDateTime</typeMapping>
-                            </typeMappings>
-                            <importMappings>
-                                <importMapping>java.time.OffsetDateTime=java.time.LocalDateTime</importMapping>
-                            </importMappings>
-                            <configOptions>
-                                <sourceFolder>src/gen/java/main</sourceFolder>
-                                <java8>true</java8>
-                                <useJakartaEe>true</useJakartaEe>
-                                <interfaceOnly>true</interfaceOnly>
-                                <generateApiTests>false</generateApiTests>
-                                <generateApiDocumentation>false</generateApiDocumentation>
-                                <openApiNullable>false</openApiNullable>
-                            </configOptions>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>

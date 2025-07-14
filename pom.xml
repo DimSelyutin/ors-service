@@ -10,9 +10,10 @@
     </parent>
     <description>Internship project on swimming topic</description>
     <modules>
+        <module>domain</module>
+        <module>dto</module>
         <module>config</module>
         <module>adapter</module>
-        <module>domain</module>
         <module>report</module>
         <module>service</module>
     </modules>
@@ -115,6 +116,16 @@
                 <version>2022.0.4</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-resource-server</artifactId>
+                <version>5.7.3</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>0.12.6</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

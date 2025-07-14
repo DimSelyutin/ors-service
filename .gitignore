@@ -5,8 +5,8 @@ target/
 **/src/test/**/target/
 !adapter/target/generated-sources/
 
-!adapter/target/generated-sources/
-!adapter/target/generated-sources/**
+!dto/target/generated-sources/
+!dto/target/generated-sources/**
 
 ### STS ###
 .apt_generated

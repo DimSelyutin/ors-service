@@ -2,7 +2,7 @@ package com.innowise.swimdom.security;
 
 import java.io.IOException;
 
-import com.innowise.swimdom.util.SecurityConstants;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -17,13 +17,15 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+    @Value("${constant.content_type}")
+    private String contentType;
+
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException authException) throws IOException, ServletException {
 
-        response.setContentType(SecurityConstants.CONTENT_TYPE);
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());// 401
-       
+        response.setContentType(contentType);
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.getWriter().println(authException.getLocalizedMessage());
     }
 

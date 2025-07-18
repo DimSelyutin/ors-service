@@ -9,8 +9,10 @@ import com.innowise.swimdom.service.AuthenticationService;
 import com.innowise.swimdom.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -56,6 +58,7 @@ class AuthControllerTest {
     private AuthenticationService authenticationService;
 
     private String expectedAuthResponseJson;
+
 
     @BeforeEach
     void setUp() throws Exception {
@@ -106,10 +109,10 @@ class AuthControllerTest {
         registerRequest.setEmail("invalid-email");
         registerRequest.setPassword("short");
         registerRequest.setName("");
-        mockMvc.perform(post("/api/v1/auth/register") // Убедитесь, что путь "/api/v1/auth/register" корректен
+        mockMvc.perform(post("/api/v1/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(registerRequest)))
-            .andExpect(status().isBadRequest()) // Ожидаем 400 Bad Request
+            .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.errorMessage").value("BAD REQUEST"));
     }
 }

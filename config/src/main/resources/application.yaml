@@ -8,6 +8,12 @@ spring:
     password: ${DB_PASSWORD:swimdom_pwd}
   liquibase:
     change-log: db/changelog/changelog-master.yml
+    enabled: true
+    default-schema: public
+    drop-first: false
+logging:
+level:
+  root: DEBUG
 management:
   endpoints:
     enabled-by-default: false
@@ -16,3 +22,9 @@ management:
     health.enabled: true
     prometheus.enabled: true
     loggers.enabled: true
+constant:
+    secret: JwtTokenSecret
+    token_prefix: "Bearer"
+    expiration_time: 600_000
+    content_type: application/json
+    header_string: "Authorization"

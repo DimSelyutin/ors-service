@@ -3,11 +3,11 @@ package com.innowise.swimdom.security;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.innowise.swimdom.util.SecurityConstants;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 
 import java.io.PrintWriter;
@@ -22,6 +22,8 @@ class JWTAuthenticationEntryPointTest {
     private AuthenticationException authException;
 
     private StringWriter responseWriter;
+    @Value("${constant.content_type}")
+    private String content_type;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -42,10 +44,9 @@ class JWTAuthenticationEntryPointTest {
     void commence_shouldSetUnauthorizedStatusAndWriteMessage() throws Exception {
         entryPoint.commence(request, response, authException);
 
-        verify(response).setContentType(SecurityConstants.CONTENT_TYPE);
+        verify(response).setContentType(content_type);
         verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
-        // Flush writer to make sure content is written
+        
         response.getWriter().flush();
 
         String responseContent = responseWriter.toString();

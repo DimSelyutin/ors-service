@@ -1,6 +1,6 @@
 package com.innowise.swimdom.controller;
 
-import com.innowise.swimdom.openapi.api.ApiApi;
+import com.innowise.swimdom.openapi.api.AuthApi;
 import com.innowise.swimdom.openapi.model.AuthRequest;
 import com.innowise.swimdom.openapi.model.AuthResponse;
 import com.innowise.swimdom.openapi.model.UserCreateRequestDTO;
@@ -21,27 +21,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/auth")
-public class AuthController implements ApiApi {
+public class AuthController implements AuthApi {
 
     private final AuthenticationService authenticationService;
 
     @Override
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> authenticateUser(@Valid @RequestBody AuthRequest authRequest) {
-        log.info("authenticateUser - start, authRequest: {}", authRequest.getEmail());
+        log.info("Request login - start, authRequest: {}", authRequest.getEmail());
         ResponseEntity<AuthResponse> responseDto =
             ResponseEntity.ok(authenticationService.login(authRequest));
-        log.info("authenticateUser - end, authRequest: {}", responseDto);
+        log.info("Request login - end, authRequest: {}", responseDto);
         return responseDto;
     }
 
     @Override
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> registerUser(@Valid @RequestBody UserCreateRequestDTO registerRequest) {
-        log.info("registerUser - start, authRequest: {}", registerRequest.getEmail());
+        log.info("Request registerUser - start, authRequest: {}", registerRequest.getEmail());
         ResponseEntity<AuthResponse> responseDto =
             ResponseEntity.ok(authenticationService.registerUser(registerRequest));
-        log.info("registerUser - end, authRequest: {}", responseDto);
+        log.info("Request registerUser - end, authRequest: {}", responseDto);
         return responseDto;
     }
 }

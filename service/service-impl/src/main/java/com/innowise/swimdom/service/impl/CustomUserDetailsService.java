@@ -22,7 +22,7 @@ import java.util.UUID;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -33,7 +33,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     public User loadUserById(UUID id) {
-        return userRepository.findUserById(id).orElse(null);
+        return userRepository.findUserById(id)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found with id"));
     }
 
     public static User build(User user) {

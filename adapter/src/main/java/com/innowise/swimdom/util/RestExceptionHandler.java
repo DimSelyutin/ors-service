@@ -41,7 +41,8 @@ public class RestExceptionHandler {
         ConstraintViolationException.class,
         IllegalArgumentException.class})
     public ErrorDto handleBadRequestException(Exception exception) {
-        log.error(exception.getMessage(), exception);
+        log.info("Exception happen - {}", exception.getMessage(), exception);
+
         return getErrorDto(HttpStatus.BAD_REQUEST);
     }
 
@@ -54,7 +55,8 @@ public class RestExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({UserNotFoundException.class})
     public ErrorDto handleNotFoundException(Exception exception) {
-        log.error(exception.getMessage(), exception);
+        log.info("Exception happen - {}", exception.getMessage(), exception);
+
         return getErrorDto(HttpStatus.NOT_FOUND);
     }
 
@@ -67,7 +69,8 @@ public class RestExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler({AuthenticationException.class})
     public ErrorDto handleAuthenticationException(Exception exception) {
-        log.error(exception.getMessage(), exception);
+        log.info("Exception happen - {}", exception.getMessage(), exception);
+
         return getErrorDto(HttpStatus.UNAUTHORIZED);
     }
 
@@ -80,7 +83,7 @@ public class RestExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({Exception.class})
     public ErrorDto handleException(Exception exception) {
-        log.error(exception.getMessage(), exception);
+        log.info("Exception happen - {}", exception.getMessage(), exception);
         return getErrorDto(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

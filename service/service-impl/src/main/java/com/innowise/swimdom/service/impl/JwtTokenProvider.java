@@ -2,14 +2,16 @@ package com.innowise.swimdom.service.impl;
 
 import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.exception.UserTokenExpiredException;
-import com.innowise.swimdom.util.SecurityConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
@@ -22,22 +24,27 @@ import java.util.UUID;
 @Component
 public class JwtTokenProvider {
 
+    @Value("${constant.secret}")
+    private String secret;
+
+    @Value("${constant.expiration_time}")
+    private Long expirationTime;
+
     public String generateToken(Authentication authentication) {
         log.debug("generateToken start - for {}", authentication.getName());
         User userDetails = (User) authentication.getPrincipal();
         String email = userDetails.getUsername();
-
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + SecurityConstants.EXPIRATION_TIME);
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expiryDate = LocalDateTime.now().plusSeconds(expirationTime);
         Map<String, Object> claimsMap = buildClaims(userDetails);
         log.debug("generateToken end - for {}", email);
 
         return Jwts.builder()
             .setSubject(email)
             .addClaims(claimsMap)
-            .setIssuedAt(now)
-            .setExpiration(expiryDate)
-            .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET)
+            .setIssuedAt(Date.from(Instant.now()))
+            .setExpiration(Date.from(Instant.from(expiryDate)))
+            .signWith(SignatureAlgorithm.HS512, secret)
             .compact();
     }
 
@@ -54,7 +61,7 @@ public class JwtTokenProvider {
 
         try {
             Jwts.parser()
-                .setSigningKey(SecurityConstants.SECRET)
+                .setSigningKey(secret)
                 .build().parseClaimsJws(token);
             return true;
         } catch (IllegalArgumentException ex) {
@@ -65,7 +72,7 @@ public class JwtTokenProvider {
 
     public UUID getUserIdFromToken(String token) {
         Claims claims = Jwts.parser()
-            .setSigningKey(SecurityConstants.SECRET)
+            .setSigningKey(secret)
             .build().parseClaimsJws(token)
             .getBody();
         UUID id = (UUID) claims.get("id");

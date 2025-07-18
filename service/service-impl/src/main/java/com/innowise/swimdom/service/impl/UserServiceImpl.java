@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
         log.info("createUser - Password encoded for user: {}", newUser.getEmail());
 
         User savedUser = userRepository.save(newUser);
-        log.debug("createUser -User created successfully with ID: {}", savedUser.getId());
+        log.info("createUser - User created successfully with ID: {}", savedUser);
 
         return savedUser;
     }

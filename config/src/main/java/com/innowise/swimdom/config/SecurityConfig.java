@@ -18,6 +18,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+
+import static com.innowise.swimdom.util.Constants.ADMIN_URLS;
+import static com.innowise.swimdom.util.Constants.ALLOWED_HEADERS;
+import static com.innowise.swimdom.util.Constants.ALLOWED_METHODS;
+import static com.innowise.swimdom.util.Constants.ALLOWED_ORIGIN_PATTERNS;
+import static com.innowise.swimdom.util.Constants.PUBLIC_URLS;
 
 /**
  * Config Spring security.
@@ -36,16 +43,14 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        log.info("Configuring HttpSecurity...");
+
         httpSecurity
             .csrf(AbstractHttpConfigurer::disable)
-            .cors(AbstractHttpConfigurer::disable)
+            .cors(cors -> cors.configurationSource(request -> createCorsConfiguration()))
             .authorizeHttpRequests(auth -> {
-
-                auth.requestMatchers("/api/v1/auth/**", "/v3/api-docs/**",
-                    "/swagger-ui/**", "/swagger-ui.html").permitAll();
-                auth.requestMatchers("/api/admin/**").hasAnyRole("ADMIN");
-                auth.anyRequest().permitAll();
+                auth.requestMatchers(PUBLIC_URLS.toArray(String[]::new)).permitAll();
+                auth.requestMatchers(ADMIN_URLS.toArray(String[]::new)).hasRole("ADMIN");
+                auth.anyRequest().authenticated();
             })
             .exceptionHandling(exception -> exception.authenticationEntryPoint(
                 jwtAuthenticationEntryPoint))
@@ -54,7 +59,6 @@ public class SecurityConfig {
             .authenticationProvider(authenticationProvider())
 
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        log.info("HttpSecurity configured successfully.");
         return httpSecurity.build();
     }
 
@@ -68,13 +72,20 @@ public class SecurityConfig {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(customUserDetailsService);
         authProvider.setPasswordEncoder(getPassEncoder());
-        log.info("DaoAuthenticationProvider bean created.");
         return authProvider;
     }
 
     @Bean
     protected AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        log.info("Creating AuthenticationManager bean.");
         return config.getAuthenticationManager();
+    }
+
+    private CorsConfiguration createCorsConfiguration() {
+        var corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedOriginPatterns(ALLOWED_ORIGIN_PATTERNS);
+        corsConfiguration.setAllowedMethods(ALLOWED_METHODS);
+        corsConfiguration.setAllowedHeaders(ALLOWED_HEADERS);
+        corsConfiguration.setAllowCredentials(true);
+        return corsConfiguration;
     }
 }

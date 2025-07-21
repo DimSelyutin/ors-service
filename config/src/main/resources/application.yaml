@@ -12,8 +12,8 @@ spring:
     default-schema: public
     drop-first: false
 logging:
-    level:
-      root: INFO
+level:
+  root: DEBUG
 management:
   endpoints:
     enabled-by-default: false

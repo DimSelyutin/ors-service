@@ -1,10 +1,13 @@
 package com.innowise.swimdom.mapper.type;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.innowise.swimdom.openapi.model.UserRole;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+;
 
 public class UserRoleMapperTest {
 

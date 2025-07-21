@@ -28,20 +28,16 @@ public class AuthController implements AuthApi {
     @Override
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> authenticateUser(@Valid @RequestBody AuthRequest authRequest) {
-        log.info("Request login - start, authRequest: {}", authRequest.getEmail());
         ResponseEntity<AuthResponse> responseDto =
             ResponseEntity.ok(authenticationService.login(authRequest));
-        log.info("Request login - end, authRequest: {}", responseDto);
         return responseDto;
     }
 
     @Override
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> registerUser(@Valid @RequestBody UserCreateRequestDTO registerRequest) {
-        log.info("Request registerUser - start, authRequest: {}", registerRequest.getEmail());
         ResponseEntity<AuthResponse> responseDto =
             ResponseEntity.ok(authenticationService.registerUser(registerRequest));
-        log.info("Request registerUser - end, authRequest: {}", responseDto);
         return responseDto;
     }
 }

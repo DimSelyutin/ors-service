@@ -3,8 +3,6 @@ package com.innowise.swimdom.mapper;
 import com.innowise.swimdom.enums.SubscriptionDuration;
 import org.junit.jupiter.api.Test;
 
-import java.util.Calendar;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class SubscriptionDurationTest {

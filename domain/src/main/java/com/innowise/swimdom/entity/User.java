@@ -15,9 +15,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.JdbcType;
 import org.hibernate.annotations.UuidGenerator;
-import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
@@ -71,7 +69,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
 
     @Enumerated(EnumType.STRING)
-    @JdbcType(PostgreSQLEnumJdbcType.class)
     private UserRole role;
 
     @CreatedDate

@@ -6,14 +6,19 @@ spring:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/db_swimdom}
     username: ${DB_USERNAME:swimdom_admin}
     password: ${DB_PASSWORD:swimdom_pwd}
+  jpa:
+    properties:
+      hibernate:
+        globally_quoted_identifiers=true
+
   liquibase:
     change-log: db/changelog/changelog-master.yml
     enabled: true
     default-schema: public
     drop-first: false
 logging:
-level:
-  root: DEBUG
+    level:
+      root: INFO
 management:
   endpoints:
     enabled-by-default: false
@@ -22,9 +27,9 @@ management:
     health.enabled: true
     prometheus.enabled: true
     loggers.enabled: true
-constant:
+token:
     secret: JwtTokenSecret
-    token_prefix: "Bearer"
+    prefix: "Bearer"
     expiration_time: 600_000
     content_type: application/json
     header_string: "Authorization"

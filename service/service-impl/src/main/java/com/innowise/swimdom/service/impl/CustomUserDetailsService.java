@@ -2,6 +2,7 @@ package com.innowise.swimdom.service.impl;
 
 import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.repository.UserRepository;
+import com.innowise.swimdom.util.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,20 +27,22 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String email) {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findUserByEmail(email)
-            .orElseThrow(() -> new UsernameNotFoundException("User with email: {} not found!" + email));
-        return build(user);
+            .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " not found"));
+        return new CustomUserDetails(user);
     }
 
-    public User loadUserById(UUID id) {
-        return userRepository.findUserById(id)
-            .orElseThrow(() -> new UsernameNotFoundException("User not found with id"));
+    @Transactional(readOnly = true)
+    public UserDetails loadUserById(UUID id) throws UsernameNotFoundException {
+        User user = userRepository.findUserById(id)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + id));
+        return new CustomUserDetails(user);
     }
 
-    public static User build(User user) {
+    public static UserDetails build(User user) {
         Set<GrantedAuthority> authorities =
             Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
-        return user;
+        return new CustomUserDetails(user);
     }
 }

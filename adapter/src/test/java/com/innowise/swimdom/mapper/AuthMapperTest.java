@@ -2,7 +2,6 @@ package com.innowise.swimdom.mapper;
 
 import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.mapper.type.UserRoleMapper;
-import com.innowise.swimdom.mapper.type.UserRoleMapperImpl;
 import com.innowise.swimdom.openapi.model.AuthResponse;
 import com.innowise.swimdom.openapi.model.UserCreateRequestDTO;
 import com.innowise.swimdom.openapi.model.UserResponseDTO;
@@ -137,9 +136,10 @@ class AuthMapperTest {
         assertEquals(dto.getEmail(), user.getEmail());
         assertEquals(dto.getPassword(), user.getPassword());
         assertEquals(dto.getName(), user.getName());
-        assertEquals(dto.getSurname(), user.getSurname());
+        assertEquals(dto.getRole().getValue(), user.getRole().name());
         assertEquals(dto.getPhone(), user.getPhone());
 
+        assertEquals(dto.getPhone(), user.getPhone());
         verify(userRoleMapper).toUserRoleEntity(roleDto);
     }
 

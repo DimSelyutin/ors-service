@@ -1,6 +1,5 @@
 package com.innowise.swimdom.security;
 
-import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.service.impl.CustomUserDetailsService;
 import com.innowise.swimdom.service.impl.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
@@ -14,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -45,10 +46,10 @@ class JWTAuthenticationFilterTest {
 
     private JWTAuthenticationFilter filter;
 
-    @Value("${constant.header_string}")
+    @Value("${token.header_string}")
     private String HEADER_STRING;
 
-    @Value("${constant.header_string}")
+    @Value("${token.header_string}")
     private String TOKEN_PREFIX;
 
     @BeforeEach
@@ -80,8 +81,7 @@ class JWTAuthenticationFilterTest {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         assertNull(auth);
-
-        verify(filterChain).doFilter(request, response);
+        verify(filterChain, times(1)).doFilter(request, response);
     }
 
     @Test
@@ -96,8 +96,7 @@ class JWTAuthenticationFilterTest {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         assertNull(auth);
-
-        verify(filterChain).doFilter(request, response);
+        verify(filterChain, times(1)).doFilter(request, response);
     }
 
     @Test
@@ -111,21 +110,20 @@ class JWTAuthenticationFilterTest {
         filter.doFilterInternal(request, response, filterChain);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         assertNull(auth);
-
-        verify(filterChain).doFilter(request, response);
+        verify(filterChain, times(1)).doFilter(request, response);
     }
 
     @Test
     void doFilterInternal_validToken_authenticatesUser() throws ServletException, IOException {
         String jwt = "valid.token";
         UUID userId = UUID.randomUUID();
-        User userDetails = mock(User.class);
+        UserDetails userDetails = mock(UserDetails.class);
 
         when(request.getHeader("Authorization")).thenReturn("Bearer " + jwt);
 
         when(jwtTokenProvider.validateToken(jwt)).thenReturn(true);
         when(jwtTokenProvider.getUserIdFromToken(jwt)).thenReturn(userId);
-        when(customUserDetailsService.loadUserById(userId)).thenReturn((User) userDetails);
+        when(customUserDetailsService.loadUserById(userId)).thenReturn(userDetails);
         when(userDetails.getAuthorities()).thenReturn(Collections.emptyList());
 
         when(customUserDetailsService.loadUserById(userId)).thenReturn(userDetails);
@@ -137,7 +135,6 @@ class JWTAuthenticationFilterTest {
 
         assertNotNull(auth);
         assertEquals(userDetails, auth.getPrincipal());
-
-        verify(filterChain).doFilter(request, response);
+        verify(filterChain, times(1)).doFilter(request, response);
     }
 }

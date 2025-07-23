@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    @Value("${constant.content_type}")
+    @Value("${token.content_type}")
     private String contentType;
 
     @Override

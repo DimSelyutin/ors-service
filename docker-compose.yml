@@ -11,15 +11,15 @@ services:
     healthcheck:
       test: [ "CMD-SHELL", "sh -c 'pg_isready -U ors-service -d db_swimdom'" ]
 
-#   ors-service:
-#     build:
-#       dockerfile: ./Dockerfile
-#     ports:
-#       - 8080:8080
-#     environment:
-#       - 'DB_URL=jdbc:postgresql://postgres/db_swimdom'
-#       - 'DB_USERNAME=swimdom_admin'
-#       - 'DB_PASSWORD=swimdom_pwd'
-#     depends_on:
-#       postgres:
-#         condition: service_healthy
+  ors-service:
+    build:
+      dockerfile: ./Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      - 'DB_URL=jdbc:postgresql://postgres/db_swimdom'
+      - 'DB_USERNAME=swimdom_admin'
+      - 'DB_PASSWORD=swimdom_pwd'
+    depends_on:
+      postgres:
+        condition: service_healthy

@@ -22,7 +22,7 @@ class JWTAuthenticationEntryPointTest {
     private AuthenticationException authException;
 
     private StringWriter responseWriter;
-    @Value("${constant.content_type}")
+    @Value("${token.content_type}")
     private String content_type;
 
     @BeforeEach

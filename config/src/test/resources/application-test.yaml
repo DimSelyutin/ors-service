@@ -13,6 +13,9 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+logging:
+    level:
+        root: DEBUG
 constant:
     secret: JwtTokenSecret
     token_prefix: "Bearer"

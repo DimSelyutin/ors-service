@@ -8,6 +8,7 @@ import com.innowise.swimdom.openapi.model.AuthResponse;
 import com.innowise.swimdom.openapi.model.UserCreateRequestDTO;
 import com.innowise.swimdom.service.AuthenticationService;
 import com.innowise.swimdom.service.UserService;
+import com.innowise.swimdom.util.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,7 +17,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service for authentication.
@@ -54,7 +54,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
             return authMapper.toAuthResponse(jwt, principal);
         } catch (BadCredentialsException | AuthenticationException ex) {
-            throw new AuthenticationException("Invalid credentials");
+            throw new AuthenticationException(Constants.INVALID_CREDENTIAL);
         }
     }
 
@@ -65,25 +65,27 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      * @return UserResponseDTO
      */
     @Override
-    @Transactional
     public AuthResponse registerUser(UserCreateRequestDTO signupRequest) {
 
         User registeredUser;
 
         registeredUser = userService.createUser(signupRequest);
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                    registeredUser.getEmail(),
+                    signupRequest.getPassword()
+                )
+            );
 
-        Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                registeredUser.getEmail(),
-                signupRequest.getPassword()
-            )
-        );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            log.debug("registerUser - New registered user automatically authenticated: {}", authentication.getName());
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        log.debug("registerUser - New registered user automatically authenticated: {}", authentication.getName());
-
-        String jwt = tokenProvider.generateToken(authentication);
-
-        return authMapper.toAuthResponse(jwt, registeredUser);
+            String jwt = tokenProvider.generateToken(authentication);
+            User principal = (User) authentication.getPrincipal();
+            return authMapper.toAuthResponse(jwt, principal);
+        } catch (BadCredentialsException | AuthenticationException ex) {
+            throw new AuthenticationException(Constants.INVALID_CREDENTIAL);
+        }
     }
 }

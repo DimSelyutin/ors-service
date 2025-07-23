@@ -29,9 +29,12 @@ public interface AuthMapper {
     UserResponseDTO toUserResponse(User user);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "accountNonExpired", expression = "java(true)")
+    @Mapping(target = "accountNonLocked", expression = "java(true)")
+    @Mapping(target = "credentialsNonExpired", expression = "java(true)")
+    @Mapping(target = "enabled", expression = "java(true)")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "authorities", ignore = true)
-    @Mapping(target = "role", source = "userCreateRequestDTO.role")
-    User toUser(UserCreateRequestDTO userCreateRequestDTO);
+    User toUser(UserCreateRequestDTO dto);
+
 }

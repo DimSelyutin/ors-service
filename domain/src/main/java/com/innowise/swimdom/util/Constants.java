@@ -25,4 +25,6 @@ public final class Constants {
     public static final List<String> ALLOWED_METHODS = List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH");
 
     public static final List<String> ALLOWED_HEADERS = List.of("*");
+
+    public static final String INVALID_CREDENTIAL = "Invalid credential";
 }

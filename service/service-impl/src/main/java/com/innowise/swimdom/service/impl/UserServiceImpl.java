@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User createUser(UserCreateRequestDTO userCreateRequestDTO) {
-        log.info("createUser - Attempting to create a new user with email: {}", userCreateRequestDTO.getEmail());
+        log.debug("createUser - Attempting to create a new user with email: {}", userCreateRequestDTO.getEmail());
 
         if (userRepository.findUserByEmail(userCreateRequestDTO.getEmail()).isPresent()) {
             log.warn("createUser - User creation failed: User with email {} already exists.",
@@ -60,14 +60,12 @@ public class UserServiceImpl implements UserService {
                 "User with email '" + userCreateRequestDTO.getEmail() + "' already exists."
             );
         }
-
         User newUser = authMapper.toUser(userCreateRequestDTO);
-
         newUser.setPassword(passwordEncoder.encode(userCreateRequestDTO.getPassword()));
-        log.info("createUser - Password encoded for user: {}", newUser.getEmail());
+        log.debug("createUser - Password encoded for user: {}", newUser);
 
         User savedUser = userRepository.save(newUser);
-        log.info("createUser - User created successfully with ID: {}", savedUser);
+        log.debug("createUser - User created successfully with ID: {}", savedUser);
 
         return savedUser;
     }

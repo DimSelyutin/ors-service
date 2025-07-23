@@ -1,7 +1,7 @@
 package com.innowise.swimdom.service.impl;
 
-import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.exception.UserTokenExpiredException;
+import com.innowise.swimdom.util.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -24,18 +24,18 @@ import java.util.UUID;
 @Component
 public class JwtTokenProvider {
 
-    @Value("${constant.secret}")
+    @Value("${token.secret}")
     private String secret;
 
-    @Value("${constant.expiration_time}")
+    @Value("${token.expiration_time}")
     private Long expirationTime;
 
     public String generateToken(Authentication authentication) {
         log.debug("generateToken start - for {}", authentication.getName());
-        User userDetails = (User) authentication.getPrincipal();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         String email = userDetails.getUsername();
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime expiryDate = LocalDateTime.now().plusSeconds(expirationTime);
+        LocalDateTime expiryDate = now.plusSeconds(expirationTime);
         Map<String, Object> claimsMap = buildClaims(userDetails);
         log.debug("generateToken end - for {}", email);
 
@@ -48,12 +48,12 @@ public class JwtTokenProvider {
             .compact();
     }
 
-    private Map<String, Object> buildClaims(User user) {
+    private Map<String, Object> buildClaims(CustomUserDetails user) {
         Map<String, Object> claimsMap = new HashMap<>();
-        claimsMap.put("id", user.getId());
-        claimsMap.put("email", user.getEmail());
-        claimsMap.put("name", user.getName());
-        claimsMap.put("lastname", user.getSurname());
+        claimsMap.put("id", user.user().getId());
+        claimsMap.put("email", user.user().getEmail());
+        claimsMap.put("name", user.user().getName());
+        claimsMap.put("lastname", user.user().getSurname());
         return claimsMap;
     }
 

@@ -1,0 +1,271 @@
+auth:
+  post:
+    summary: Authenticate user and get JWT token
+    operationId: authenticateUser
+    tags:
+      - Authentication
+    requestBody:
+      description: User login credentials
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthRequest'
+    responses:
+      '200':
+        description: Authentication successful, JWT token returned
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthResponse'
+      '400':
+        $ref: './error-dto.yaml#/components/responses/BadRequest'
+
+register:
+  post:
+    summary: Register a new user
+    operationId: registerUser
+    tags:
+      - Authentication
+    requestBody:
+      description: Data for registering a new user
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserCreateRequestDTO'
+    responses:
+      '201':
+        description: User successfully registered
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthResponse'
+      '400':
+        description: Validation error or user with this email already exists
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "User with this email already exists"
+
+components:
+  schemas:
+    AuthRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: "user@example.com"
+        password:
+          type: string
+          writeOnly: true
+          example: "yourSecurePassword"
+
+    AuthResponse:
+      type: object
+      required:
+        - token
+        - type
+      properties:
+        token:
+          type: string
+          description: JWT-токен для аутентификации в последующих запросах.
+          example: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIiwiaWF0IjoxNjcyNTY5MzU5LCJleHAiOjE2NzI2NTU3NTl9...."
+        user:
+          $ref: '#/components/schemas/UserResponseDTO'
+
+    UserRole:
+      type: string
+      description: Role user in system.
+      enum:
+        - ADMIN
+        - USER
+
+    UserResponseDTO:
+      type: object
+      description: Represents user data returned by the API. The 'password' field is intentionally excluded for security reasons.
+      required:
+        - id
+        - email
+        - name
+        - surname
+        - phone
+        - role
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique user identifier.
+          readOnly: true
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        email:
+          type: string
+          format: email
+          maxLength: 100
+          description: Unique email address of the user.
+          example: "user@example.com"
+        name:
+          type: string
+          maxLength: 30
+          description: User name.
+          example: "Ivan"
+        surname:
+          type: string
+          maxLength: 30
+          description: User's last name.
+          example: "Ivanov"
+        phone:
+          type: string
+          minLength: 7
+          maxLength: 15
+          description: Unique phone number of the user.
+          example: "79001234567"
+        role:
+          $ref: '#/components/schemas/UserRole'
+        createdAt:
+          type: string
+          format: date-time
+          description: Date and time the user account was created (in UTC).
+          example: "2023-10-26T10:00:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: date and time the user account was last updated (in UTC).
+          example: "2023-10-26T11:30:00Z"
+
+    UserCreateRequestDTO:
+      type: object
+      description: The data required to create a new user.
+      required:
+        - email
+        - password
+        - name
+        - surname
+        - phone
+        - role
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 100
+          description: The user's unique email address.
+          example: "newuser@example.com"
+        password:
+          type: string
+          minLength: 8
+          maxLength: 255
+          pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).+$"
+          description: User's password. Must contain at least 8 characters, at least one capital letter.,one lowercase letter and one special character.
+          writeOnly: true
+          example: "MySecureP@ssw0rd"
+        name:
+          type: string
+          maxLength: 30
+          description: The user's name.
+          example: "Peter"
+        surname:
+          type: string
+          maxLength: 30
+          description: Last name of the user.
+          example: "Petrov"
+        phone:
+          type: string
+          minLength: 9
+          maxLength: 15
+          description: The user's unique phone number.
+          example: "79019876543"
+        role:
+          $ref: '#/components/schemas/UserRole'
+
+    UserUpdateRequestDTO:
+      type: object
+      description: Data for a partial update of an existing user. All fields are optional, but if specified, they must comply with the validation rules.
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 100
+          description: The user's new unique email address.
+          example: "updated.user@example.com"
+        password:
+          type: string
+          minLength: 8
+          maxLength: 255
+          pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).+$"
+          description: The user's new password. Must contain at least 8 characters, at least one capital letter.,one lowercase letter and one special character.
+          writeOnly: true
+          nullable: true
+          example: "NewSecureP@ssw0rd!"
+        name:
+          type: string
+          maxLength: 30
+          description: New username.
+          example: "Sergey"
+        surname:
+          type: string
+          maxLength: 30
+          description: The user's new last name.
+          example: "Sergeev"
+        phone:
+          type: string
+          minLength: 9
+          maxLength: 15
+          description: The user's new unique phone number.
+          example: "79023456789"
+        role:
+          $ref: '#/components/schemas/UserRole'
+
+    RegisterRequest:
+      type: object
+      description: Data required to create a new user.
+      required:
+        - email
+        - password
+        - name
+        - surname
+        - phone
+        - role
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 100
+          description: Unique email address of the user.
+          example: "newuser@example.com"
+        password:
+          type: string
+          minLength: 8
+          maxLength: 255
+          pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).+$"
+          description: The user's password. Must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, and one special character.
+          writeOnly: true
+          example: "MySecureP@ssw0rd"
+        name:
+          type: string
+          maxLength: 30
+          description: Username.
+          example: "Petr"
+        surname:
+          type: string
+          maxLength: 30
+          description: User's last name.
+          example: "Petrov"
+        phone:
+          type: string
+          minLength: 9
+          maxLength: 15
+          description: User's unique phone number.
+          example: "79019876543"
+        role:
+          $ref: '#/components/schemas/UserRole'
+          description: User's role.

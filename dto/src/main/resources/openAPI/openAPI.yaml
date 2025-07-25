@@ -1,0 +1,34 @@
+openapi: 3.0.3
+
+info:
+  title: Swimming Service
+  description: Service for buying tickets at swimming pools.
+  version: 1.0.0
+
+paths:
+    /pools:
+        tags:
+          - Pools
+        $ref: './pool-dtos.yaml#/pools'
+    /subscriptions:
+        $ref: './subscriptions-dtos.yaml#/subscriptions'
+    /subscriptions/{id}:
+        $ref: './subscriptions-dtos.yaml#/subscriptionById'
+    /subscriptions/filter:
+        $ref: './subscriptions-dtos.yaml#/getSubscriptionByFilter'
+    /user/subscriptions:
+        $ref: './subscriptions-dtos.yaml#/userSubscriptions'
+    /user/subscriptions/{id}:
+        $ref: './subscriptions-dtos.yaml#/userSubscriptionById'
+    /users:
+        $ref: './user-dtos.yaml#/users'
+    /uses/{id}:
+        $ref: './user-dtos.yaml#/usersId'
+    /auth/login:
+        tags:
+            - Auth
+        $ref: './user-dtos.yaml#/auth'
+    /auth/register:
+        tags:
+            - Auth
+        $ref: './user-dtos.yaml#/register'

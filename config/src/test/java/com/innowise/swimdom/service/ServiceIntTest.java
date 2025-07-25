@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import com.innowise.swimdom.openapi.model.SubscriptionFilterDTO;
+
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ActiveProfiles("test")
 @SpringBootTest
 @Sql(scripts = "/data.sql")
-public class ServiceIntTest {
+class ServiceIntTest {
 
     @Autowired
     private SubscriptionService subscriptionService;

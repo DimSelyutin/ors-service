@@ -77,16 +77,4 @@ public class User {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
-    @Column(nullable = false)
-    private boolean accountNonExpired = true;
-
-    @Column(nullable = false)
-    private boolean accountNonLocked = true;
-
-    @Column(nullable = false)
-    private boolean credentialsNonExpired = true;
-
-    @Column(nullable = false)
-    private boolean enabled = true;
 }

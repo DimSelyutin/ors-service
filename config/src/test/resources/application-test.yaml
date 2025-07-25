@@ -17,7 +17,7 @@ logging:
     level:
         root: DEBUG
 constant:
-    secret: JwtTokenSecret
+    secret: "yF8nG7xvJ+2K0mZrTq6L3p9vX4Yw5Zs8QeRfU1aN6bH7jK0pLqMwNxYzVtRgSeDf"
     token_prefix: "Bearer"
     expiration_time: 600_000
     content_type: application/json

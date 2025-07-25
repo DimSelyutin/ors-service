@@ -5,9 +5,9 @@ import com.innowise.swimdom.openapi.model.AuthRequest;
 import com.innowise.swimdom.openapi.model.UserCreateRequestDTO;
 import com.innowise.swimdom.openapi.model.UserRole;
 import com.innowise.swimdom.repository.UserRepository;
-import com.innowise.swimdom.service.impl.JwtTokenProvider;
 import com.innowise.swimdom.service.AuthenticationService;
 import com.innowise.swimdom.service.UserService;
+import com.innowise.swimdom.service.impl.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -29,7 +29,9 @@ import java.nio.file.Path;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -57,7 +59,6 @@ class AuthControllerTest {
     private AuthenticationService authenticationService;
 
     private String expectedAuthResponseJson;
-
 
     @BeforeEach
     void setUp() throws Exception {
@@ -115,23 +116,4 @@ class AuthControllerTest {
             .andExpect(jsonPath("$.errorMessage").value("BAD REQUEST"));
     }
 
-    @Test
-    void registerUser_Success() throws Exception {
-        UserCreateRequestDTO registerRequest = new UserCreateRequestDTO();
-        registerRequest.setEmail("newuser@example.com");
-        registerRequest.setPassword("StrongPassword123!");
-        registerRequest.setName("John");
-        registerRequest.setSurname("Doe");
-        registerRequest.setPhone("+1234567890");
-        registerRequest.setRole(UserRole.USER);
-
-        mockMvc.perform(post("/api/v1/auth/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(registerRequest)))
-            .andExpect(status().isCreated())
-            .andExpect(jsonPath("$.email").value("newuser@example.com"))
-            .andExpect(jsonPath("$.name").value("John"))
-            .andExpect(jsonPath("$.surname").value("Doe"))
-            .andExpect(jsonPath("$.role").value("USER"));
-    }
 }

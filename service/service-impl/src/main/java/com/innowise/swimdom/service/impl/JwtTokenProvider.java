@@ -4,18 +4,21 @@ import com.innowise.swimdom.exception.UserTokenExpiredException;
 import com.innowise.swimdom.util.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.crypto.SecretKey;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.UUID;
+
+import static com.innowise.swimdom.util.Constants.TOKEN_INVALID;
 
 /**
  * JwtTokenProvider.
@@ -34,17 +37,18 @@ public class JwtTokenProvider {
         log.debug("generateToken start - for {}", authentication.getName());
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         String email = userDetails.getUsername();
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime expiryDate = now.plusSeconds(expirationTime);
         Map<String, Object> claimsMap = buildClaims(userDetails);
         log.debug("generateToken end - for {}", email);
+
+        Instant now = Instant.now();
+        Instant expiryInstant = now.plusSeconds(expirationTime);
 
         return Jwts.builder()
             .setSubject(email)
             .addClaims(claimsMap)
-            .setIssuedAt(Date.from(Instant.now()))
-            .setExpiration(Date.from(Instant.from(expiryDate)))
-            .signWith(SignatureAlgorithm.HS512, secret)
+            .setIssuedAt(Date.from(now))
+            .setExpiration(Date.from(expiryInstant))
+            .signWith(getSigningKey())
             .compact();
     }
 
@@ -61,21 +65,29 @@ public class JwtTokenProvider {
 
         try {
             Jwts.parser()
-                .setSigningKey(secret)
-                .build().parseClaimsJws(token);
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token);
             return true;
         } catch (IllegalArgumentException ex) {
             log.error("validateToken exception: {}", ex.getMessage());
-            throw new UserTokenExpiredException("Token expired!");
+            throw new UserTokenExpiredException(TOKEN_INVALID);
         }
     }
 
     public UUID getUserIdFromToken(String token) {
         Claims claims = Jwts.parser()
-            .setSigningKey(secret)
-            .build().parseClaimsJws(token)
+            .setSigningKey(getSigningKey())
+            .build()
+            .parseClaimsJws(token)
             .getBody();
-        UUID id = (UUID) claims.get("id");
-        return id;
+
+        String idStr = claims.get("id", String.class);
+        return UUID.fromString(idStr);
+    }
+
+    private SecretKey getSigningKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 }

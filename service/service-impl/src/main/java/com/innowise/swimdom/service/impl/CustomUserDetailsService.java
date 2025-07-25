@@ -4,6 +4,7 @@ import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.repository.UserRepository;
 import com.innowise.swimdom.util.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,7 @@ import java.util.UUID;
 /**
  * Custom service for UserDetails.
  */
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -26,10 +28,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    @Transactional(readOnly = true)
+
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findUserByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " not found"));
+        log.debug("loadUserByUsername -end {}", user);
         return new CustomUserDetails(user);
     }
 

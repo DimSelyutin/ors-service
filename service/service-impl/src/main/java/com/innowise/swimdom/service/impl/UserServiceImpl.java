@@ -1,9 +1,12 @@
 package com.innowise.swimdom.service.impl;
 
 import com.innowise.swimdom.entity.User;
+import com.innowise.swimdom.enums.UserRole;
 import com.innowise.swimdom.exception.UserAlreadyExistsException;
+import com.innowise.swimdom.exception.UserNotFoundException;
 import com.innowise.swimdom.mapper.AuthMapper;
 import com.innowise.swimdom.openapi.model.UserCreateRequestDTO;
+import com.innowise.swimdom.openapi.model.UserUpdateRequestDTO;
 import com.innowise.swimdom.repository.UserRepository;
 import com.innowise.swimdom.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -41,8 +44,32 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      */
     @Override
-    public User updateUser() {
-        return null;
+    @Transactional
+    public User updateUser(UserUpdateRequestDTO userUpdateRequestDTO) {
+        UUID userId = userUpdateRequestDTO.getId();
+        log.debug("updateUser - Attempting to update user with ID: {}", userId);
+
+        User existingUser = userRepository.findById(userId)
+            .orElseThrow(() -> {
+                log.warn("updateUser - User with ID {} not found.", userId);
+                return new UserNotFoundException("User with ID " + userId + " not found.");
+            });
+
+        if (userUpdateRequestDTO.getEmail() != null
+            && !userUpdateRequestDTO.getEmail().equals(existingUser.getEmail())) {
+            if (userRepository.findUserByEmail(userUpdateRequestDTO.getEmail()).isPresent()) {
+                log.warn("updateUser - User update failed: Email {} is already taken.",
+                    userUpdateRequestDTO.getEmail());
+                throw new UserAlreadyExistsException(
+                    "Email '" + userUpdateRequestDTO.getEmail() + "' is already taken.");
+            }
+            existingUser.setEmail(userUpdateRequestDTO.getEmail());
+        }
+        authMapper.updateUserFromDto(userUpdateRequestDTO, existingUser);
+        User updatedUser = userRepository.save(existingUser);
+        log.debug("updateUser - User updated successfully with ID: {}", userId);
+
+        return updatedUser;
     }
 
     /**
@@ -61,6 +88,7 @@ public class UserServiceImpl implements UserService {
             );
         }
         User newUser = authMapper.toUser(userCreateRequestDTO);
+        newUser.setRole(UserRole.USER);
         newUser.setPassword(passwordEncoder.encode(userCreateRequestDTO.getPassword()));
         log.debug("createUser - Password encoded for user: {}", newUser);
 

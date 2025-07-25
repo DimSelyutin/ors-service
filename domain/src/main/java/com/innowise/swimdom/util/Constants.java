@@ -26,5 +26,7 @@ public final class Constants {
 
     public static final List<String> ALLOWED_HEADERS = List.of("*");
 
-    public static final String INVALID_CREDENTIAL = "Invalid credential";
+    public static final String INVALID_CREDENTIAL = "Wrong login or password!";
+    public static final String TOKEN_INVALID = "Token expired or invalid!";
+    public static final String ROLE_PREFIX = "ROLE_";
 }

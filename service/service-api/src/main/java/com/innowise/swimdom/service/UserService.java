@@ -2,6 +2,7 @@ package com.innowise.swimdom.service;
 
 import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.openapi.model.UserCreateRequestDTO;
+import com.innowise.swimdom.openapi.model.UserUpdateRequestDTO;
 
 import java.util.UUID;
 
@@ -15,5 +16,5 @@ public interface UserService {
 
     void deleteUser(UUID id);
 
-    User updateUser();
+    User updateUser(UserUpdateRequestDTO userUpdateRequestDTO);
 }

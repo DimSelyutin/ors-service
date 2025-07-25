@@ -8,6 +8,7 @@ import com.innowise.swimdom.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,16 +29,12 @@ public class AuthController implements AuthApi {
     @Override
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> authenticateUser(@Valid @RequestBody AuthRequest authRequest) {
-        ResponseEntity<AuthResponse> responseDto =
-            ResponseEntity.ok(authenticationService.login(authRequest));
-        return responseDto;
+        return ResponseEntity.ok(authenticationService.login(authRequest));
     }
 
     @Override
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> registerUser(@Valid @RequestBody UserCreateRequestDTO registerRequest) {
-        ResponseEntity<AuthResponse> responseDto =
-            ResponseEntity.ok(authenticationService.registerUser(registerRequest));
-        return responseDto;
+        return new ResponseEntity<>(authenticationService.registerUser(registerRequest), HttpStatus.CREATED);
     }
 }

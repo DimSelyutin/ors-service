@@ -5,9 +5,13 @@ import com.innowise.swimdom.mapper.type.UserRoleMapper;
 import com.innowise.swimdom.openapi.model.AuthResponse;
 import com.innowise.swimdom.openapi.model.UserCreateRequestDTO;
 import com.innowise.swimdom.openapi.model.UserResponseDTO;
+import com.innowise.swimdom.openapi.model.UserUpdateRequestDTO;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
@@ -29,12 +33,10 @@ public interface AuthMapper {
     UserResponseDTO toUserResponse(User user);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "accountNonExpired", expression = "java(true)")
-    @Mapping(target = "accountNonLocked", expression = "java(true)")
-    @Mapping(target = "credentialsNonExpired", expression = "java(true)")
-    @Mapping(target = "enabled", expression = "java(true)")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     User toUser(UserCreateRequestDTO dto);
 
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateUserFromDto(UserUpdateRequestDTO dto, @MappingTarget User user);
 }

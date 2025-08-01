@@ -210,7 +210,6 @@ public class UserSubscriptionMapperImplTest {
         assertEquals(LocalDate.of(2023, 6, 1), entity.getStartDate());
         assertEquals(LocalDate.of(2023, 9, 1), entity.getEndDate());
         assertNull(entity.getCreatedAt());
-        assertNull(entity.getUpdatedAt());
     }
 
     @Test

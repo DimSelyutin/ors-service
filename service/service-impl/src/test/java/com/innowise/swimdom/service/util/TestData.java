@@ -2,8 +2,10 @@ package com.innowise.swimdom.service.util;
 
 import com.innowise.swimdom.entity.Pool;
 import com.innowise.swimdom.entity.PoolWorkingHours;
+import com.innowise.swimdom.entity.Schedule;
 import com.innowise.swimdom.openapi.model.PoolDto;
 import com.innowise.swimdom.openapi.model.PoolWorkingHoursDto;
+import com.innowise.swimdom.openapi.model.ScheduleDto;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -25,6 +27,10 @@ public class TestData {
     public static final int WEEKDAY_MONDAY = 1;
     public static final String OPEN_TIME = "08:00:00";
     public static final String CLOSE_TIME = "22:00:00";
+
+    public static final UUID SCHEDULE_ID = UUID.fromString("2d7f0a00-6c8f-5e4c-0c6e-7a2f8a9c1234");
+    public static final LocalDateTime SCHEDULE_START_DATETIME = LocalDateTime.parse("2024-01-15T10:00:00");
+    public static final LocalDateTime SCHEDULE_END_DATETIME = LocalDateTime.parse("2024-01-15T12:00:00");
 
     public static PoolWorkingHoursDto createPoolWorkingHoursDto() {
         PoolWorkingHoursDto workingHours = new PoolWorkingHoursDto();
@@ -72,4 +78,29 @@ public class TestData {
     public static PoolWorkingHoursDto testPoolWorkingHoursDto = createPoolWorkingHoursDto();
     public static final Pool testPoolEntity = createPoolEntity();
     public static final PoolWorkingHours testPoolWorkingHours = createPoolWorkingHours();
+
+    public static ScheduleDto createScheduleDto() {
+        ScheduleDto schedule = new ScheduleDto();
+        schedule.setId(SCHEDULE_ID);
+        schedule.setPoolId(POOL_ID);
+        schedule.setStartDatetime(SCHEDULE_START_DATETIME);
+        schedule.setEndDatetime(SCHEDULE_END_DATETIME);
+        schedule.setCreatedAt(CREATED_AT);
+        schedule.setUpdatedAt(UPDATED_AT);
+        return schedule;
+    }
+
+    public static Schedule createScheduleEntity() {
+        Schedule schedule = new Schedule();
+        schedule.setId(SCHEDULE_ID);
+        schedule.setPool(testPoolEntity);
+        schedule.setStartDatetime(SCHEDULE_START_DATETIME);
+        schedule.setEndDatetime(SCHEDULE_END_DATETIME);
+        schedule.setCreatedAt(CREATED_AT);
+        schedule.setUpdatedAt(UPDATED_AT);
+        return schedule;
+    }
+
+    public static ScheduleDto testScheduleDto = createScheduleDto();
+    public static final Schedule testScheduleEntity = createScheduleEntity();
 }

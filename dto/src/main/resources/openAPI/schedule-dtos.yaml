@@ -1,0 +1,91 @@
+schedules:
+  post:
+    tags:
+      - Schedules
+    summary: Create a new schedule
+    description: Adds a new schedule for a pool.
+    operationId: createSchedule
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ScheduleDto'
+    responses:
+      '201':
+        description: Schedule created successfully
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleDto'
+      '400':
+        $ref: './error-dto.yaml#/components/responses/BadRequest'
+      '409':
+        $ref: './error-dto.yaml#/components/responses/Conflict'
+      '500':
+        $ref: './error-dto.yaml#/components/responses/InternalServerError'
+
+schedulesFilter:
+  post:
+    tags:
+      - Schedules
+    summary: Retrieve schedules by filter
+    description: Returns a list of schedules matching the filter criteria.
+    operationId: getSchedules
+    requestBody:
+      description: Filter criteria as ScheduleDto
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ScheduleDto'
+    responses:
+      '200':
+        description: A list of schedules matching the filter
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ScheduleDto'
+      '204':
+        description: No schedules found
+      '400':
+        $ref: './error-dto.yaml#/components/responses/BadRequest'
+      '404':
+        $ref: './error-dto.yaml#/components/responses/NotFound'
+      '409':
+        $ref: './error-dto.yaml#/components/responses/Conflict'
+      '500':
+        $ref: './error-dto.yaml#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    ScheduleDto:
+      type: object
+      description: Represents a schedule entity.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the schedule.
+        poolId:
+          type: string
+          format: uuid
+          description: ID of the pool this schedule belongs to.
+        startDatetime:
+          type: string
+          format: date-time
+          description: Start date and time of the schedule.
+        endDatetime:
+          type: string
+          format: date-time
+          description: End date and time of the schedule.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the schedule was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the schedule was last updated. 

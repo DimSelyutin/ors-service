@@ -2,6 +2,7 @@ package com.innowise.swimdom.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,13 +11,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * Config OpenApi.
  */
+@RequiredArgsConstructor
 @Configuration
 public class OpenApiConfig implements WebMvcConfigurer {
-    private final BuildProperties buildProperties;
 
-    public OpenApiConfig(BuildProperties buildProperties) {
-        this.buildProperties = buildProperties;
-    }
+    private final BuildProperties buildProperties;
 
     /**
      * Bean OpenApi.
@@ -32,5 +31,4 @@ public class OpenApiConfig implements WebMvcConfigurer {
                 .description(
                     "Service for buying ticket swimming pool."));
     }
-
 }

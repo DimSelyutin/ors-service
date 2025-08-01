@@ -29,4 +29,7 @@ public final class Constants {
     public static final String INVALID_CREDENTIAL = "Wrong login or password!";
     public static final String TOKEN_INVALID = "Token expired or invalid!";
     public static final String ROLE_PREFIX = "ROLE_";
+
+    public static final String USER_NOT_FOUND = "User not found with ID: ";
+    public static final String BOOKING_NOT_FOUND = "Booking not found with ID: ";
 }

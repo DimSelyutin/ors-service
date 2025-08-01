@@ -23,7 +23,7 @@ class JWTAuthenticationEntryPointTest {
 
     private StringWriter responseWriter;
     @Value("${token.content_type}")
-    private String content_type;
+    private String contentType;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -44,7 +44,7 @@ class JWTAuthenticationEntryPointTest {
     void commence_shouldSetUnauthorizedStatusAndWriteMessage() throws Exception {
         entryPoint.commence(request, response, authException);
 
-        verify(response).setContentType(content_type);
+        verify(response).setContentType(contentType);
         verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         
         response.getWriter().flush();

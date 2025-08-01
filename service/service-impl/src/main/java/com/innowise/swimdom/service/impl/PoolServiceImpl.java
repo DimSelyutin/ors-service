@@ -14,6 +14,7 @@ import com.innowise.swimdom.service.PoolService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
@@ -26,6 +27,7 @@ import java.util.UUID;
  */
 @RequiredArgsConstructor
 @Slf4j
+@Service
 public class PoolServiceImpl implements PoolService {
 
     private PoolRepository poolRepository;

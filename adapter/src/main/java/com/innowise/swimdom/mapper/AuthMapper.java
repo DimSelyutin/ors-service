@@ -38,5 +38,7 @@ public interface AuthMapper {
     User toUser(UserCreateRequestDTO dto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     void updateUserFromDto(UserUpdateRequestDTO dto, @MappingTarget User user);
 }

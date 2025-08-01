@@ -11,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -51,10 +50,6 @@ public class User {
 
     @Column(nullable = false, length = 255)
     @Size(min = 8, max = 255, message = "Password length must be between 8 and 255 characters")
-    @Pattern(
-        regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).+$",
-        message = "Password must contain at least one uppercase letter, one lowercase letter, and one special character"
-    )
     private String password;
 
     @Column(nullable = false, length = 30)

@@ -98,7 +98,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public void deleteSubscription(UUID id) {
         log.debug("deleteSubscription - start, id: {}", id);
         if (!subscriptionRepository.existsById(id)) {
-            log.warn("getSubscriptionById - subscription with id:{} not found", id);
+            log.warn("deleteSubscription - subscription with id:{} not found", id);
             throw new SubscriptionNotFoundException("Subscription not found with id: " + id);
         }
         subscriptionRepository.deleteById(id);

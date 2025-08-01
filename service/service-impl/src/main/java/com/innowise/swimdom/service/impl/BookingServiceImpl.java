@@ -126,7 +126,6 @@ public class BookingServiceImpl implements BookingService {
      * Retrieves a booking by its unique ID.
      */
     @Override
-    @Transactional(readOnly = true)
     public BookingResponseDTO getBooking(String bookingId) {
         UUID uuid;
         try {
@@ -143,7 +142,6 @@ public class BookingServiceImpl implements BookingService {
      * Retrieves all bookings for a given user.
      */
     @Override
-    @Transactional(readOnly = true)
     public List<BookingResponseDTO> getBookingsByUser(UUID userId) {
         userRepository.findById(userId)
             .orElseThrow(() -> new BookingNotFoundException("User not found with ID: " + userId));
@@ -157,7 +155,6 @@ public class BookingServiceImpl implements BookingService {
      * Retrieves all bookings.
      */
     @Override
-    @Transactional(readOnly = true)
     public List<BookingResponseDTO> getAllBookings() {
         return bookingRepository.findAll().stream()
             .map(bookingMapper::toBookingResponseDTO)
@@ -168,7 +165,6 @@ public class BookingServiceImpl implements BookingService {
      * Deletes a booking by its ID.
      */
     @Override
-    @Transactional
     public void deleteBooking(UUID bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
             .orElseThrow(() -> new BookingNotFoundException(Constants.BOOKING_NOT_FOUND + bookingId));

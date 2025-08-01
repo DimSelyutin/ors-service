@@ -10,6 +10,7 @@ import com.innowise.swimdom.enums.BookingStatus;
 import com.innowise.swimdom.exception.BookingConflictException;
 import com.innowise.swimdom.exception.BookingNotFoundException;
 import com.innowise.swimdom.exception.InvalidTimeSlotException;
+import com.innowise.swimdom.exception.ScheduleNotFoundException;
 import com.innowise.swimdom.exception.UserNotFoundException;
 import com.innowise.swimdom.mapper.BookingMapper;
 import com.innowise.swimdom.openapi.model.BookingCreateRequestDTO;
@@ -131,7 +132,7 @@ class BookingServiceImplTest {
         when(scheduleRepository.findById(SCHEDULE_ID)).thenReturn(Optional.empty());
 
         // WHEN & THEN
-        assertThrows(BookingNotFoundException.class, () -> bookingService.createBooking(testCreateRequest));
+        assertThrows(ScheduleNotFoundException.class, () -> bookingService.createBooking(testCreateRequest));
         verify(bookingRepository, never()).save(any());
     }
 
@@ -169,7 +170,7 @@ class BookingServiceImplTest {
         when(userRepository.findById(USER_ID)).thenReturn(Optional.of(testUser));
 
         // WHEN & THEN
-        assertThrows(BookingNotFoundException.class, () -> bookingService.createBooking(testCreateRequest));
+        assertThrows(ScheduleNotFoundException.class, () -> bookingService.createBooking(testCreateRequest));
         verify(bookingRepository, never()).save(any());
     }
 

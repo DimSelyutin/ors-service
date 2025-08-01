@@ -3,9 +3,12 @@ package com.innowise.swimdom.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.innowise.swimdom.openapi.model.ScheduleDto;
 import com.innowise.swimdom.service.ScheduleService;
+import com.innowise.swimdom.util.TestData;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -14,14 +17,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static com.innowise.swimdom.service.util.TestData.*;
+import static com.innowise.swimdom.util.TestData.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@AutoConfigureMockMvc
+@SpringBootTest
 @WebMvcTest(ScheduleController.class)
-public class ScheduleControllerTest {
+class ScheduleControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -42,9 +47,9 @@ public class ScheduleControllerTest {
         mockMvc.perform(post("/api/v1/schedules")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(scheduleDto)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(scheduleDto.getId().toString()))
-                .andExpect(jsonPath("$.poolId").value(scheduleDto.getPoolId().toString()));
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.id").value(scheduleDto.getId().toString()))
+            .andExpect(jsonPath("$.poolId").value(scheduleDto.getPoolId().toString()));
 
         verify(scheduleService, times(1)).createSchedule(any(ScheduleDto.class));
     }
@@ -58,9 +63,9 @@ public class ScheduleControllerTest {
 
         // WHEN & THEN
         mockMvc.perform(get("/api/v1/schedules/{id}", scheduleId))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(scheduleDto.getId().toString()))
-                .andExpect(jsonPath("$.poolId").value(scheduleDto.getPoolId().toString()));
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").value(scheduleDto.getId().toString()))
+            .andExpect(jsonPath("$.poolId").value(scheduleDto.getPoolId().toString()));
 
         verify(scheduleService, times(1)).getSchedule(scheduleId);
     }
@@ -73,7 +78,7 @@ public class ScheduleControllerTest {
 
         // WHEN & THEN
         mockMvc.perform(get("/api/v1/schedules/{id}", scheduleId))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
 
         verify(scheduleService, times(1)).getSchedule(scheduleId);
     }
@@ -86,8 +91,8 @@ public class ScheduleControllerTest {
 
         // WHEN & THEN
         mockMvc.perform(get("/api/v1/schedules"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(schedules.get(0).getId().toString()));
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].id").value(schedules.get(0).getId().toString()));
 
         verify(scheduleService, times(1)).getAllSchedules();
     }
@@ -101,8 +106,8 @@ public class ScheduleControllerTest {
 
         // WHEN & THEN
         mockMvc.perform(get("/api/v1/schedules/by-pool/{poolId}", poolId))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(schedules.get(0).getId().toString()));
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].id").value(schedules.get(0).getId().toString()));
 
         verify(scheduleService, times(1)).getSchedulesByPool(poolId);
     }
@@ -115,7 +120,7 @@ public class ScheduleControllerTest {
 
         // WHEN & THEN
         mockMvc.perform(delete("/api/v1/schedules/{id}", scheduleId))
-                .andExpect(status().isNoContent());
+            .andExpect(status().isNoContent());
 
         verify(scheduleService, times(1)).deleteSchedule(scheduleId);
     }
@@ -132,8 +137,8 @@ public class ScheduleControllerTest {
         mockMvc.perform(get("/api/v1/schedules/in-range")
                 .param("from", from.toString())
                 .param("to", to.toString()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(schedules.get(0).getId().toString()));
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].id").value(schedules.get(0).getId().toString()));
 
         verify(scheduleService, times(1)).getSchedulesInRange(from, to);
     }
@@ -151,8 +156,8 @@ public class ScheduleControllerTest {
         mockMvc.perform(get("/api/v1/schedules/by-pool/{poolId}/in-range", poolId)
                 .param("from", from.toString())
                 .param("to", to.toString()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(schedules.get(0).getId().toString()));
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].id").value(schedules.get(0).getId().toString()));
 
         verify(scheduleService, times(1)).getSchedulesByPoolInRange(poolId, from, to);
     }
@@ -168,8 +173,8 @@ public class ScheduleControllerTest {
         mockMvc.perform(put("/api/v1/schedules/{id}", scheduleId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(scheduleDto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(scheduleDto.getId().toString()));
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").value(scheduleDto.getId().toString()));
 
         verify(scheduleService, times(1)).updateSchedule(any(ScheduleDto.class));
     }
@@ -187,8 +192,8 @@ public class ScheduleControllerTest {
                 .param("poolId", poolId.toString())
                 .param("startTime", startTime.toString())
                 .param("endTime", endTime.toString()))
-                .andExpect(status().isOk())
-                .andExpect(content().string("true"));
+            .andExpect(status().isOk())
+            .andExpect(content().string("true"));
 
         verify(scheduleService, times(1)).isTimeSlotAvailable(poolId, startTime, endTime);
     }

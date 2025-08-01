@@ -8,8 +8,6 @@ import com.innowise.swimdom.openapi.model.UserSubscriptionDTO;
 import com.innowise.swimdom.openapi.model.UserSubscriptionUpdateDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;

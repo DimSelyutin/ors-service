@@ -50,3 +50,9 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorDto'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDto'

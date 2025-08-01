@@ -44,7 +44,7 @@ public class Booking  {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_subscription_id", nullable = false,
                 foreignKey = @ForeignKey(name = "fk_user_subscription"))
-    private Subscription userSubscription;
+    private UserSubscription userSubscription;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "schedule_id", nullable = false,

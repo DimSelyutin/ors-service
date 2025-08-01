@@ -56,6 +56,7 @@ public enum SubscriptionDuration {
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month - 1);
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
             return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         }
         return days != null ? days : 0;

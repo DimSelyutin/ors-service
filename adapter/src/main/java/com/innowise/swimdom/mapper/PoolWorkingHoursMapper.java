@@ -28,8 +28,8 @@ public interface PoolWorkingHoursMapper {
      */
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "pool", ignore = true)
+    @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
     PoolWorkingHours toPoolWorkingHours(PoolWorkingHoursDto dto);
 
     /**
@@ -54,8 +54,8 @@ public interface PoolWorkingHoursMapper {
      */
     @Mapping(source = "poolId", target = "entity.pool.id")
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
     void updatePoolWorkingHoursFromDto(PoolWorkingHoursDto dto, @MappingTarget PoolWorkingHours entity);
     
 }

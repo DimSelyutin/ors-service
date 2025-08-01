@@ -10,7 +10,6 @@ import com.innowise.swimdom.enums.BookingStatus;
 import com.innowise.swimdom.exception.BookingConflictException;
 import com.innowise.swimdom.exception.BookingNotFoundException;
 import com.innowise.swimdom.exception.InvalidTimeSlotException;
-import com.innowise.swimdom.exception.ScheduleNotFoundException;
 import com.innowise.swimdom.exception.UserNotFoundException;
 import com.innowise.swimdom.mapper.BookingMapper;
 import com.innowise.swimdom.openapi.model.BookingCreateRequestDTO;
@@ -66,7 +65,7 @@ public class BookingServiceImpl implements BookingService {
 
         Schedule schedule = scheduleRepository.findById(bookingDTO.getScheduleId())
             .orElseThrow(
-                () -> new ScheduleNotFoundException("Schedule not found with ID: " + bookingDTO.getScheduleId()));
+                () -> new BookingNotFoundException("Schedule not found with ID: " + bookingDTO.getScheduleId()));
 
         Pool pool = schedule.getPool();
 

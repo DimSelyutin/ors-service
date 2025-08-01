@@ -134,6 +134,7 @@ class BookingMapperTest {
         assertEquals(BOOKING_DATETIME, result.getBookingDatetime());
         assertFalse(result.getNotificationSent());
         assertEquals(CREATED_AT, result.getCreatedAt());
+        assertEquals(UPDATED_AT, result.getUpdatedAt());
     }
 
     @Test
@@ -161,7 +162,8 @@ class BookingMapperTest {
         assertEquals(BookingStatus.CONFIRMED, result.getStatus());
         assertEquals(BOOKING_DATETIME, result.getBookingDatetime());
         assertFalse(result.getNotificationSent());
-
+        assertNotNull(result.getCreatedAt());
+        assertNotNull(result.getUpdatedAt());
     }
 
     @Test

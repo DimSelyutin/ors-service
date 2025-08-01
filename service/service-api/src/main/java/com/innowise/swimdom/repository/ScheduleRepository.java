@@ -23,9 +23,4 @@ public interface ScheduleRepository extends JpaRepository<Schedule, UUID> {
      * Finds all pool schedules.
      */
     List<Schedule> findByPoolId(UUID poolId);
-
-    /**
-     * Finds all schedules within a specified time range.
-     */
-    List<Schedule> findByStartDatetimeBetween(LocalDateTime from, LocalDateTime to);
 }

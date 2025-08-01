@@ -60,11 +60,3 @@ paths:
         tags:
             - Booking
         $ref: './booking-dtos.yaml#/bookingsFilter'
-    /schedules:
-        tags:
-            - Schedules
-        $ref: './schedule-dtos.yaml#/schedules'
-    /schedules/filter:
-        tags:
-            - Schedules
-        $ref: './schedule-dtos.yaml#/schedulesFilter'

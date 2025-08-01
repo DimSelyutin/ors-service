@@ -4,6 +4,7 @@ subscriptions:
     operationId: getSubscriptions
     tags:
       - Subscription
+
     parameters:
       - name: filter
         in: query

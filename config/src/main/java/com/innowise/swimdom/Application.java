@@ -1,6 +1,7 @@
 package com.innowise.swimdom;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
@@ -13,18 +14,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class Application {
 
     public static void main(String[] args) {
-        Integer a = 9999;
-
-        System.out.println(a);
-
-        changeList(a);
-        System.out.println(a);
-        // SpringApplication.run(Application.class, args);
-    }
-
-    public static void changeList(Integer c) {
-        System.out.println(c);
-        c = 10;
-
+        SpringApplication.run(Application.class, args);
     }
 }

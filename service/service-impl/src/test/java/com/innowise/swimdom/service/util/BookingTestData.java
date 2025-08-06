@@ -18,7 +18,7 @@ import java.util.UUID;
 
 public class BookingTestData {
 
-    public static final LocalDateTime FIXED_NOW = LocalDateTime.now();
+    public static final LocalDateTime FIXED_NOW = LocalDateTime.parse("2024-06-21T12:00:00");
     public static final LocalDate FIXED_TODAY = FIXED_NOW.toLocalDate();
 
     public static final UUID BOOKING_ID = UUID.fromString("550e8400-e29b-41d4-a716-446655440000");
@@ -28,12 +28,14 @@ public class BookingTestData {
     public static final UUID USER_SUBSCRIPTION_ID = UUID.fromString("550e8400-e29b-41d4-a716-446655440004");
 
     public static final LocalDateTime BOOKING_DATETIME = FIXED_NOW.plusHours(4);
-    public static final LocalDateTime SCHEDULE_START = LocalDateTime.of(FIXED_TODAY, LocalTime.of(17, 0)); // 2024-06-21T17:00:00
-    public static final LocalDateTime SCHEDULE_END = LocalDateTime.of(FIXED_TODAY, LocalTime.of(18, 0));   // 2024-06-21T18:00:00
-    public static final LocalDate SUBSCRIPTION_START = FIXED_TODAY;                      // 2024-06-21
-    public static final LocalDate SUBSCRIPTION_END = FIXED_TODAY.plusMonths(1);          // 2024-07-21
-    public static final LocalDateTime CREATED_AT = FIXED_NOW;                           // 2024-06-21T12:00:00
-    public static final LocalDateTime UPDATED_AT = FIXED_NOW;                           // 2024-06-21T12:00:00
+    public static final LocalDateTime SCHEDULE_START = LocalDateTime.of(FIXED_TODAY, LocalTime.of(17, 0));
+        // 2024-06-21T17:00:00
+    public static final LocalDateTime SCHEDULE_END = LocalDateTime.of(FIXED_TODAY, LocalTime.of(18, 0));
+        // 2024-06-21T18:00:00
+    public static final LocalDate SUBSCRIPTION_START = FIXED_TODAY;
+    public static final LocalDate SUBSCRIPTION_END = FIXED_TODAY.plusMonths(3);
+    public static final LocalDateTime CREATED_AT = FIXED_NOW;
+    public static final LocalDateTime UPDATED_AT = FIXED_NOW;
 
     public static final String USER_EMAIL = "test@example.com";
     public static final String USER_NAME = "Test User";
@@ -42,7 +44,6 @@ public class BookingTestData {
     public static final short WEEKDAY_MONDAY = 4;
     public static final LocalTime OPEN_TIME = LocalTime.of(8, 0);  // 08:00
     public static final LocalTime CLOSE_TIME = LocalTime.of(22, 0); // 22:00
-
 
     public static User createTestUser() {
         User user = new User();

@@ -104,7 +104,6 @@ public class ScheduleServiceImpl implements ScheduleService {
      * Deletes a schedule by its ID.
      */
     @Override
-    @Transactional
     public void deleteSchedule(UUID scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
             .orElseThrow(() -> new ScheduleNotFoundException("Schedule not found with ID: " + scheduleId));
@@ -135,13 +134,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     @Transactional(readOnly = true)
     public List<ScheduleDto> getSchedulesByPoolInRange(UUID poolId, LocalDateTime from, LocalDateTime to) {
-        if (from == null || to == null) {
-            throw new IllegalArgumentException("From and To dates cannot be null.");
-        }
-        if (from.isAfter(to)) {
-            throw new IllegalArgumentException("Start date cannot be after end date.");
-        }
-
         // Validate pool exists
         poolRepository.findById(poolId)
             .orElseThrow(() -> new PoolNotFoundException(Constants.POOL_NOT_FOUND + poolId));

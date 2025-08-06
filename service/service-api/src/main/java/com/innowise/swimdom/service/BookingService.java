@@ -65,15 +65,6 @@ public interface BookingService {
     List<BookingResponseDTO> getBookingsInRange(LocalDateTime from, LocalDateTime to);
 
     /**
-     * Checks if the pool is available for booking in the given time slot.
-     *
-     * @param startTime the start time of the time slot
-     * @param endTime   the end time of the time slot
-     * @return true if the pool is available, false if already booked
-     */
-    boolean isAvailable(LocalDateTime startTime, LocalDateTime endTime);
-
-    /**
      * Updates a booking (e.g., changes time).
      * Checks constraints, availability and user rights.
      */

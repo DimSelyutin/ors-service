@@ -21,7 +21,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * Mapper for mapping Booking and Dto.
  */
 @Mapper(componentModel = SPRING, injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {LocalDateTime.class})
+        unmappedTargetPolicy = ReportingPolicy.ERROR, imports = {LocalDateTime.class})
 public interface BookingMapper {
 
     @Mapping(target = "userId", source = "user.id")
@@ -31,6 +31,7 @@ public interface BookingMapper {
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
     BookingResponseDTO toBookingResponseDTO(Booking booking);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "user.id", source = "userId")
     @Mapping(target = "userSubscription.id", source = "userSubscriptionId")
     @Mapping(target = "schedule.id", source = "scheduleId")
@@ -44,6 +45,7 @@ public interface BookingMapper {
     @Mapping(target = "userSubscription.id", source = "userSubscriptionId")
     @Mapping(target = "schedule.id", source = "scheduleId")
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
+    @Mapping(target = "createdAt", ignore = true)
     void updateBookingFromDTO(BookingUpdateRequestDTO bookingUpdateRequestDTO, @MappingTarget Booking booking);
 
     List<BookingResponseDTO> toBookingResponseDTOList(List<Booking> bookings);

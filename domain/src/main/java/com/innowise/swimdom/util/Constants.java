@@ -33,4 +33,23 @@ public final class Constants {
     public static final String USER_NOT_FOUND = "User not found with ID: ";
     public static final String BOOKING_NOT_FOUND = "Booking not found with ID: ";
     public static final String POOL_NOT_FOUND = "Pool not found with ID: ";
+
+    public static final String BOOKING_ALREADY_EXIST =
+        "User already has a booking for this schedule. Please choose a different time slot.";
+    public static final String TIME_NOT_AVAILABLE =
+        "The selected time slot is not available or pool is at full capacity.";
+    public static final String BOOKING_TIME_OUTSIDE =
+        "Booking time is outside of pool's operating hours.";
+    public static final String USER_SUBSCRIPTION_NOT_BELONG =
+        "User subscription does not belong to the user.";
+    public static final String USER_SUBSCRIPTION_NOT_FOUND =
+        "User subscription not found with ID: ";
+    public static final String SCHEDULE_NOT_FOUND =
+        "Schedule not found with ID: ";
+    public static final String USER_SUBSCRIPTION_EXPIRED =
+        "User subscription has expired.";
+    public static final String BOOKING_DATE_OUTSIDE =
+        "Booking date is outside of subscription period.";
+    public static final String SCHEDULE_NOT_AVAILABLE =
+        "The new schedule is not available or pool is at full capacity.";
 }

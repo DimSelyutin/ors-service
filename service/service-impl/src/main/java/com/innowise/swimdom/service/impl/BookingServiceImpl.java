@@ -36,7 +36,16 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import org.springframework.data.jpa.domain.Specification;
+
+import static com.innowise.swimdom.util.Constants.BOOKING_ALREADY_EXIST;
+import static com.innowise.swimdom.util.Constants.BOOKING_DATE_OUTSIDE;
+import static com.innowise.swimdom.util.Constants.BOOKING_TIME_OUTSIDE;
+import static com.innowise.swimdom.util.Constants.SCHEDULE_NOT_FOUND;
+import static com.innowise.swimdom.util.Constants.USER_SUBSCRIPTION_EXPIRED;
+import static com.innowise.swimdom.util.Constants.USER_SUBSCRIPTION_NOT_BELONG;
+import static com.innowise.swimdom.util.Constants.USER_SUBSCRIPTION_NOT_FOUND;
 
 /**
  * Implementation for BookingService.
@@ -66,7 +75,7 @@ public class BookingServiceImpl implements BookingService {
 
         Schedule schedule = scheduleRepository.findById(bookingDTO.getScheduleId())
             .orElseThrow(
-                () -> new ScheduleNotFoundException("Schedule not found with ID: " + bookingDTO.getScheduleId()));
+                () -> new ScheduleNotFoundException(SCHEDULE_NOT_FOUND + bookingDTO.getScheduleId()));
 
         Pool pool = schedule.getPool();
 
@@ -75,48 +84,44 @@ public class BookingServiceImpl implements BookingService {
 
         if (activeBooking.isPresent()) {
             throw new BookingConflictException(
-                "User already has a booking for this schedule. Please choose a different time slot.");
-        }
-
-        // Check availability and pool capacity
-        if (!isAvailable(pool.getId(), schedule.getStartDatetime(), schedule.getEndDatetime())) {
-            throw new BookingConflictException("The selected time slot is not available or pool is at full capacity.");
+                BOOKING_ALREADY_EXIST);
         }
 
         // Check if booking time is within pool operating hours
         if (isWorkingHours(pool, schedule.getStartDatetime(), schedule.getEndDatetime())) {
-            throw new InvalidTimeSlotException("Booking time is outside of pool's operating hours.");
+            throw new InvalidTimeSlotException(BOOKING_TIME_OUTSIDE);
         }
 
         // Check subscription
         UserSubscription userSubscription = userSubscriptionRepository.findById(bookingDTO.getUserSubscriptionId())
             .orElseThrow(() -> new BookingNotFoundException(
-                "User subscription not found with ID: " + bookingDTO.getUserSubscriptionId()));
+                USER_SUBSCRIPTION_NOT_FOUND + bookingDTO.getUserSubscriptionId()));
 
         // Check that subscription belongs to user
         if (!userSubscription.getUser().getId().equals(user.getId())) {
-            throw new BookingConflictException("User subscription does not belong to the user.");
+            throw new BookingConflictException(USER_SUBSCRIPTION_NOT_BELONG);
         }
 
         // Check that subscription is active
         if (userSubscription.getEndDate().isBefore(LocalDate.now())) {
-            throw new BookingConflictException("User subscription has expired.");
+            throw new BookingConflictException(USER_SUBSCRIPTION_EXPIRED);
         }
 
         // Check that booking time is within subscription period
         LocalDate scheduleDate = schedule.getStartDatetime().toLocalDate();
         if (scheduleDate.isBefore(userSubscription.getStartDate())
             || scheduleDate.isAfter(userSubscription.getEndDate())) {
-            throw new BookingConflictException("Booking date is outside of subscription period.");
+            throw new BookingConflictException(BOOKING_DATE_OUTSIDE);
         }
 
-        Booking booking = new Booking();
-        booking.setUser(user);
-        booking.setUserSubscription(userSubscription);
-        booking.setSchedule(schedule);
-        booking.setStatus(BookingStatus.CONFIRMED);
-        booking.setBookingDatetime(bookingDTO.getBookingDatetime());
-        booking.setNotificationSent(false);
+        Booking booking = Booking.builder()
+            .user(user)
+            .userSubscription(userSubscription)
+            .schedule(schedule)
+            .status(BookingStatus.CONFIRMED)
+            .bookingDatetime(bookingDTO.getBookingDatetime())
+            .notificationSent(false)
+            .build();
 
         Booking savedBooking = bookingRepository.save(booking);
         return bookingMapper.toBookingResponseDTO(savedBooking);
@@ -143,9 +148,6 @@ public class BookingServiceImpl implements BookingService {
      */
     @Override
     public List<BookingResponseDTO> getBookingsByUser(UUID userId) {
-        userRepository.findById(userId)
-            .orElseThrow(() -> new BookingNotFoundException("User not found with ID: " + userId));
-
         return bookingRepository.findByUserId(userId).stream()
             .map(bookingMapper::toBookingResponseDTO)
             .toList();
@@ -178,13 +180,6 @@ public class BookingServiceImpl implements BookingService {
     @Override
     @Transactional(readOnly = true)
     public List<BookingResponseDTO> getBookingsInRange(LocalDateTime from, LocalDateTime to) {
-        if (from == null || to == null) {
-            throw new IllegalArgumentException("From and To dates cannot be null.");
-        }
-        if (from.isAfter(to)) {
-            throw new IllegalArgumentException("Start date cannot be after end date.");
-        }
-
         return bookingRepository.findByScheduleStartDatetimeBetween(from, to).stream()
             .map(bookingMapper::toBookingResponseDTO)
             .toList();
@@ -203,49 +198,12 @@ public class BookingServiceImpl implements BookingService {
     }
 
     /**
-     * Checks if the pool is available for booking in the given time slot.
-     * Takes into account pool capacity.
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public boolean isAvailable(LocalDateTime startTime, LocalDateTime endTime) {
-        List<Pool> allPools = poolRepository.findAll();
-        for (Pool pool : allPools) {
-            if (isAvailable(pool.getId(), startTime, endTime)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Overloaded version of isAvailable for specific pool.
      * Checks capacity and booking overlaps.
      */
-    public boolean isAvailable(UUID poolId, LocalDateTime startTime, LocalDateTime endTime) {
-        Optional<Pool> optionalPool = poolRepository.findById(poolId);
-        if (optionalPool.isEmpty()) {
-            return false;
-        }
-        Pool pool = optionalPool.get();
-
-        // Check if requested slot is within pool operating hours
-        if (isWorkingHours(pool, startTime, endTime)) {
-            return false;
-        }
-
-        // Find all schedules for this pool in specified time range
-        List<Schedule> overlappingSchedules = scheduleRepository.findByPoolIdAndStartDatetimeBetween(
+    public boolean isAvailable(UUID poolId, LocalTime startTime, LocalTime endTime) {
+        return bookingRepository.findByPoolIdAndStartDatetimeBetween(
             poolId, startTime.minusMinutes(1), endTime.plusMinutes(1));
-
-        // Check how many bookings already exist for these schedules
-        int totalBookings = 0;
-        for (Schedule schedule : overlappingSchedules) {
-            List<Booking> bookings = bookingRepository.findByScheduleId(schedule.getId());
-            totalBookings += bookings.size();
-        }
-
-        return totalBookings < pool.getCapacity();
     }
 
     /**
@@ -270,13 +228,6 @@ public class BookingServiceImpl implements BookingService {
         Schedule newSchedule = scheduleRepository.findById(bookingUpdateRequestDTO.getScheduleId())
             .orElseThrow(() -> new BookingNotFoundException("Schedule not found with ID: "
                 + bookingUpdateRequestDTO.getScheduleId()));
-
-        // Check availability of new schedule
-        if (!isAvailable(newSchedule.getPool().getId(), newSchedule.getStartDatetime(),
-            newSchedule.getEndDatetime())) {
-            throw new BookingConflictException("The new schedule is not available or pool is at full capacity.");
-        }
-
         // Update booking fields
         existingBooking.setSchedule(newSchedule);
         existingBooking.setBookingDatetime(bookingUpdateRequestDTO.getBookingDatetime());

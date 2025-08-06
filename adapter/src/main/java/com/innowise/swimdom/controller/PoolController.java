@@ -45,9 +45,6 @@ public class PoolController implements PoolsApi {
     public ResponseEntity<List<PoolDto>> getPools(PoolDto filter) {
 
         List<PoolDto> pools = poolService.searchPools(filter);
-        if (pools.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
         return ResponseEntity.ok(pools);
     }
 }

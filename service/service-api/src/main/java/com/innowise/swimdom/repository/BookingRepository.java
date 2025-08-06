@@ -3,9 +3,11 @@ package com.innowise.swimdom.repository;
 import com.innowise.swimdom.entity.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -50,4 +52,19 @@ public interface BookingRepository extends JpaRepository<Booking, UUID>, JpaSpec
      */
     List<Booking> findByScheduleStartDatetimeBetween(LocalDateTime from, LocalDateTime to);
 
+    /**
+     * Find bookings by schedule start datetime range.
+     *
+     * @param openTime  start datetime (inclusive)
+     * @param closeTime end datetime (exclusive)
+     * @return list of bookings in the range
+     */
+    @Query("SELECT COUNT(s) > 0 FROM Schedule s "
+        + "JOIN s.pool p "
+        + "JOIN p.poolWorkingHours pw "
+        + "WHERE p.id = :id "
+        + "AND s.startDatetime <= :closeTime "
+        + "AND pw.openTime < :openTime "
+        + "AND pw.closeTime > :closeTime")
+    boolean findByPoolIdAndStartDatetimeBetween(UUID id, LocalTime openTime, LocalTime closeTime);
 }

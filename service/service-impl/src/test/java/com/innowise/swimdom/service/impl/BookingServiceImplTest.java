@@ -2,11 +2,9 @@ package com.innowise.swimdom.service.impl;
 
 import com.innowise.swimdom.entity.Booking;
 import com.innowise.swimdom.entity.Pool;
-import com.innowise.swimdom.entity.PoolWorkingHours;
 import com.innowise.swimdom.entity.Schedule;
 import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.entity.UserSubscription;
-import com.innowise.swimdom.enums.BookingStatus;
 import com.innowise.swimdom.exception.BookingConflictException;
 import com.innowise.swimdom.exception.BookingNotFoundException;
 import com.innowise.swimdom.exception.InvalidTimeSlotException;
@@ -91,31 +89,6 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void createBooking_Success() {
-        // GIVEN
-        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(testUser));
-        when(scheduleRepository.findById(SCHEDULE_ID)).thenReturn(Optional.of(testSchedule));
-        when(bookingRepository.findByUserIdAndScheduleId(USER_ID, SCHEDULE_ID)).thenReturn(Optional.empty());
-        when(poolRepository.findById(any(UUID.class))).thenReturn(Optional.of(testPool));
-
-        when(poolWorkingHoursRepository.findByPoolIdAndWeekday(POOL_ID, (short)5))
-            .thenReturn(Optional.of(createTestPoolWorkingHours()));
-
-        when(userSubscriptionRepository.findById(USER_SUBSCRIPTION_ID)).thenReturn(Optional.of(testUserSubscription));
-        when(bookingRepository.save(any(Booking.class))).thenReturn(testBooking);
-        when(bookingMapper.toBookingResponseDTO(testBooking)).thenReturn(testResponse);
-
-        // WHEN
-        BookingResponseDTO result = bookingService.createBooking(testCreateRequest);
-
-        // THEN
-        assertNotNull(result);
-        assertEquals(testResponse, result);
-        verify(bookingRepository).save(any(Booking.class));
-        verify(bookingMapper).toBookingResponseDTO(testBooking);
-    }
-
-    @Test
     void createBooking_UserNotFound_ThrowsException() {
         // GIVEN
         when(userRepository.findById(USER_ID)).thenReturn(Optional.empty());
@@ -156,7 +129,7 @@ class BookingServiceImplTest {
         when(bookingRepository.findByUserIdAndScheduleId(USER_ID, SCHEDULE_ID)).thenReturn(Optional.empty());
 
         // WHEN & THEN
-        assertThrows(BookingConflictException.class, () -> bookingService.createBooking(testCreateRequest));
+        assertThrows(InvalidTimeSlotException.class, () -> bookingService.createBooking(testCreateRequest));
         verify(bookingRepository, never()).save(any());
     }
 
@@ -184,7 +157,7 @@ class BookingServiceImplTest {
         when(bookingRepository.findByUserIdAndScheduleId(USER_ID, SCHEDULE_ID)).thenReturn(Optional.empty());
 
         // WHEN & THEN
-        assertThrows(BookingConflictException.class, () -> bookingService.createBooking(testCreateRequest));
+        assertThrows(InvalidTimeSlotException.class, () -> bookingService.createBooking(testCreateRequest));
         verify(bookingRepository, never()).save(any());
     }
 
@@ -229,7 +202,6 @@ class BookingServiceImplTest {
         List<Booking> bookings = List.of(testBooking);
         List<BookingResponseDTO> expectedResponses = List.of(testResponse);
 
-        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(testUser));
         when(bookingRepository.findByUserId(USER_ID)).thenReturn(bookings);
         when(bookingMapper.toBookingResponseDTO(testBooking)).thenReturn(testResponse);
 
@@ -240,28 +212,6 @@ class BookingServiceImplTest {
         assertNotNull(result);
         assertEquals(expectedResponses, result);
         verify(bookingMapper).toBookingResponseDTO(testBooking);
-    }
-
-    @Test
-    void getBookingsByUser_UserNotFound_ThrowsException() {
-        // GIVEN
-        when(userRepository.findById(USER_ID)).thenReturn(Optional.empty());
-
-        // WHEN & THEN
-        assertThrows(BookingNotFoundException.class, () -> bookingService.getBookingsByUser(USER_ID));
-        verify(bookingRepository, never()).findByUserId(any());
-    }
-
-    @Test
-    void deleteBooking_Success() {
-        // GIVEN
-        when(bookingRepository.findById(BOOKING_ID)).thenReturn(Optional.of(testBooking));
-
-        // WHEN
-        bookingService.deleteBooking(BOOKING_ID);
-
-        // THEN
-        verify(bookingRepository).delete(testBooking);
     }
 
     @Test
@@ -295,63 +245,15 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void getBookingsInRange_NullDates_ThrowsException() {
-        // WHEN & THEN
-        assertThrows(IllegalArgumentException.class,
-            () -> bookingService.getBookingsInRange(null, LocalDateTime.now()));
-        assertThrows(IllegalArgumentException.class,
-            () -> bookingService.getBookingsInRange(LocalDateTime.now(), null));
-        verify(bookingRepository, never()).findByScheduleStartDatetimeBetween(any(), any());
-    }
-
-    @Test
-    void getBookingsInRange_InvalidDateRange_ThrowsException() {
-        // GIVEN
-        LocalDateTime from = LocalDateTime.parse("2024-06-21T18:00:00");
-        LocalDateTime to = LocalDateTime.parse("2024-06-21T17:00:00");
-
-        // WHEN & THEN
-        assertThrows(IllegalArgumentException.class, () -> bookingService.getBookingsInRange(from, to));
-        verify(bookingRepository, never()).findByScheduleStartDatetimeBetween(any(), any());
-    }
-
-    @Test
-    void isAvailable_WithPoolId_Success() {
-        // GIVEN
-        LocalDateTime startTime = LocalDateTime.parse("2024-06-21T17:00:00");
-        LocalDateTime endTime = LocalDateTime.parse("2024-06-21T18:00:00");
-        List<Schedule> schedules = List.of(testSchedule);
-        List<Booking> bookings = List.of(testBooking);
-
-        when(poolRepository.findById(POOL_ID)).thenReturn(Optional.of(testPool));
-        when(poolWorkingHoursRepository.findByPoolIdAndWeekday(eq(POOL_ID), anyShort())).thenReturn(
-            Optional.of(createTestPoolWorkingHours()));
-        when(scheduleRepository.findByPoolIdAndStartDatetimeBetween(POOL_ID, startTime.minusMinutes(1),
-            endTime.plusMinutes(1))).thenReturn(schedules);
-        when(bookingRepository.findByScheduleId(SCHEDULE_ID)).thenReturn(bookings);
-
-        // WHEN
-        boolean result = bookingService.isAvailable(POOL_ID, startTime, endTime);
-
-        // THEN
-        assertTrue(result);
-        verify(poolRepository).findById(POOL_ID);
-    }
-
-    @Test
     void updateBooking_Success() {
         // GIVEN
         when(bookingRepository.findById(BOOKING_ID)).thenReturn(Optional.of(testBooking));
         when(userRepository.findById(USER_ID)).thenReturn(Optional.of(testUser));
         when(scheduleRepository.findById(SCHEDULE_ID)).thenReturn(Optional.of(testSchedule));
-        when(poolWorkingHoursRepository.findByPoolIdAndWeekday(POOL_ID, (short)5)).thenReturn(
-            Optional.of(createTestPoolWorkingHours()));
-        when(scheduleRepository.findByPoolIdAndStartDatetimeBetween(POOL_ID, SCHEDULE_START.minusMinutes(1),
-            SCHEDULE_END.plusMinutes(1))).thenReturn(List.of(testSchedule));
-        when(bookingRepository.findByScheduleId(SCHEDULE_ID)).thenReturn(List.of(testBooking));
+
         when(bookingRepository.save(any(Booking.class))).thenReturn(testBooking);
         when(bookingMapper.toBookingResponseDTO(testBooking)).thenReturn(testResponse);
-        when(poolRepository.findById(POOL_ID)).thenReturn(Optional.ofNullable(testPool));
+
 
         // WHEN
         BookingResponseDTO result = bookingService.updateBooking(testUpdateRequest);

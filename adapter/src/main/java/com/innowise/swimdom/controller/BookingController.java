@@ -8,7 +8,6 @@ import com.innowise.swimdom.openapi.model.BookingUpdateRequestDTO;
 import com.innowise.swimdom.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -38,21 +36,15 @@ public class BookingController implements BookingsApi {
     private final BookingService bookingService;
 
     @Override
-    public ResponseEntity<List<BookingResponseDTO>> bookingsGet() {
-        List<BookingResponseDTO> bookings = bookingService.getAllBookings();
-        return new ResponseEntity<>(bookings, HttpStatus.OK);
-    }
-
-    @Override
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> bookingsIdDelete(@PathVariable("id") UUID id) {
+    public ResponseEntity<Void> deleteBookingsById(@PathVariable("id") UUID id) {
         bookingService.deleteBooking(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<BookingResponseDTO> bookingsIdGet(@PathVariable("id") UUID id) {
+    public ResponseEntity<BookingResponseDTO> getBookingsById(@PathVariable("id") UUID id) {
         BookingResponseDTO booking = bookingService.getBooking(id.toString());
         if (booking != null) {
             return new ResponseEntity<>(booking, HttpStatus.OK);
@@ -62,21 +54,22 @@ public class BookingController implements BookingsApi {
 
     @Override
     @PutMapping("/{id}")
-    public ResponseEntity<BookingResponseDTO> bookingsIdPut(@PathVariable("id") UUID id,
-                                                            @RequestBody
-                                                            BookingUpdateRequestDTO bookingUpdateRequestDTO) {
+    public ResponseEntity<BookingResponseDTO> updateBookingsById(@PathVariable("id") UUID id,
+                                                                 @RequestBody
+                                                                 BookingUpdateRequestDTO bookingUpdateRequestDTO) {
         BookingResponseDTO updatedBooking = bookingService.updateBooking(bookingUpdateRequestDTO);
         return new ResponseEntity<>(updatedBooking, HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping
     @Override
-    public ResponseEntity<BookingResponseDTO> bookingsPost(
+    public ResponseEntity<BookingResponseDTO> createBooking(
         @RequestBody BookingCreateRequestDTO bookingCreateRequestDTO) {
         BookingResponseDTO createdBooking = bookingService.createBooking(bookingCreateRequestDTO);
         return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
     }
 
+    @Override
     @GetMapping("/user")
     public ResponseEntity<List<BookingResponseDTO>> getBookingsByUser(@RequestParam UUID userId) {
         List<BookingResponseDTO> bookings = bookingService.getBookingsByUser(userId);
@@ -84,24 +77,16 @@ public class BookingController implements BookingsApi {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<BookingResponseDTO>> getBookingsInRange(
-        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
-        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to) {
+    public ResponseEntity<List<BookingResponseDTO>> getBookingsByRange(
+        @RequestParam LocalDateTime from,
+        @RequestParam LocalDateTime to) {
         List<BookingResponseDTO> bookings = bookingService.getBookingsInRange(from, to);
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
-    @GetMapping("/availability")
-    public ResponseEntity<Map<String, Boolean>> checkAvailability(
-        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
-        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime) {
-        boolean isAvailable = bookingService.isAvailable(startTime, endTime);
-        Map<String, Boolean> response = Map.of("available", isAvailable);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
+    @Override
     @PostMapping("/filter")
-    public ResponseEntity<List<BookingResponseDTO>> getBookingsByFilter(
+    public ResponseEntity<List<BookingResponseDTO>> getBookingsByFilters(
         @RequestBody BookingFilterDTO filterDTO) {
         List<BookingResponseDTO> bookings = bookingService.getBookingsByFilter(filterDTO);
         return new ResponseEntity<>(bookings, HttpStatus.OK);

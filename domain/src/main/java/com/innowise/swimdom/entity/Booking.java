@@ -13,7 +13,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -24,10 +27,13 @@ import java.util.UUID;
  * Entity for booking.
  */
 @Data
+@Builder
+@RequiredArgsConstructor
 @Entity
 @Table(name = "booking",
        uniqueConstraints = @UniqueConstraint(name = "uq_booking_user_schedule",
                                              columnNames = {"user_id", "schedule_id"}))
+@AllArgsConstructor
 public class Booking  {
 
     @Id

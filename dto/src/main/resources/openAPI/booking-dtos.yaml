@@ -1,17 +1,7 @@
-bookings: 
- get:
-   summary: Get all bookings
-   responses:
-     '200':
-       description: Successful response
-       content:
-         application/json:
-           schema:
-             type: array
-             items:
-               $ref: '#/components/schemas/BookingResponseDTO'
+bookings:
  post:
    summary: Create a new booking
+   operationId: createBooking
    requestBody:
      required: true
      content:
@@ -39,6 +29,7 @@ bookingsId:
      description: Booking ID
  get:
    summary: Get a booking by ID
+   operationId: getBookingsById
    responses:
      '200':
        description: Successful response
@@ -50,6 +41,7 @@ bookingsId:
        description: Booking not found
  put:
    summary: Update a booking by ID
+   operationId: updateBookingsById
    requestBody:
      required: true
      content:
@@ -69,6 +61,7 @@ bookingsId:
        description: Booking not found
  delete:
    summary: Delete a booking by ID
+   operationId: deleteBookingsById
    responses:
      '204':
        description: Booking successfully deleted
@@ -78,6 +71,7 @@ bookingsId:
 bookingsByUser:
  get:
    summary: Get all bookings for a user
+   operationId: getBookingsByUser
    parameters:
      - in: query
        name: userId
@@ -101,14 +95,17 @@ bookingsByUser:
 bookingsInRange:
  get:
    summary: Get bookings in a datetime range
+   operationId: getBookingsByRange
    properties:
      from:
+       in: path
        type: string
        format: date-time
        required: true
        description: Start datetime (inclusive)
        example: "2024-06-21T17:00:00Z"
      to:
+       in: path
        type: string
        format: date-time
        required: true
@@ -129,6 +126,8 @@ bookingsInRange:
 bookingsAvailability:
  get:
    summary: Check if pool is available for booking in given time slot
+   operationId: getBookingsAvailability
+
    properties:
      startTime:
        type: string
@@ -155,6 +154,7 @@ bookingsAvailability:
 bookingsFilter:
  post:
    summary: Get bookings by filter
+   operationId: getBookingsByFilters
    requestBody:
      required: true
      content:

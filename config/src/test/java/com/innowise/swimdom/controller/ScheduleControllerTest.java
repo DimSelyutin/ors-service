@@ -3,29 +3,46 @@ package com.innowise.swimdom.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.innowise.swimdom.openapi.model.ScheduleDto;
 import com.innowise.swimdom.service.ScheduleService;
+import com.innowise.swimdom.service.impl.JwtTokenProvider;
 import com.innowise.swimdom.util.TestData;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static com.innowise.swimdom.util.TestData.*;
+import static com.innowise.swimdom.util.TestData.POOL_ID;
+import static com.innowise.swimdom.util.TestData.SCHEDULE_END_DATETIME;
+import static com.innowise.swimdom.util.TestData.SCHEDULE_ID;
+import static com.innowise.swimdom.util.TestData.SCHEDULE_START_DATETIME;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
 @SpringBootTest
-@WebMvcTest(ScheduleController.class)
+@ActiveProfiles("test")
+@WithMockUser
 class ScheduleControllerTest {
 
     @Autowired
@@ -38,6 +55,7 @@ class ScheduleControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
+
     void createSchedule_success() throws Exception {
         // GIVEN
         ScheduleDto scheduleDto = TestData.testScheduleDto;
@@ -45,7 +63,7 @@ class ScheduleControllerTest {
 
         // WHEN & THEN
         mockMvc.perform(post("/api/v1/schedules")
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON).header("Authorization", "token")
                 .content(objectMapper.writeValueAsString(scheduleDto)))
             .andExpect(status().isCreated())
             .andExpect(jsonPath("$.id").value(scheduleDto.getId().toString()))

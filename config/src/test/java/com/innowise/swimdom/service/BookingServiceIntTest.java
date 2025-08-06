@@ -250,25 +250,12 @@ class BookingServiceIntTest {
     }
 
     @Test
-    void isAvailable_Integration_Success() {
-        // GIVEN
-        LocalDateTime startTime = LocalDateTime.parse("2024-06-24T17:00:00");
-        LocalDateTime endTime = LocalDateTime.parse("2024-06-24T18:00:00");
-
-        // WHEN
-        boolean result = bookingService.isAvailable(testPool.getId(), startTime, endTime);
-
-        // THEN
-        assertTrue(result); // Pool is available before any bookings
-    }
-
-    @Test
     void isAvailable_Integration_AfterBooking_ReturnsFalse() {
         // GIVEN - Create a booking
         bookingService.createBooking(testCreateRequest);
 
-        LocalDateTime startTime = LocalDateTime.now();
-        LocalDateTime endTime = LocalDateTime.now().plusMonths(3);
+        LocalTime startTime = LocalTime.now();
+        LocalTime endTime = LocalTime.now().plusHours(3);
 
         // WHEN
         boolean result = bookingService.isAvailable(testPool.getId(), startTime, endTime);

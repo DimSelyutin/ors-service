@@ -24,7 +24,6 @@ pools:
         $ref: './error-dto.yaml#/components/responses/Conflict'
       '500':
         $ref: './error-dto.yaml#/components/responses/InternalServerError'
-
 poolsFilter:
   post:
     tags:
@@ -42,6 +41,16 @@ poolsFilter:
     responses:
       '200':
         description: A list of pools matching the filter
+
+  get:
+    tags:
+      - Pools
+    summary: Retrieve all available pools
+    description: Returns a list of all swimming pools available for ticket purchase.
+    operationId: getPools
+    responses:
+      '200':
+        description: A list of pools
         content:
           application/json:
             schema:
@@ -58,7 +67,6 @@ poolsFilter:
         $ref: './error-dto.yaml#/components/responses/Conflict'
       '500':
         $ref: './error-dto.yaml#/components/responses/InternalServerError'
-
 components:
   schemas:
     PoolDto:

@@ -26,3 +26,4 @@ token:
     expiration_time: 600_000
     content_type: application/json
     header_string: "Authorization"
+

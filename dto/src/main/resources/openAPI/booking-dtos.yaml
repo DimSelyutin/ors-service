@@ -61,7 +61,7 @@ bookingsId:
        description: Booking not found
  delete:
    summary: Delete a booking by ID
-   operationId: deleteBookingsById
+   operationId: deleteBookingById
    responses:
      '204':
        description: Booking successfully deleted
@@ -71,7 +71,7 @@ bookingsId:
 bookingsByUser:
  get:
    summary: Get all bookings for a user
-   operationId: getBookingsByUser
+   operationId: getBookingByUser
    parameters:
      - in: query
        name: userId
@@ -126,7 +126,7 @@ bookingsInRange:
 bookingsAvailability:
  get:
    summary: Check if pool is available for booking in given time slot
-   operationId: getBookingsAvailability
+   operationId: getBookingAvailability
 
    properties:
      startTime:

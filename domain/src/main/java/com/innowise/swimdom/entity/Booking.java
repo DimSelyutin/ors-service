@@ -16,10 +16,11 @@ import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -28,13 +29,13 @@ import java.util.UUID;
  */
 @Data
 @Builder
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "booking",
        uniqueConstraints = @UniqueConstraint(name = "uq_booking_user_schedule",
                                              columnNames = {"user_id", "schedule_id"}))
-@AllArgsConstructor
-public class Booking  {
+public class Booking {
 
     @Id
     @GeneratedValue
@@ -73,6 +74,5 @@ public class Booking  {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
 }
 

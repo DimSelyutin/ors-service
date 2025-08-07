@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,7 +36,7 @@ public class BookingController implements BookingsApi {
 
     @Override
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBookingsById(@PathVariable("id") UUID id) {
+    public ResponseEntity<Void> deleteBookingById(@PathVariable("id") UUID id) {
         bookingService.deleteBooking(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -71,16 +70,8 @@ public class BookingController implements BookingsApi {
 
     @Override
     @GetMapping("/user")
-    public ResponseEntity<List<BookingResponseDTO>> getBookingsByUser(@RequestParam UUID userId) {
+    public ResponseEntity<List<BookingResponseDTO>> getBookingByUser(@RequestParam UUID userId) {
         List<BookingResponseDTO> bookings = bookingService.getBookingsByUser(userId);
-        return new ResponseEntity<>(bookings, HttpStatus.OK);
-    }
-
-    @GetMapping("")
-    public ResponseEntity<List<BookingResponseDTO>> getBookingsByRange(
-        @RequestParam LocalDateTime from,
-        @RequestParam LocalDateTime to) {
-        List<BookingResponseDTO> bookings = bookingService.getBookingsInRange(from, to);
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 

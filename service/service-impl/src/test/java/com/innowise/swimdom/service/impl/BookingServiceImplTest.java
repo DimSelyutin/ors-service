@@ -225,26 +225,6 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void getBookingsInRange_Success() {
-        // GIVEN
-        LocalDateTime from = LocalDateTime.parse("2024-06-21T00:00:00");
-        LocalDateTime to = LocalDateTime.parse("2024-06-21T23:59:59");
-        List<Booking> bookings = List.of(testBooking);
-        List<BookingResponseDTO> expectedResponses = List.of(testResponse);
-
-        when(bookingRepository.findByScheduleStartDatetimeBetween(from, to)).thenReturn(bookings);
-        when(bookingMapper.toBookingResponseDTO(testBooking)).thenReturn(testResponse);
-
-        // WHEN
-        List<BookingResponseDTO> result = bookingService.getBookingsInRange(from, to);
-
-        // THEN
-        assertNotNull(result);
-        assertEquals(expectedResponses, result);
-        verify(bookingMapper).toBookingResponseDTO(testBooking);
-    }
-
-    @Test
     void updateBooking_Success() {
         // GIVEN
         when(bookingRepository.findById(BOOKING_ID)).thenReturn(Optional.of(testBooking));

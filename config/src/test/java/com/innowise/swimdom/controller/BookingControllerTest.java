@@ -121,20 +121,6 @@ class BookingControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    // @Test
-    // void updateBookingsById_Success() throws Exception {
-    //     UUID bookingId = UUID.randomUUID();
-    //     testBookingUpdateRequest.setId(bookingId);
-    //     testBookingUpdateRequest.setBookingDatetime(LocalDateTime.now().plusMonths(4));
-    //     when(bookingService.updateBooking(any(BookingUpdateRequestDTO.class))).thenReturn(testBookingResponse);
-    //
-    //     mockMvc.perform(put("/api/v1/bookings/{id}", bookingId)
-    //             .contentType(MediaType.APPLICATION_JSON)
-    //             .content(objectMapper.writeValueAsString(testBookingUpdateRequest)))
-    //             .andExpect(status().isOk())
-    //             .andExpect(content().json(objectMapper.writeValueAsString(testBookingResponse)));
-    // }
-
     @Test
     void updateBookingsById_InvalidJson_ReturnsBadRequest() throws Exception {
         UUID bookingId = UUID.randomUUID();
@@ -173,34 +159,6 @@ class BookingControllerTest {
 
         mockMvc.perform(get("/api/v1/bookings/user")
                 .param("userId", userId.toString())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().json("[]"));
-    }
-
-    @Test
-    void getBookingsByRange_Success() throws Exception {
-        LocalDateTime from = LocalDateTime.now();
-        LocalDateTime to = LocalDateTime.now().plusDays(1);
-        when(bookingService.getBookingsInRange(eq(from), eq(to))).thenReturn(testBookingList);
-
-        mockMvc.perform(get("/api/v1/bookings")
-                .param("from", from.toString())
-                .param("to", to.toString())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(testBookingList)));
-    }
-
-    @Test
-    void getBookingsByRange_EmptyList_Success() throws Exception {
-        LocalDateTime from = LocalDateTime.now();
-        LocalDateTime to = LocalDateTime.now().plusDays(1);
-        when(bookingService.getBookingsInRange(eq(from), eq(to))).thenReturn(Arrays.asList());
-
-        mockMvc.perform(get("/api/v1/bookings")
-                .param("from", from.toString())
-                .param("to", to.toString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("[]"));

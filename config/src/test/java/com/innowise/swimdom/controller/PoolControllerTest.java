@@ -81,37 +81,6 @@ class PoolControllerTest {
             .andExpect(status().isBadRequest());
     }
 
-    // @Test
-    // void getPools_WithFilter_Success() throws Exception {
-    //     when(poolService.searchPools(any(PoolDto.class))).thenReturn(testPoolList);
-    //
-    //     mockMvc.perform(get("/api/v1/pools")
-    //             .param("name", "Test Pool")
-    //             .contentType(MediaType.APPLICATION_JSON))
-    //         .andExpect(status().isOk())
-    //         .andExpect(content().json(objectMapper.writeValueAsString(testPoolList)));
-    // }
-
-    // @Test
-    // void getPools_WithoutFilter_Success() throws Exception {
-    //     when(poolService.searchPools(any(PoolDto.class))).thenReturn(testPoolList);
-    //
-    //     mockMvc.perform(get("/api/v1/pools")
-    //             .contentType(MediaType.APPLICATION_JSON))
-    //         .andExpect(status().isOk())
-    //         .andExpect(content().json(objectMapper.writeValueAsString(testPoolList)));
-    // }
-
-    // @Test
-    // void getPools_EmptyList_Success() throws Exception {
-    //     when(poolService.searchPools(any(PoolDto.class))).thenReturn(Arrays.asList());
-    //
-    //     mockMvc.perform(get("/api/v1/pools")
-    //             .contentType(MediaType.APPLICATION_JSON))
-    //         .andExpect(status().isOk())
-    //         .andExpect(content().json("[]"));
-    // }
-
     @Test
     void createPool_InvalidJson_ReturnsBadRequest() throws Exception {
         mockMvc.perform(post("/api/v1/pools")

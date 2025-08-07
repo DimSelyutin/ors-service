@@ -174,18 +174,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     /**
-     * Retrieves all bookings within a specified time range.
-     * Useful for admins to see load.
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<BookingResponseDTO> getBookingsInRange(LocalDateTime from, LocalDateTime to) {
-        return bookingRepository.findByScheduleStartDatetimeBetween(from, to).stream()
-            .map(bookingMapper::toBookingResponseDTO)
-            .toList();
-    }
-
-    /**
      * Retrieves bookings based on filter criteria.
      */
     @Override

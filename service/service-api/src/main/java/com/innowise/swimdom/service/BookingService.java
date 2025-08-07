@@ -6,7 +6,6 @@ import com.innowise.swimdom.openapi.model.BookingResponseDTO;
 import com.innowise.swimdom.openapi.model.BookingUpdateRequestDTO;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,15 +53,6 @@ public interface BookingService {
      * @param bookingId the ID of the booking to delete
      */
     void deleteBooking(UUID bookingId);
-
-    /**
-     * Retrieves all bookings within a specified time range.
-     *
-     * @param from start of the time range (inclusive)
-     * @param to   end of the time range (exclusive)
-     * @return list of bookings within the specified time range
-     */
-    List<BookingResponseDTO> getBookingsInRange(LocalDateTime from, LocalDateTime to);
 
     /**
      * Updates a booking (e.g., changes time).

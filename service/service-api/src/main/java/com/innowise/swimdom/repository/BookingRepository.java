@@ -59,12 +59,15 @@ public interface BookingRepository extends JpaRepository<Booking, UUID>, JpaSpec
      * @param closeTime end datetime (exclusive)
      * @return list of bookings in the range
      */
-    @Query("SELECT COUNT(s) > 0 FROM Schedule s "
-        + "JOIN s.pool p "
-        + "JOIN p.poolWorkingHours pw "
+    @Query(value = "SELECT EXISTS ("
+        + "SELECT 1 "
+        + "FROM schedule s "
+        + "JOIN pool p ON s.pool_id = p.id "
+        + "JOIN pool_working_hours pw ON pw.pool_id = p.id "
         + "WHERE p.id = :id "
-        + "AND s.startDatetime <= :closeTime "
-        + "AND pw.openTime < :openTime "
-        + "AND pw.closeTime > :closeTime")
+        + "AND s.start_datetime <= :closeTime "
+        + "AND pw.open_time < :openTime "
+        + "AND pw.close_time > :closeTime"
+        + ") AS exists_flag", nativeQuery = true)
     boolean findByPoolIdAndStartDatetimeBetween(UUID id, LocalTime openTime, LocalTime closeTime);
 }

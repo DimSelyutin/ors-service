@@ -233,23 +233,6 @@ class BookingServiceIntTest {
     }
 
     @Test
-    void getBookingsInRange_Integration_Success() {
-        // GIVEN - Create a booking
-        bookingService.createBooking(testCreateRequest);
-
-        LocalDateTime from = LocalDateTime.now();
-        LocalDateTime to = LocalDateTime.now().plusDays(7);
-
-        // WHEN
-        List<BookingResponseDTO> result = bookingService.getBookingsInRange(from, to);
-
-        // THEN
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals(testUser.getId(), result.get(0).getUserId());
-    }
-
-    @Test
     void isAvailable_Integration_AfterBooking_ReturnsFalse() {
         // GIVEN - Create a booking
         bookingService.createBooking(testCreateRequest);

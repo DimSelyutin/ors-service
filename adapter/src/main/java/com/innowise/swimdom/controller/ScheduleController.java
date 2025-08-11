@@ -50,9 +50,6 @@ public class ScheduleController {
     @GetMapping("/{id}")
     public ResponseEntity<ScheduleDto> getSchedule(@PathVariable String id) {
         ScheduleDto schedule = scheduleService.getSchedule(id);
-        if (schedule == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(schedule);
     }
 

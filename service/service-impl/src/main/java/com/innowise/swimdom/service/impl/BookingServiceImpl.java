@@ -7,11 +7,7 @@ import com.innowise.swimdom.entity.Schedule;
 import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.entity.UserSubscription;
 import com.innowise.swimdom.enums.BookingStatus;
-import com.innowise.swimdom.exception.BookingConflictException;
 import com.innowise.swimdom.exception.BookingNotFoundException;
-import com.innowise.swimdom.exception.InvalidTimeSlotException;
-import com.innowise.swimdom.exception.ScheduleNotFoundException;
-import com.innowise.swimdom.exception.UserNotFoundException;
 import com.innowise.swimdom.mapper.BookingMapper;
 import com.innowise.swimdom.openapi.model.BookingCreateRequestDTO;
 import com.innowise.swimdom.openapi.model.BookingFilterDTO;
@@ -26,11 +22,11 @@ import com.innowise.swimdom.repository.UserSubscriptionRepository;
 import com.innowise.swimdom.repository.specification.BookingSpecification;
 import com.innowise.swimdom.service.BookingService;
 import com.innowise.swimdom.util.Constants;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -38,14 +34,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.domain.Specification;
-
-import static com.innowise.swimdom.util.Constants.BOOKING_ALREADY_EXIST;
-import static com.innowise.swimdom.util.Constants.BOOKING_DATE_OUTSIDE;
-import static com.innowise.swimdom.util.Constants.BOOKING_TIME_OUTSIDE;
-import static com.innowise.swimdom.util.Constants.SCHEDULE_NOT_FOUND;
-import static com.innowise.swimdom.util.Constants.USER_SUBSCRIPTION_EXPIRED;
-import static com.innowise.swimdom.util.Constants.USER_SUBSCRIPTION_NOT_BELONG;
-import static com.innowise.swimdom.util.Constants.USER_SUBSCRIPTION_NOT_FOUND;
 
 /**
  * Implementation for BookingService.
@@ -69,50 +57,12 @@ public class BookingServiceImpl implements BookingService {
      */
     @Override
     @Transactional
-    public BookingResponseDTO createBooking(BookingCreateRequestDTO bookingDTO) {
-        User user = userRepository.findById(bookingDTO.getUserId())
-            .orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND + bookingDTO.getUserId()));
+    public BookingResponseDTO createBooking(@Valid BookingCreateRequestDTO bookingDTO) {
 
-        Schedule schedule = scheduleRepository.findById(bookingDTO.getScheduleId())
-            .orElseThrow(
-                () -> new ScheduleNotFoundException(SCHEDULE_NOT_FOUND + bookingDTO.getScheduleId()));
-
-        Pool pool = schedule.getPool();
-
-        Optional<Booking> activeBooking = bookingRepository.findByUserIdAndScheduleId(
-            user.getId(), schedule.getId());
-
-        if (activeBooking.isPresent()) {
-            throw new BookingConflictException(
-                BOOKING_ALREADY_EXIST);
-        }
-
-        // Check if booking time is within pool operating hours
-        if (isWorkingHours(pool, schedule.getStartDatetime(), schedule.getEndDatetime())) {
-            throw new InvalidTimeSlotException(BOOKING_TIME_OUTSIDE);
-        }
-
-        // Check subscription
-        UserSubscription userSubscription = userSubscriptionRepository.findById(bookingDTO.getUserSubscriptionId())
-            .orElseThrow(() -> new BookingNotFoundException(
-                USER_SUBSCRIPTION_NOT_FOUND + bookingDTO.getUserSubscriptionId()));
-
-        // Check that subscription belongs to user
-        if (!userSubscription.getUser().getId().equals(user.getId())) {
-            throw new BookingConflictException(USER_SUBSCRIPTION_NOT_BELONG);
-        }
-
-        // Check that subscription is active
-        if (userSubscription.getEndDate().isBefore(LocalDate.now())) {
-            throw new BookingConflictException(USER_SUBSCRIPTION_EXPIRED);
-        }
-
-        // Check that booking time is within subscription period
-        LocalDate scheduleDate = schedule.getStartDatetime().toLocalDate();
-        if (scheduleDate.isBefore(userSubscription.getStartDate())
-            || scheduleDate.isAfter(userSubscription.getEndDate())) {
-            throw new BookingConflictException(BOOKING_DATE_OUTSIDE);
-        }
+        User user = userRepository.findById(bookingDTO.getUserId()).get();
+        UserSubscription userSubscription =
+            userSubscriptionRepository.findById(bookingDTO.getUserSubscriptionId()).get();
+        Schedule schedule = scheduleRepository.findById(bookingDTO.getScheduleId()).get();
 
         Booking booking = Booking.builder()
             .user(user)
@@ -190,7 +140,7 @@ public class BookingServiceImpl implements BookingService {
      * Checks capacity and booking overlaps.
      */
     public boolean isAvailable(UUID poolId, LocalTime startTime, LocalTime endTime) {
-        return bookingRepository.findByPoolIdAndStartDatetimeBetween(
+        return bookingRepository.findBookingByTime(
             poolId, startTime.minusMinutes(1), endTime.plusMinutes(1));
     }
 

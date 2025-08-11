@@ -29,7 +29,7 @@ bookingsId:
      description: Booking ID
  get:
    summary: Get a booking by ID
-   operationId: getBookingsById
+   operationId: getBookingById
    responses:
      '200':
        description: Successful response
@@ -41,7 +41,7 @@ bookingsId:
        description: Booking not found
  put:
    summary: Update a booking by ID
-   operationId: updateBookingsById
+   operationId: updateBookingById
    requestBody:
      required: true
      content:
@@ -71,7 +71,7 @@ bookingsId:
 bookingsByUser:
  get:
    summary: Get all bookings for a user
-   operationId: getBookingByUser
+   operationId: getBookingByUserId
    parameters:
      - in: query
        name: userId

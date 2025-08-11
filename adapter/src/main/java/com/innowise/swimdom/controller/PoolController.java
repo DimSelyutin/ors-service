@@ -22,7 +22,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/pools")
+@RequestMapping("/api/v1")
 public class PoolController implements PoolsApi {
 
     private final PoolService poolService;
@@ -31,7 +31,7 @@ public class PoolController implements PoolsApi {
      * POST /pools : Create a new pool.
      */
     @Override
-    @PostMapping()
+    @PostMapping("/admin/pools")
     public ResponseEntity<PoolDto> createPool(@Valid @RequestBody PoolDto poolDto) {
         PoolDto createdPool = poolService.createPool(poolDto);
         return new ResponseEntity<>(createdPool, HttpStatus.CREATED);
@@ -41,7 +41,7 @@ public class PoolController implements PoolsApi {
      * GET /pools : Retrieve all available pools.
      */
     @Override
-    @GetMapping()
+    @GetMapping("/pools")
     public ResponseEntity<List<PoolDto>> getPools(PoolDto filter) {
 
         List<PoolDto> pools = poolService.searchPools(filter);

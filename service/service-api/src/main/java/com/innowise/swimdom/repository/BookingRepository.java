@@ -69,5 +69,5 @@ public interface BookingRepository extends JpaRepository<Booking, UUID>, JpaSpec
         + "AND pw.open_time < :openTime "
         + "AND pw.close_time > :closeTime"
         + ") AS exists_flag", nativeQuery = true)
-    boolean findByPoolIdAndStartDatetimeBetween(UUID id, LocalTime openTime, LocalTime closeTime);
+    boolean findBookingByTime(UUID id, LocalTime openTime, LocalTime closeTime);
 }

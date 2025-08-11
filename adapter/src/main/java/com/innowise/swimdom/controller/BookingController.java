@@ -29,21 +29,21 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/bookings")
+@RequestMapping("/api/v1")
 public class BookingController implements BookingsApi {
 
     private final BookingService bookingService;
 
     @Override
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/bookings/{id}")
     public ResponseEntity<Void> deleteBookingById(@PathVariable("id") UUID id) {
         bookingService.deleteBooking(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override
-    @GetMapping("/{id}")
-    public ResponseEntity<BookingResponseDTO> getBookingsById(@PathVariable("id") UUID id) {
+    @GetMapping("/bookings/bookings/{id}")
+    public ResponseEntity<BookingResponseDTO> getBookingById(@PathVariable("id") UUID id) {
         BookingResponseDTO booking = bookingService.getBooking(id.toString());
         if (booking != null) {
             return new ResponseEntity<>(booking, HttpStatus.OK);
@@ -52,16 +52,16 @@ public class BookingController implements BookingsApi {
     }
 
     @Override
-    @PutMapping("/{id}")
-    public ResponseEntity<BookingResponseDTO> updateBookingsById(@PathVariable("id") UUID id,
+    @PutMapping("/admin/bookings/{id}")
+    public ResponseEntity<BookingResponseDTO> updateBookingById(@PathVariable("id") UUID id,
                                                                  @RequestBody
                                                                  BookingUpdateRequestDTO bookingUpdateRequestDTO) {
         BookingResponseDTO updatedBooking = bookingService.updateBooking(bookingUpdateRequestDTO);
         return new ResponseEntity<>(updatedBooking, HttpStatus.OK);
     }
 
-    @PostMapping
     @Override
+    @PostMapping("/admin/bookings")
     public ResponseEntity<BookingResponseDTO> createBooking(
         @RequestBody BookingCreateRequestDTO bookingCreateRequestDTO) {
         BookingResponseDTO createdBooking = bookingService.createBooking(bookingCreateRequestDTO);
@@ -69,14 +69,14 @@ public class BookingController implements BookingsApi {
     }
 
     @Override
-    @GetMapping("/user")
-    public ResponseEntity<List<BookingResponseDTO>> getBookingByUser(@RequestParam UUID userId) {
+    @GetMapping("/admin/user/bookings")
+    public ResponseEntity<List<BookingResponseDTO>> getBookingByUserId(@RequestParam UUID userId) {
         List<BookingResponseDTO> bookings = bookingService.getBookingsByUser(userId);
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @Override
-    @PostMapping("/filter")
+    @PostMapping("/admin/filter/bookings")
     public ResponseEntity<List<BookingResponseDTO>> getBookingsByFilters(
         @RequestBody BookingFilterDTO filterDTO) {
         List<BookingResponseDTO> bookings = bookingService.getBookingsByFilter(filterDTO);

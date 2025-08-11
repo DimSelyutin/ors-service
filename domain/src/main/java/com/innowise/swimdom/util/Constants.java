@@ -52,4 +52,6 @@ public final class Constants {
         "Booking date is outside of subscription period.";
     public static final String SCHEDULE_NOT_AVAILABLE =
         "The new schedule is not available or pool is at full capacity.";
+
+    public static final String CONFIRMED = "CONFIRMED";
 }

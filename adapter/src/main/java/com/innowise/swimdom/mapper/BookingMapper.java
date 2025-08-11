@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static com.innowise.swimdom.util.Constants.CONFIRMED;
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**
@@ -35,7 +36,7 @@ public interface BookingMapper {
     @Mapping(target = "user.id", source = "userId")
     @Mapping(target = "userSubscription.id", source = "userSubscriptionId")
     @Mapping(target = "schedule.id", source = "scheduleId")
-    @Mapping(target = "status", constant = "CONFIRMED")
+    @Mapping(target = "status", constant = CONFIRMED)
     @Mapping(target = "notificationSent", constant = "false")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")

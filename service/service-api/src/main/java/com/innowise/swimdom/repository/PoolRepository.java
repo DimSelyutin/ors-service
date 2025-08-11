@@ -23,4 +23,8 @@ public interface PoolRepository
     Optional<List<Pool>> findPoolsByPoolWorkingHoursWeekday(Short weekday);
 
     boolean existsById(UUID poolId);
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 }

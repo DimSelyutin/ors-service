@@ -8,7 +8,11 @@ import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+<<<<<<< Updated upstream
 import org.mapstruct.ReportingPolicy;
+=======
+import org.mapstruct.NullValuePropertyMappingStrategy;
+>>>>>>> Stashed changes
 
 import java.util.List;
 
@@ -20,7 +24,11 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * @author DimSelyutin
  */
 @Mapper(componentModel = SPRING, injectionStrategy = InjectionStrategy.CONSTRUCTOR,
+<<<<<<< Updated upstream
         unmappedTargetPolicy = ReportingPolicy.ERROR)
+=======
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+>>>>>>> Stashed changes
 public interface UserSubscriptionMapper {
 
     /**
@@ -29,8 +37,11 @@ public interface UserSubscriptionMapper {
      * @param userSubscription entity
      * @return DTO
      */
+<<<<<<< Updated upstream
     @Mapping(target = "userId", source = "userSubscription.user.id")
     @Mapping(target = "subscriptionId", source = "userSubscription.subscription.id")
+=======
+>>>>>>> Stashed changes
     UserSubscriptionDTO toUserSubscriptionDto(UserSubscription userSubscription);
 
     /**
@@ -48,8 +59,11 @@ public interface UserSubscriptionMapper {
      * @return DTO
      */
     @Mapping(target = "id", ignore = true)
+<<<<<<< Updated upstream
     @Mapping(target = "user.id", source = "userSubscriptionDTO.userId")
     @Mapping(target = "subscription.id", source = "userSubscriptionDTO.subscriptionId")
+=======
+>>>>>>> Stashed changes
     UserSubscription toUserSubscription(UserSubscriptionDTO userSubscriptionDTO);
 
     /**
@@ -58,11 +72,14 @@ public interface UserSubscriptionMapper {
      * @param userSubscriptionDTO dto
      * @return DTO
      */
+<<<<<<< Updated upstream
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user.id", source = "userSubscriptionDTO.userId")
     @Mapping(target = "subscription.id", source = "userSubscriptionDTO.subscriptionId")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
+=======
+>>>>>>> Stashed changes
     UserSubscription toUserSubscription(UserSubscriptionCreateDTO userSubscriptionDTO);
 
     /**
@@ -70,10 +87,13 @@ public interface UserSubscriptionMapper {
      *
      * @params entity, updateDTO
      */
+<<<<<<< Updated upstream
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "entity.user.id", ignore = true)
     @Mapping(target = "entity.subscription.id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
+=======
+>>>>>>> Stashed changes
     void updateUserSubscriptionFromDto(UserSubscriptionUpdateDTO updateDTO, @MappingTarget UserSubscription entity);
 }

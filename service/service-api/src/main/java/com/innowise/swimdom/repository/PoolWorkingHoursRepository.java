@@ -4,7 +4,10 @@ import com.innowise.swimdom.entity.PoolWorkingHours;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+<<<<<<< Updated upstream
 import java.util.Optional;
+=======
+>>>>>>> Stashed changes
 import java.util.Set;
 import java.util.UUID;
 
@@ -13,6 +16,13 @@ import java.util.UUID;
  */
 @Repository
 public interface PoolWorkingHoursRepository extends JpaRepository<PoolWorkingHours, UUID> {
+<<<<<<< Updated upstream
+=======
+
+    Set<PoolWorkingHours> findByPoolId(UUID poolId);
+
+    Set<PoolWorkingHours> saveAll(Set<PoolWorkingHours> poolWorkingHours);
+>>>>>>> Stashed changes
 
     /**
      * Delete working hours for the pool on a specific day of the week.

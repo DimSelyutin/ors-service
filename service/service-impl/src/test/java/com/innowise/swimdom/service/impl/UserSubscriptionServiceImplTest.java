@@ -1,7 +1,11 @@
 package com.innowise.swimdom.service.impl;
 
 import com.innowise.swimdom.entity.UserSubscription;
+<<<<<<< Updated upstream
 import com.innowise.swimdom.exception.UserSubscriptionNotFoundException;
+=======
+import com.innowise.swimdom.exceptions.UserSubscriptionNotFoundException;
+>>>>>>> Stashed changes
 import com.innowise.swimdom.mapper.UserSubscriptionMapper;
 import com.innowise.swimdom.openapi.model.UserSubscriptionCreateDTO;
 import com.innowise.swimdom.openapi.model.UserSubscriptionDTO;
@@ -43,6 +47,7 @@ class UserSubscriptionServiceImplTest {
 
         userSubscriptionEntity = new UserSubscription();
         userSubscriptionEntity.setId(existingId);
+<<<<<<< Updated upstream
 
         userSubscriptionDTO = new UserSubscriptionDTO();
         userSubscriptionDTO.setId(existingId);
@@ -50,6 +55,23 @@ class UserSubscriptionServiceImplTest {
         createDTO = new UserSubscriptionCreateDTO();
 
         updateDTO = new UserSubscriptionUpdateDTO();
+=======
+        // userSubscriptionEntity.setSubscription("Test Des");
+        // заполните остальные поля сущности, если есть
+
+        userSubscriptionDTO = new UserSubscriptionDTO();
+        userSubscriptionDTO.setId(existingId);
+        // userSubscriptionDTO.setName("Test UserSubscription");
+        // заполните остальные поля DTO
+
+        createDTO = new UserSubscriptionCreateDTO();
+        // createDTO.setName("New UserSubscription");
+        // заполните поля создания
+
+        updateDTO = new UserSubscriptionUpdateDTO();
+        // updateDTO.setName("Updated UserSubscription");
+        // заполните поля обновления
+>>>>>>> Stashed changes
     }
 
     @Test

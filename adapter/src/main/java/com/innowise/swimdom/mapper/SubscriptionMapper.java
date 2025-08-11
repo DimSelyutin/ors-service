@@ -8,7 +8,11 @@ import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+<<<<<<< Updated upstream
 import org.mapstruct.ReportingPolicy;
+=======
+import org.mapstruct.NullValuePropertyMappingStrategy;
+>>>>>>> Stashed changes
 
 import java.util.List;
 
@@ -20,7 +24,11 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * @author DimSelyutin
  */
 @Mapper(componentModel = SPRING, injectionStrategy = InjectionStrategy.CONSTRUCTOR,
+<<<<<<< Updated upstream
         unmappedTargetPolicy = ReportingPolicy.ERROR)
+=======
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+>>>>>>> Stashed changes
 public interface SubscriptionMapper {
 
     /**
@@ -31,20 +39,29 @@ public interface SubscriptionMapper {
      * @return Subscription entity
      */
     @Mapping(target = "id", ignore = true)
+<<<<<<< Updated upstream
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
+=======
+>>>>>>> Stashed changes
     Subscription toSubscriptionEntity(SubscriptionCreateDTO createDTO);
 
     /**
      * Mapping SubscriptionUpdateDTO to Subscription entity.
      * Used to update an existing entity.
      *
+<<<<<<< Updated upstream
      * @param updateDTO            update data
      * @param existingSubscription existingSubscription entity to update
      */
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
+=======
+     * @param updateDTO update data
+     * @param existingSubscription existingSubscription entity to update
+     */
+>>>>>>> Stashed changes
     void updateSubscriptionFromDTO(SubscriptionUpdateDTO updateDTO, @MappingTarget Subscription existingSubscription);
 
     /**

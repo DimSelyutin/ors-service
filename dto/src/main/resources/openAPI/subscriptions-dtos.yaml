@@ -1,9 +1,14 @@
+<<<<<<< Updated upstream:dto/src/main/resources/openAPI/subscriptions-dtos.yaml
+=======
+
+>>>>>>> Stashed changes:adapter/src/main/resources/openAPI/subscriptions-dtos.yaml
 subscriptions:
   get:
     summary: Get all subscriptions
     operationId: getSubscriptions
     tags:
       - Subscription
+<<<<<<< Updated upstream:dto/src/main/resources/openAPI/subscriptions-dtos.yaml
 
     parameters:
       - name: filter
@@ -23,6 +28,8 @@ subscriptions:
             userId:
               type: string
               description: Filter by user ID
+=======
+>>>>>>> Stashed changes:adapter/src/main/resources/openAPI/subscriptions-dtos.yaml
     responses:
       '200':
         description: List of subscriptions
@@ -224,6 +231,7 @@ userSubscriptionById:
         description: User subscription deleted
       '404':
         description: User subscription not found
+<<<<<<< Updated upstream:dto/src/main/resources/openAPI/subscriptions-dtos.yaml
 getSubscriptionByFilter:
   post:
     summary: Get all subscriptions with filter
@@ -248,6 +256,9 @@ getSubscriptionByFilter:
                 $ref: '#/components/schemas/SubscriptionDTO'
       '400':
         description: Invalid filter supplied
+=======
+
+>>>>>>> Stashed changes:adapter/src/main/resources/openAPI/subscriptions-dtos.yaml
 components:
   schemas:
     SubscriptionDTO:
@@ -265,7 +276,11 @@ components:
           example: "Access to all premium features"
         duration:
           type: string
+<<<<<<< Updated upstream:dto/src/main/resources/openAPI/subscriptions-dtos.yaml
           enum: [ WEEK, MONTH, YEAR ]
+=======
+          enum: [WEEK, MONTH, YEAR]
+>>>>>>> Stashed changes:adapter/src/main/resources/openAPI/subscriptions-dtos.yaml
           example: MONTH
         price:
           type: number
@@ -290,6 +305,7 @@ components:
         name:
           type: string
           example: "Premium Plan"
+<<<<<<< Updated upstream:dto/src/main/resources/openAPI/subscriptions-dtos.yaml
           nullable: false
         description:
           type: string
@@ -300,10 +316,20 @@ components:
           enum: [ WEEK, MONTH, YEAR ]
           example: MONTH
           nullable: false
+=======
+        description:
+          type: string
+          example: "Access to all premium features"
+        duration:
+          type: string
+          enum: [WEEK, MONTH, YEAR]
+          example: MONTH
+>>>>>>> Stashed changes:adapter/src/main/resources/openAPI/subscriptions-dtos.yaml
         price:
           type: number
           format: double
           example: 29.99
+<<<<<<< Updated upstream:dto/src/main/resources/openAPI/subscriptions-dtos.yaml
           nullable: false
     SubscriptionUpdateDTO:
       type: object
@@ -313,6 +339,12 @@ components:
           format: uuid
           example: "e7e6f9b9-1f4a-4a9e-8b6f-123456789abc"
           nullable: false
+=======
+
+    SubscriptionUpdateDTO:
+      type: object
+      properties:
+>>>>>>> Stashed changes:adapter/src/main/resources/openAPI/subscriptions-dtos.yaml
         name:
           type: string
           example: "Premium Plan"
@@ -321,7 +353,11 @@ components:
           example: "Access to all premium features"
         duration:
           type: string
+<<<<<<< Updated upstream:dto/src/main/resources/openAPI/subscriptions-dtos.yaml
           enum: [ WEEK, MONTH, YEAR ]
+=======
+          enum: [WEEK, MONTH, YEAR]
+>>>>>>> Stashed changes:adapter/src/main/resources/openAPI/subscriptions-dtos.yaml
           example: MONTH
         price:
           type: number
@@ -391,6 +427,7 @@ components:
           type: string
           format: date
           example: "2024-06-30"
+<<<<<<< Updated upstream:dto/src/main/resources/openAPI/subscriptions-dtos.yaml
     SubscriptionFilterDTO:
         type: object
         properties:
@@ -408,6 +445,9 @@ components:
             type: number
             format: double
             example: 29.99
+=======
+
+>>>>>>> Stashed changes:adapter/src/main/resources/openAPI/subscriptions-dtos.yaml
     UserSubscriptionUpdateDTO:
       type: object
       properties:

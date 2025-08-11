@@ -1,7 +1,10 @@
 package com.innowise.swimdom.service;
 
 import com.innowise.swimdom.openapi.model.SubscriptionDTO;
+<<<<<<< Updated upstream
 import com.innowise.swimdom.openapi.model.SubscriptionFilterDTO;
+=======
+>>>>>>> Stashed changes
 import com.innowise.swimdom.openapi.model.SubscriptionCreateDTO;
 import com.innowise.swimdom.openapi.model.SubscriptionUpdateDTO;
 
@@ -19,7 +22,11 @@ public interface SubscriptionService {
      *
      * @return list of DTO subscriptions; empty list if there are no subscriptions
      */
+<<<<<<< Updated upstream
     List<SubscriptionDTO> getAllSubscriptions(SubscriptionFilterDTO subscriptionDTO);
+=======
+    List<SubscriptionDTO> getAllSubscriptions();
+>>>>>>> Stashed changes
 
     /**
      * Get a subscription using a unique identifier.
@@ -40,10 +47,18 @@ public interface SubscriptionService {
     /**
      * Update your existing subscription.
      *
+<<<<<<< Updated upstream
      * @param updateDTO DTO with updated subscription data
      * @return DTO of the renewed subscription
      */
     SubscriptionDTO updateSubscription(SubscriptionUpdateDTO updateDTO);
+=======
+     * @param id subscription for renewal
+     * @param updateDTO DTO with updated subscription data
+     * @return DTO of the renewed subscription
+     */
+    SubscriptionDTO updateSubscription(UUID id, SubscriptionUpdateDTO updateDTO);
+>>>>>>> Stashed changes
 
     /**
      * Delete a subscription by ID.

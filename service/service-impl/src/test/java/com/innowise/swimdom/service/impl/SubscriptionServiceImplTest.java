@@ -1,6 +1,7 @@
 package com.innowise.swimdom.service.impl;
 
 import com.innowise.swimdom.entity.Subscription;
+<<<<<<< Updated upstream
 import com.innowise.swimdom.exception.SubscriptionNotFoundException;
 import com.innowise.swimdom.mapper.SubscriptionMapper;
 import com.innowise.swimdom.openapi.model.SubscriptionCreateDTO;
@@ -9,15 +10,28 @@ import com.innowise.swimdom.openapi.model.SubscriptionFilterDTO;
 import com.innowise.swimdom.openapi.model.SubscriptionUpdateDTO;
 import com.innowise.swimdom.repository.SubscriptionRepository;
 import org.junit.jupiter.api.Test;
+=======
+import com.innowise.swimdom.exceptions.SubscriptionNotFoundException;
+import com.innowise.swimdom.mapper.SubscriptionMapper;
+import com.innowise.swimdom.openapi.model.SubscriptionCreateDTO;
+import com.innowise.swimdom.openapi.model.SubscriptionDTO;
+import com.innowise.swimdom.openapi.model.SubscriptionUpdateDTO;
+import com.innowise.swimdom.repository.SubscriptionRepository;
+import org.junit.Test;
+>>>>>>> Stashed changes
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+<<<<<<< Updated upstream
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Arrays;
 import java.util.List;
+=======
+
+>>>>>>> Stashed changes
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,7 +42,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
+<<<<<<< Updated upstream
 import static org.mockito.Mockito.times;
+=======
+>>>>>>> Stashed changes
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -59,10 +76,15 @@ public class SubscriptionServiceImplTest {
         subscriptionEntity = new Subscription();
         subscriptionEntity.setId(existingId);
         subscriptionEntity.setName("Test Subscription");
+<<<<<<< Updated upstream
+=======
+        // заполните другие поля сущности, если есть
+>>>>>>> Stashed changes
 
         subscriptionDTO = new SubscriptionDTO();
         subscriptionDTO.setId(existingId);
         subscriptionDTO.setName("Test Subscription");
+<<<<<<< Updated upstream
 
         createDTO = new SubscriptionCreateDTO();
         createDTO.setName("New Subscription");
@@ -100,6 +122,17 @@ public class SubscriptionServiceImplTest {
 
         verify(subscriptionRepository, times(1)).findAll(any(Specification.class));
         verify(subscriptionMapper, times(1)).toSubscriptionDTOList(subscriptionList);
+=======
+        // заполните другие поля DTO
+
+        createDTO = new SubscriptionCreateDTO();
+        createDTO.setName("New Subscription");
+        // заполните поля для создания
+
+        updateDTO = new SubscriptionUpdateDTO();
+        updateDTO.setName("Updated Subscription");
+        // заполните поля для обновления
+>>>>>>> Stashed changes
     }
 
     @Test
@@ -124,7 +157,10 @@ public class SubscriptionServiceImplTest {
             () -> subscriptionService.getSubscriptionById(nonExistingId));
 
         verify(subscriptionRepository).findById(nonExistingId);
+<<<<<<< Updated upstream
         verify(subscriptionRepository, times(1)).findById(nonExistingId);
+=======
+>>>>>>> Stashed changes
         verifyNoInteractions(subscriptionMapper);
     }
 
@@ -143,8 +179,11 @@ public class SubscriptionServiceImplTest {
 
         when(subscriptionMapper.toSubscriptionEntity(createDTO)).thenReturn(newEntity);
         when(subscriptionRepository.save(newEntity)).thenReturn(savedEntity);
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
         when(subscriptionMapper.toSubscriptionDTO(savedEntity)).thenReturn(savedDTO);
 
         SubscriptionDTO result = subscriptionService.createSubscription(createDTO);
@@ -154,7 +193,11 @@ public class SubscriptionServiceImplTest {
         assertEquals(savedDTO.getName(), result.getName());
 
         verify(subscriptionMapper).toSubscriptionEntity(createDTO);
+<<<<<<< Updated upstream
         verify(subscriptionRepository, times(1)).save(newEntity);
+=======
+        verify(subscriptionRepository).save(newEntity);
+>>>>>>> Stashed changes
         verify(subscriptionMapper).toSubscriptionDTO(savedEntity);
     }
 
@@ -164,7 +207,12 @@ public class SubscriptionServiceImplTest {
         doNothing().when(subscriptionMapper).updateSubscriptionFromDTO(updateDTO, subscriptionEntity);
         when(subscriptionRepository.save(subscriptionEntity)).thenReturn(subscriptionEntity);
         when(subscriptionMapper.toSubscriptionDTO(subscriptionEntity)).thenReturn(subscriptionDTO);
+<<<<<<< Updated upstream
         SubscriptionDTO result = subscriptionService.updateSubscription(updateDTO);
+=======
+
+        SubscriptionDTO result = subscriptionService.updateSubscription(existingId, updateDTO);
+>>>>>>> Stashed changes
 
         assertNotNull(result);
         assertEquals(subscriptionDTO.getId(), result.getId());
@@ -179,11 +227,17 @@ public class SubscriptionServiceImplTest {
     public void updateSubscription_nonExistingId_throwsException() {
         UUID nonExistingId = UUID.randomUUID();
         when(subscriptionRepository.findById(nonExistingId)).thenReturn(Optional.empty());
+<<<<<<< Updated upstream
         SubscriptionUpdateDTO subscriptionUpdateDTO = new SubscriptionUpdateDTO();
         subscriptionUpdateDTO.setId(nonExistingId);
         subscriptionUpdateDTO.setName("Pool");
         assertThrows(SubscriptionNotFoundException.class,
             () -> subscriptionService.updateSubscription(subscriptionUpdateDTO));
+=======
+
+        assertThrows(SubscriptionNotFoundException.class,
+            () -> subscriptionService.updateSubscription(nonExistingId, updateDTO));
+>>>>>>> Stashed changes
 
         verify(subscriptionRepository).findById(nonExistingId);
         verifyNoMoreInteractions(subscriptionMapper);

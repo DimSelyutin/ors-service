@@ -15,9 +15,15 @@ pools:
       '201':
         description: Pool created successfully
         content:
+<<<<<<< Updated upstream:dto/src/main/resources/openAPI/pool-dtos.yaml
          application/json:
            schema:
             $ref: '#/components/schemas/PoolDto'
+=======
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PoolDto'
+>>>>>>> Stashed changes:adapter/src/main/resources/openAPI/pool-dtos.yaml
       '400':
         $ref: './error-dto.yaml#/components/responses/BadRequest'
       '409':
@@ -25,6 +31,7 @@ pools:
       '500':
         $ref: './error-dto.yaml#/components/responses/InternalServerError'
 
+<<<<<<< Updated upstream:dto/src/main/resources/openAPI/pool-dtos.yaml
 poolsFilter:
   post:
     tags:
@@ -49,6 +56,33 @@ poolsFilter:
             items:
              $ref: '#/components/schemas/PoolDto'
 
+=======
+  get:
+    tags:
+      - Pools
+    summary: Retrieve all available pools
+    description: Returns a list of all swimming pools available for ticket purchase.
+    operationId: getPools
+    responses:
+      '200':
+        description: A list of pools
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PoolDto'
+      '204':
+        description: No pools found
+      '400':
+        $ref: './error-dto.yaml#/components/responses/BadRequest'
+      '404':
+        $ref: './error-dto.yaml#/components/responses/NotFound'
+      '409':
+        $ref: './error-dto.yaml#/components/responses/Conflict'
+      '500':
+        $ref: './error-dto.yaml#/components/responses/InternalServerError'
+>>>>>>> Stashed changes:adapter/src/main/resources/openAPI/pool-dtos.yaml
 components:
   schemas:
     PoolDto:

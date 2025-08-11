@@ -1,7 +1,11 @@
 package com.innowise.swimdom.service.impl;
 
 import com.innowise.swimdom.entity.UserSubscription;
+<<<<<<< Updated upstream
 import com.innowise.swimdom.exception.UserSubscriptionNotFoundException;
+=======
+import com.innowise.swimdom.exceptions.UserSubscriptionNotFoundException;
+>>>>>>> Stashed changes
 import com.innowise.swimdom.mapper.UserSubscriptionMapper;
 import com.innowise.swimdom.openapi.model.UserSubscriptionCreateDTO;
 import com.innowise.swimdom.openapi.model.UserSubscriptionDTO;

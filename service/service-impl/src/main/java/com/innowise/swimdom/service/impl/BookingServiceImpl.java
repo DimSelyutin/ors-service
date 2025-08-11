@@ -8,6 +8,9 @@ import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.entity.UserSubscription;
 import com.innowise.swimdom.enums.BookingStatus;
 import com.innowise.swimdom.exception.BookingNotFoundException;
+import com.innowise.swimdom.exception.ScheduleNotFoundException;
+import com.innowise.swimdom.exception.UserNotFoundException;
+import com.innowise.swimdom.exception.UserSubscriptionNotFoundException;
 import com.innowise.swimdom.mapper.BookingMapper;
 import com.innowise.swimdom.openapi.model.BookingCreateRequestDTO;
 import com.innowise.swimdom.openapi.model.BookingFilterDTO;
@@ -59,10 +62,13 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public BookingResponseDTO createBooking(@Valid BookingCreateRequestDTO bookingDTO) {
 
-        User user = userRepository.findById(bookingDTO.getUserId()).get();
+        User user = userRepository.findById(bookingDTO.getUserId())
+            .orElseThrow(() -> new UserNotFoundException(Constants.USER_NOT_FOUND + bookingDTO.getUserId()));
         UserSubscription userSubscription =
-            userSubscriptionRepository.findById(bookingDTO.getUserSubscriptionId()).get();
-        Schedule schedule = scheduleRepository.findById(bookingDTO.getScheduleId()).get();
+            userSubscriptionRepository.findById(bookingDTO.getUserSubscriptionId())
+                .orElseThrow(() -> new UserSubscriptionNotFoundException(Constants.USER_SUBSCRIPTION_NOT_FOUND));
+        Schedule schedule = scheduleRepository.findById(bookingDTO.getScheduleId())
+            .orElseThrow(() -> new ScheduleNotFoundException(Constants.SCHEDULE_NOT_FOUND));
 
         Booking booking = Booking.builder()
             .user(user)

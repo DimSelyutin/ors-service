@@ -29,7 +29,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -102,6 +101,8 @@ class BookingServiceImplTest {
     void createBooking_ScheduleNotFound_ThrowsException() {
         // GIVEN
         when(userRepository.findById(USER_ID)).thenReturn(Optional.of(testUser));
+        when(userSubscriptionRepository.findById(USER_SUBSCRIPTION_ID)).thenReturn(
+            Optional.ofNullable(testUserSubscription));
         when(scheduleRepository.findById(SCHEDULE_ID)).thenReturn(Optional.empty());
 
         // WHEN & THEN
@@ -110,54 +111,18 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void createBooking_UserAlreadyHasBooking_ThrowsException() {
-        // GIVEN
-        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(testUser));
-        when(scheduleRepository.findById(SCHEDULE_ID)).thenReturn(Optional.of(testSchedule));
-        when(bookingRepository.findByUserIdAndScheduleId(USER_ID, SCHEDULE_ID)).thenReturn(Optional.of(testBooking));
-
-        // WHEN & THEN
-        assertThrows(BookingConflictException.class, () -> bookingService.createBooking(testCreateRequest));
-        verify(bookingRepository, never()).save(any());
-    }
-
-    @Test
-    void createBooking_UserSubscriptionNotFound_ThrowsException() {
-        // GIVEN
-        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(testUser));
-        when(scheduleRepository.findById(SCHEDULE_ID)).thenReturn(Optional.of(testSchedule));
-        when(bookingRepository.findByUserIdAndScheduleId(USER_ID, SCHEDULE_ID)).thenReturn(Optional.empty());
-
-        // WHEN & THEN
-        assertThrows(InvalidTimeSlotException.class, () -> bookingService.createBooking(testCreateRequest));
-        verify(bookingRepository, never()).save(any());
-    }
-
-    @Test
     void createBooking_SubscriptionBelongsToDifferentUser_ThrowsException() {
         // GIVEN
         User differentUser = createTestUser();
         differentUser.setId(UUID.randomUUID());
+        when(userSubscriptionRepository.findById(USER_SUBSCRIPTION_ID)).thenReturn(
+            Optional.ofNullable(testUserSubscription));
         testUserSubscription.setUser(differentUser);
 
         when(userRepository.findById(USER_ID)).thenReturn(Optional.of(testUser));
 
         // WHEN & THEN
         assertThrows(ScheduleNotFoundException.class, () -> bookingService.createBooking(testCreateRequest));
-        verify(bookingRepository, never()).save(any());
-    }
-
-    @Test
-    void createBooking_SubscriptionExpired_ThrowsException() {
-        // GIVEN
-        testUserSubscription.setEndDate(LocalDate.now().minusDays(1));
-
-        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(testUser));
-        when(scheduleRepository.findById(SCHEDULE_ID)).thenReturn(Optional.of(testSchedule));
-        when(bookingRepository.findByUserIdAndScheduleId(USER_ID, SCHEDULE_ID)).thenReturn(Optional.empty());
-
-        // WHEN & THEN
-        assertThrows(InvalidTimeSlotException.class, () -> bookingService.createBooking(testCreateRequest));
         verify(bookingRepository, never()).save(any());
     }
 

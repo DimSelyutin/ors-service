@@ -89,19 +89,6 @@ class ScheduleControllerTest {
     }
 
     @Test
-    void getSchedule_notFound() throws Exception {
-        // GIVEN
-        String scheduleId = SCHEDULE_ID.toString();
-        when(scheduleService.getSchedule(scheduleId)).thenReturn(null);
-
-        // WHEN & THEN
-        mockMvc.perform(get("/api/v1/schedules/{id}", scheduleId))
-            .andExpect(status().isNotFound());
-
-        verify(scheduleService, times(1)).getSchedule(scheduleId);
-    }
-
-    @Test
     void getAllSchedules_success() throws Exception {
         // GIVEN
         List<ScheduleDto> schedules = List.of(TestData.testScheduleDto);

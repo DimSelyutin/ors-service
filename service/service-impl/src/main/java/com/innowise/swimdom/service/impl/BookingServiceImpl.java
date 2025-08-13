@@ -146,7 +146,7 @@ public class BookingServiceImpl implements BookingService {
      * Checks capacity and booking overlaps.
      */
     public boolean isAvailable(UUID poolId, LocalTime startTime, LocalTime endTime) {
-        return bookingRepository.findBookingByTime(
+        return !bookingRepository.findBookingByTime(
             poolId, startTime.minusMinutes(1), endTime.plusMinutes(1));
     }
 
@@ -201,6 +201,6 @@ public class BookingServiceImpl implements BookingService {
         }
 
         PoolWorkingHours hours = workingHours.get();
-        return startTimeOfDay.isBefore(hours.getOpenTime()) || endTimeOfDay.isAfter(hours.getCloseTime());
+        return startTimeOfDay.isAfter(hours.getOpenTime()) && endTimeOfDay.isBefore(hours.getCloseTime());
     }
 }

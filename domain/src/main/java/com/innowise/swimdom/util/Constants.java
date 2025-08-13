@@ -10,6 +10,12 @@ public final class Constants {
     private Constants() {
     }
 
+    public static final String SQLQUERY = """
+        ELECT EXISTS (SELECT 1 FROM schedule s JOIN pool p ON s.pool_id = p.id
+        JOIN pool_working_hours pw ON pw.pool_id = p.id WHERE p.id = :id
+        AND s.start_datetime <= :closeTime AND pw.open_time < :openTime
+        AND pw.close_time > :closeTime) AS exists_flag""";
+
     public static final List<String> PUBLIC_URLS = List.of(
         "/api/v1/auth/**",
         "/swagger-ui/**",

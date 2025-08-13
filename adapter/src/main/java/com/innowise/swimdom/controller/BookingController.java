@@ -29,20 +29,20 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/bookings")
 public class BookingController implements BookingsApi {
 
     private final BookingService bookingService;
 
     @Override
-    @DeleteMapping("/admin/bookings/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBookingById(@PathVariable("id") UUID id) {
         bookingService.deleteBooking(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override
-    @GetMapping("/bookings/bookings/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<BookingResponseDTO> getBookingById(@PathVariable("id") UUID id) {
         BookingResponseDTO booking = bookingService.getBooking(id.toString());
         if (booking != null) {
@@ -52,7 +52,7 @@ public class BookingController implements BookingsApi {
     }
 
     @Override
-    @PutMapping("/admin/bookings/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<BookingResponseDTO> updateBookingById(@PathVariable("id") UUID id,
                                                                  @RequestBody
                                                                  BookingUpdateRequestDTO bookingUpdateRequestDTO) {
@@ -61,7 +61,7 @@ public class BookingController implements BookingsApi {
     }
 
     @Override
-    @PostMapping("/admin/bookings")
+    @PostMapping
     public ResponseEntity<BookingResponseDTO> createBooking(
         @RequestBody BookingCreateRequestDTO bookingCreateRequestDTO) {
         BookingResponseDTO createdBooking = bookingService.createBooking(bookingCreateRequestDTO);
@@ -69,14 +69,14 @@ public class BookingController implements BookingsApi {
     }
 
     @Override
-    @GetMapping("/admin/user/bookings")
+    @GetMapping("/user")
     public ResponseEntity<List<BookingResponseDTO>> getBookingByUserId(@RequestParam UUID userId) {
         List<BookingResponseDTO> bookings = bookingService.getBookingsByUser(userId);
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @Override
-    @PostMapping("/admin/filter/bookings")
+    @PostMapping("/filter")
     public ResponseEntity<List<BookingResponseDTO>> getBookingsByFilters(
         @RequestBody BookingFilterDTO filterDTO) {
         List<BookingResponseDTO> bookings = bookingService.getBookingsByFilter(filterDTO);

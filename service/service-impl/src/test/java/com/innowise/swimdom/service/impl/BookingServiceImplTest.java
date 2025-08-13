@@ -5,11 +5,11 @@ import com.innowise.swimdom.entity.Pool;
 import com.innowise.swimdom.entity.Schedule;
 import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.entity.UserSubscription;
-import com.innowise.swimdom.exception.BookingConflictException;
+import com.innowise.swimdom.enums.BookingStatus;
 import com.innowise.swimdom.exception.BookingNotFoundException;
-import com.innowise.swimdom.exception.InvalidTimeSlotException;
 import com.innowise.swimdom.exception.ScheduleNotFoundException;
 import com.innowise.swimdom.exception.UserNotFoundException;
+import com.innowise.swimdom.exception.UserSubscriptionNotFoundException;
 import com.innowise.swimdom.mapper.BookingMapper;
 import com.innowise.swimdom.openapi.model.BookingCreateRequestDTO;
 import com.innowise.swimdom.openapi.model.BookingFilterDTO;
@@ -29,6 +29,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -88,6 +89,25 @@ class BookingServiceImplTest {
     }
 
     @Test
+    void createBooking_Success() {
+        // GIVEN
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(testUser));
+        when(userSubscriptionRepository.findById(USER_SUBSCRIPTION_ID)).thenReturn(Optional.of(testUserSubscription));
+        when(scheduleRepository.findById(SCHEDULE_ID)).thenReturn(Optional.of(testSchedule));
+        when(bookingRepository.save(any(Booking.class))).thenReturn(testBooking);
+        when(bookingMapper.toBookingResponseDTO(testBooking)).thenReturn(testResponse);
+
+        // WHEN
+        BookingResponseDTO result = bookingService.createBooking(testCreateRequest);
+
+        // THEN
+        assertNotNull(result);
+        assertEquals(testResponse, result);
+        verify(bookingRepository).save(any(Booking.class));
+        verify(bookingMapper).toBookingResponseDTO(testBooking);
+    }
+
+    @Test
     void createBooking_UserNotFound_ThrowsException() {
         // GIVEN
         when(userRepository.findById(USER_ID)).thenReturn(Optional.empty());
@@ -98,28 +118,22 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void createBooking_ScheduleNotFound_ThrowsException() {
+    void createBooking_UserSubscriptionNotFound_ThrowsException() {
         // GIVEN
         when(userRepository.findById(USER_ID)).thenReturn(Optional.of(testUser));
-        when(userSubscriptionRepository.findById(USER_SUBSCRIPTION_ID)).thenReturn(
-            Optional.ofNullable(testUserSubscription));
-        when(scheduleRepository.findById(SCHEDULE_ID)).thenReturn(Optional.empty());
+        when(userSubscriptionRepository.findById(USER_SUBSCRIPTION_ID)).thenReturn(Optional.empty());
 
         // WHEN & THEN
-        assertThrows(ScheduleNotFoundException.class, () -> bookingService.createBooking(testCreateRequest));
+        assertThrows(UserSubscriptionNotFoundException.class, () -> bookingService.createBooking(testCreateRequest));
         verify(bookingRepository, never()).save(any());
     }
 
     @Test
-    void createBooking_SubscriptionBelongsToDifferentUser_ThrowsException() {
+    void createBooking_ScheduleNotFound_ThrowsException() {
         // GIVEN
-        User differentUser = createTestUser();
-        differentUser.setId(UUID.randomUUID());
-        when(userSubscriptionRepository.findById(USER_SUBSCRIPTION_ID)).thenReturn(
-            Optional.ofNullable(testUserSubscription));
-        testUserSubscription.setUser(differentUser);
-
         when(userRepository.findById(USER_ID)).thenReturn(Optional.of(testUser));
+        when(userSubscriptionRepository.findById(USER_SUBSCRIPTION_ID)).thenReturn(Optional.of(testUserSubscription));
+        when(scheduleRepository.findById(SCHEDULE_ID)).thenReturn(Optional.empty());
 
         // WHEN & THEN
         assertThrows(ScheduleNotFoundException.class, () -> bookingService.createBooking(testCreateRequest));
@@ -180,6 +194,64 @@ class BookingServiceImplTest {
     }
 
     @Test
+    void getBookingsByUser_EmptyResult_ReturnsEmptyList() {
+        // GIVEN
+        when(bookingRepository.findByUserId(USER_ID)).thenReturn(List.of());
+
+        // WHEN
+        List<BookingResponseDTO> result = bookingService.getBookingsByUser(USER_ID);
+
+        // THEN
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+        verify(bookingMapper, never()).toBookingResponseDTO(any());
+    }
+
+    @Test
+    void getAllBookings_Success() {
+        // GIVEN
+        List<Booking> bookings = List.of(testBooking);
+        List<BookingResponseDTO> expectedResponses = List.of(testResponse);
+
+        when(bookingRepository.findAll()).thenReturn(bookings);
+        when(bookingMapper.toBookingResponseDTO(testBooking)).thenReturn(testResponse);
+
+        // WHEN
+        List<BookingResponseDTO> result = bookingService.getAllBookings();
+
+        // THEN
+        assertNotNull(result);
+        assertEquals(expectedResponses, result);
+        verify(bookingMapper).toBookingResponseDTO(testBooking);
+    }
+
+    @Test
+    void getAllBookings_EmptyResult_ReturnsEmptyList() {
+        // GIVEN
+        when(bookingRepository.findAll()).thenReturn(List.of());
+
+        // WHEN
+        List<BookingResponseDTO> result = bookingService.getAllBookings();
+
+        // THEN
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+        verify(bookingMapper, never()).toBookingResponseDTO(any());
+    }
+
+    @Test
+    void deleteBooking_Success() {
+        // GIVEN
+        when(bookingRepository.findById(BOOKING_ID)).thenReturn(Optional.of(testBooking));
+
+        // WHEN
+        bookingService.deleteBooking(BOOKING_ID);
+
+        // THEN
+        verify(bookingRepository).delete(testBooking);
+    }
+
+    @Test
     void deleteBooking_NotFound_ThrowsException() {
         // GIVEN
         when(bookingRepository.findById(BOOKING_ID)).thenReturn(Optional.empty());
@@ -195,10 +267,8 @@ class BookingServiceImplTest {
         when(bookingRepository.findById(BOOKING_ID)).thenReturn(Optional.of(testBooking));
         when(userRepository.findById(USER_ID)).thenReturn(Optional.of(testUser));
         when(scheduleRepository.findById(SCHEDULE_ID)).thenReturn(Optional.of(testSchedule));
-
         when(bookingRepository.save(any(Booking.class))).thenReturn(testBooking);
         when(bookingMapper.toBookingResponseDTO(testBooking)).thenReturn(testResponse);
-
 
         // WHEN
         BookingResponseDTO result = bookingService.updateBooking(testUpdateRequest);
@@ -284,5 +354,35 @@ class BookingServiceImplTest {
         verify(bookingMapper, never()).toBookingResponseDTO(any());
     }
 
+    @Test
+    void isAvailable_ReturnsTrue_WhenNoConflicts() {
+        // GIVEN
+        LocalTime startTime = LocalTime.of(10, 0);
+        LocalTime endTime = LocalTime.of(11, 0);
+        when(bookingRepository.findBookingByTime(POOL_ID, startTime.minusMinutes(1), endTime.plusMinutes(1)))
+            .thenReturn(false);
 
+        // WHEN
+        boolean result = bookingService.isAvailable(POOL_ID, startTime, endTime);
+
+        // THEN
+        assertTrue(result);
+        verify(bookingRepository).findBookingByTime(POOL_ID, startTime.minusMinutes(1), endTime.plusMinutes(1));
+    }
+
+    @Test
+    void isAvailable_ReturnsFalse_WhenConflictsExist() {
+        // GIVEN
+        LocalTime startTime = LocalTime.of(10, 0);
+        LocalTime endTime = LocalTime.of(11, 0);
+        when(bookingRepository.findBookingByTime(POOL_ID, startTime.minusMinutes(1), endTime.plusMinutes(1)))
+            .thenReturn(true);
+
+        // WHEN
+        boolean result = bookingService.isAvailable(POOL_ID, startTime, endTime);
+
+        // THEN
+        assertFalse(result);
+        verify(bookingRepository).findBookingByTime(POOL_ID, startTime.minusMinutes(1), endTime.plusMinutes(1));
+    }
 } 

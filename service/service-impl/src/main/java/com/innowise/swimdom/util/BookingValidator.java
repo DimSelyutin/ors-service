@@ -47,30 +47,25 @@ public class BookingValidator implements ConstraintValidator<ValidateBooking, Bo
     public boolean isValid(BookingCreateRequestDTO bookingDTO, ConstraintValidatorContext context) {
 
         context.disableDefaultConstraintViolation();
-        boolean isValid = true;
         Optional<User> userOptional = userRepository.findById(bookingDTO.getUserId());
         Optional<UserSubscription> userSubscriptionOptional =
             userSubscriptionRepository.findById(bookingDTO.getUserSubscriptionId());
         Optional<Schedule> scheduleOptional = scheduleRepository.findById(bookingDTO.getScheduleId());
 
         if (userOptional.isEmpty()) {
-            isValid = false;
             context.buildConstraintViolationWithTemplate(USER_NOT_FOUND + bookingDTO.getUserId())
                 .addPropertyNode("userId").addConstraintViolation();
+            return false;
         }
         if (userSubscriptionOptional.isEmpty()) {
-            isValid = false;
             context.buildConstraintViolationWithTemplate(
                     USER_SUBSCRIPTION_NOT_FOUND + bookingDTO.getUserSubscriptionId())
                 .addPropertyNode("userSubscriptionId").addConstraintViolation();
+            return false;
         }
         if (scheduleOptional.isEmpty()) {
-            isValid = false;
             context.buildConstraintViolationWithTemplate(SCHEDULE_NOT_FOUND + bookingDTO.getScheduleId())
                 .addPropertyNode("scheduleId").addConstraintViolation();
-        }
-
-        if (!isValid) {
             return false;
         }
 
@@ -80,39 +75,39 @@ public class BookingValidator implements ConstraintValidator<ValidateBooking, Bo
         Pool pool = schedule.getPool();
 
         if (bookingRepository.findByUserIdAndScheduleId(user.getId(), schedule.getId()).isPresent()) {
-            isValid = false;
             context.buildConstraintViolationWithTemplate(BOOKING_ALREADY_EXIST)
                 .addPropertyNode("scheduleId").addConstraintViolation();
+            return false;
         }
 
-        if (isWorkingHours(pool, schedule.getStartDatetime(), schedule.getEndDatetime())) {
-            isValid = false;
+        if (!isWorkingHours(pool, schedule.getStartDatetime(), schedule.getEndDatetime())) {
             context.buildConstraintViolationWithTemplate(BOOKING_TIME_OUTSIDE)
                 .addPropertyNode("bookingDatetime").addConstraintViolation();
+            return false;
         }
 
         if (!userSubscription.getUser().getId().equals(user.getId())) {
-            isValid = false;
             context.buildConstraintViolationWithTemplate(
                     USER_SUBSCRIPTION_NOT_BELONG + user.getId())
                 .addPropertyNode("userSubscriptionId").addConstraintViolation();
+            return false;
         }
 
         if (userSubscription.getEndDate().isBefore(LocalDate.now())) {
-            isValid = false;
             context.buildConstraintViolationWithTemplate(USER_SUBSCRIPTION_EXPIRED)
                 .addPropertyNode("userSubscriptionId").addConstraintViolation();
+            return false;
         }
 
         LocalDate scheduleDate = schedule.getStartDatetime().toLocalDate();
         if (scheduleDate.isBefore(userSubscription.getStartDate())
             || scheduleDate.isAfter(userSubscription.getEndDate())) {
-            isValid = false;
             context.buildConstraintViolationWithTemplate(BOOKING_DATE_OUTSIDE)
                 .addPropertyNode("bookingDatetime").addConstraintViolation();
+            return false;
         }
 
-        return isValid;
+        return true;
     }
 
     /**
@@ -132,6 +127,6 @@ public class BookingValidator implements ConstraintValidator<ValidateBooking, Bo
         }
 
         PoolWorkingHours hours = workingHours.get();
-        return startTimeOfDay.isBefore(hours.getOpenTime()) || endTimeOfDay.isAfter(hours.getCloseTime());
+        return startTimeOfDay.isAfter(hours.getOpenTime()) && endTimeOfDay.isBefore(hours.getCloseTime());
     }
 }

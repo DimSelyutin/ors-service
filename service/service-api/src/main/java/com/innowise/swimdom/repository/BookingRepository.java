@@ -1,6 +1,7 @@
 package com.innowise.swimdom.repository;
 
 import com.innowise.swimdom.entity.Booking;
+import com.innowise.swimdom.util.Constants;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +18,8 @@ import java.util.UUID;
  */
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, UUID>, JpaSpecificationExecutor<Booking> {
+
+
 
     /**
      * Find bookings by user ID.
@@ -59,15 +62,6 @@ public interface BookingRepository extends JpaRepository<Booking, UUID>, JpaSpec
      * @param closeTime end datetime (exclusive)
      * @return list of bookings in the range
      */
-    @Query(value = "SELECT EXISTS ("
-        + "SELECT 1 "
-        + "FROM schedule s "
-        + "JOIN pool p ON s.pool_id = p.id "
-        + "JOIN pool_working_hours pw ON pw.pool_id = p.id "
-        + "WHERE p.id = :id "
-        + "AND s.start_datetime <= :closeTime "
-        + "AND pw.open_time < :openTime "
-        + "AND pw.close_time > :closeTime"
-        + ") AS exists_flag", nativeQuery = true)
+    @Query(value = Constants.SQLQUERY, nativeQuery = true)
     boolean findBookingByTime(UUID id, LocalTime openTime, LocalTime closeTime);
 }

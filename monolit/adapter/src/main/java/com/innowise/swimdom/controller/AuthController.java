@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Controller for authentication.
  */
-@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/auth")
+@RequiredArgsConstructor
 public class AuthController implements AuthApi {
 
     private final AuthenticationService authenticationService;
@@ -36,5 +36,11 @@ public class AuthController implements AuthApi {
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> registerUser(@Valid @RequestBody UserCreateRequestDTO registerRequest) {
         return new ResponseEntity<>(authenticationService.registerUser(registerRequest), HttpStatus.CREATED);
+    }
+
+    @Override
+    @PostMapping("/refresh")
+    public Mono<JwtResponse> getNewAccessToken(@Valid RefreshJwtRequest refreshJwtRequest) {
+        return authenticationService.getNewAccessToken(refreshJwtRequest);
     }
 }

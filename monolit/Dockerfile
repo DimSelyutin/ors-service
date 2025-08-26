@@ -2,7 +2,7 @@ FROM openjdk:17  as build
 
 WORKDIR /app
 
-COPY .. .
+COPY ../../microservices/monoservice .
 
 RUN sed -i 's/\r$//' mvnw
 

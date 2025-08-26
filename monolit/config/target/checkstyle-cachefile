@@ -1,8 +1,0 @@
-#Tue Aug 19 17:26:10 MSK 2025
-configuration*?=A0C3E7B2E7F3621CBA987F36474990BB3D19B5B7
-C\:\\projects\\innowise\\ors-service\\config\\src\\main\\java\\com\\innowise\\swimdom\\config\\OpenApiConfig.java=1754048532723
-C\:\\projects\\innowise\\ors-service\\config\\src\\main\\java\\com\\innowise\\swimdom\\security\\JWTAuthenticationEntryPoint.java=1754048532724
-module-resource*?\:suppressions.xml=C47D62E1EE44582F63D54F0EDC28FB74CABD058B
-module-resource*?\:checkstyle-xpath-suppressions.xml=890FE6831889FD9658D26FC59812153FFFC1042
-C\:\\projects\\innowise\\ors-service\\config\\src\\main\\java\\com\\innowise\\swimdom\\security\\JWTAuthenticationFilter.java=1754048532725
-C\:\\projects\\innowise\\ors-service\\config\\src\\main\\java\\com\\innowise\\swimdom\\config\\SecurityConfig.java=1754465005037

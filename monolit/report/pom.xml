@@ -111,7 +111,7 @@
                                     <include>**/jacoco.exec</include>
                                 </fileSet>
                             </fileSets>
-                            <destFile>target/jacoco-output/merged.exec</destFile>
+                            <destFile>${project.build.directory}/jacoco-output/merged.exec</destFile>
                         </configuration>
                     </execution>
 
@@ -121,7 +121,7 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
-                            <dataFile>target/jacoco-output/merged.exec</dataFile>
+                            <dataFile>${project.build.directory}/jacoco-output/merged.exec</dataFile>
                             <rules>
                                 <rule>
                                     <element>BUNDLE</element>

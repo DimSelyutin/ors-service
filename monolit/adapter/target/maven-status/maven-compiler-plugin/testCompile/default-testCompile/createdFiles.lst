@@ -1,9 +1,0 @@
-com\innowise\swimdom\mapper\BookingMapperTest.class
-com\innowise\swimdom\mapper\type\UserRoleMapperTest.class
-com\innowise\swimdom\mapper\AuthMapperTest.class
-com\innowise\swimdom\mapper\SubscriptionMapperImplTest.class
-com\innowise\swimdom\mapper\UserSubscriptionMapperImplTest.class
-com\innowise\swimdom\mapper\PoolMapperTest.class
-com\innowise\swimdom\mapper\SubscriptionDurationTest.class
-com\innowise\swimdom\mapper\ScheduleMapperImplTest.class
-com\innowise\swimdom\mapper\PoolWorkingHoursMapperImplTest.class

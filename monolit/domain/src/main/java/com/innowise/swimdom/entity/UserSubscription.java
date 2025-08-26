@@ -14,9 +14,11 @@ import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.LastModifiedDate;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 import org.springframework.data.annotation.CreatedDate;
 
 /**
@@ -63,7 +65,7 @@ public class UserSubscription {
             int year = now.getYear();
             startDate = now;
             endDate = now.plusDays(subscription.getDuration()
-                .getDurationInDays(month,year));
+                .getDurationInDays(month, year));
         }
     }
 
@@ -72,4 +74,13 @@ public class UserSubscription {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    public void reduceSessions() {
+        this.estimate = this.estimate >= 1 ? this.estimate - 1 : 0;
+    }
+
+    public void increaseSessions() {
+
+        this.estimate = this.estimate >= 1 ? this.estimate + 1 : 0;
+    }
 }

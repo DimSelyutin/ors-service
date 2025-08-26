@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.innowise.swimdom.mapper.UserSubscriptionMapperImplTest
--------------------------------------------------------------------------------
-Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.058 s -- in com.innowise.swimdom.mapper.UserSubscriptionMapperImplTest

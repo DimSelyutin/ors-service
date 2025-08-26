@@ -9,6 +9,7 @@ import com.innowise.swimdom.openapi.model.ScheduleDto;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 

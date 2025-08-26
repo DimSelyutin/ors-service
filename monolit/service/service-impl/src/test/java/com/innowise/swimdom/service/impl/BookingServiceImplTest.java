@@ -5,6 +5,7 @@ import com.innowise.swimdom.entity.Pool;
 import com.innowise.swimdom.entity.Schedule;
 import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.entity.UserSubscription;
+import com.innowise.swimdom.enums.BookingStatus;
 import com.innowise.swimdom.exception.BookingNotFoundException;
 import com.innowise.swimdom.exception.ScheduleNotFoundException;
 import com.innowise.swimdom.exception.UserNotFoundException;
@@ -27,9 +28,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.innowise.swimdom.service.util.BookingTestData.*;
 import static org.junit.jupiter.api.Assertions.*;

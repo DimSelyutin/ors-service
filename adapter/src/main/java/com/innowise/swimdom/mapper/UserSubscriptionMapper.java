@@ -62,7 +62,7 @@ public interface UserSubscriptionMapper {
     @Mapping(target = "user.id", source = "userSubscriptionDTO.userId")
     @Mapping(target = "subscription.id", source = "userSubscriptionDTO.subscriptionId")
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
     UserSubscription toUserSubscription(UserSubscriptionCreateDTO userSubscriptionDTO);
 
     /**
@@ -74,6 +74,6 @@ public interface UserSubscriptionMapper {
     @Mapping(target = "entity.user.id", ignore = true)
     @Mapping(target = "entity.subscription.id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
     void updateUserSubscriptionFromDto(UserSubscriptionUpdateDTO updateDTO, @MappingTarget UserSubscription entity);
 }

@@ -13,10 +13,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -24,11 +28,14 @@ import java.util.UUID;
  * Entity for booking.
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "booking",
        uniqueConstraints = @UniqueConstraint(name = "uq_booking_user_schedule",
                                              columnNames = {"user_id", "schedule_id"}))
-public class Booking  {
+public class Booking {
 
     @Id
     @GeneratedValue
@@ -44,7 +51,7 @@ public class Booking  {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_subscription_id", nullable = false,
                 foreignKey = @ForeignKey(name = "fk_user_subscription"))
-    private Subscription userSubscription;
+    private UserSubscription userSubscription;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "schedule_id", nullable = false,
@@ -67,6 +74,5 @@ public class Booking  {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
 }
 

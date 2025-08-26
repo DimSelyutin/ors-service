@@ -1,4 +1,4 @@
-package com.innowise.swimdom.service.util;
+package com.innowise.swimdom.util;
 
 import com.innowise.swimdom.entity.Pool;
 import com.innowise.swimdom.entity.PoolWorkingHours;
@@ -9,7 +9,6 @@ import com.innowise.swimdom.openapi.model.ScheduleDto;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 

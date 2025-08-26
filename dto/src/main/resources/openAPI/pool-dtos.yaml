@@ -15,9 +15,9 @@ pools:
       '201':
         description: Pool created successfully
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PoolDto'
+         application/json:
+           schema:
+            $ref: '#/components/schemas/PoolDto'
       '400':
         $ref: './error-dto.yaml#/components/responses/BadRequest'
       '409':
@@ -25,31 +25,30 @@ pools:
       '500':
         $ref: './error-dto.yaml#/components/responses/InternalServerError'
 
-  get:
+poolsFilter:
+  post:
     tags:
       - Pools
-    summary: Retrieve all available pools
-    description: Returns a list of all swimming pools available for ticket purchase.
+    summary: Retrieve pools by filter
+    description: Returns a list of swimming pools matching the filter criteria.
     operationId: getPools
+    requestBody:
+      description: Filter criteria as PoolDto
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PoolDto'
     responses:
       '200':
-        description: A list of pools
+        description: A list of pools matching the filter
         content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/PoolDto'
-      '204':
-        description: No pools found
-      '400':
-        $ref: './error-dto.yaml#/components/responses/BadRequest'
-      '404':
-        $ref: './error-dto.yaml#/components/responses/NotFound'
-      '409':
-        $ref: './error-dto.yaml#/components/responses/Conflict'
-      '500':
-        $ref: './error-dto.yaml#/components/responses/InternalServerError'
+         application/json:
+           schema:
+            type: array
+            items:
+             $ref: '#/components/schemas/PoolDto'
+
 components:
   schemas:
     PoolDto:

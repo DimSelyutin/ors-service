@@ -6,6 +6,7 @@ import com.innowise.swimdom.openapi.model.AuthResponse;
 import com.innowise.swimdom.openapi.model.UserCreateRequestDTO;
 import com.innowise.swimdom.openapi.model.UserResponseDTO;
 import com.innowise.swimdom.openapi.model.UserRole;
+import com.innowise.swimdom.openapi.model.UserUpdateRequestDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -154,6 +155,88 @@ class AuthMapperTest {
         user.setCreatedAt(LocalDateTime.of(2023, 1, 1, 12, 0));
         user.setUpdatedAt(LocalDateTime.of(2023, 1, 2, 12, 0));
         return user;
+    }
+
+    @Test
+    void updateUserFromDto_nullDto_doesNotUpdateUser() {
+        User user = createUser();
+        User originalUser = new User();
+        originalUser.setId(user.getId());
+        originalUser.setEmail(user.getEmail());
+        originalUser.setName(user.getName());
+        originalUser.setSurname(user.getSurname());
+        originalUser.setPhone(user.getPhone());
+        originalUser.setRole(user.getRole());
+        originalUser.setCreatedAt(user.getCreatedAt());
+        originalUser.setUpdatedAt(user.getUpdatedAt());
+
+        authMapper.updateUserFromDto(null, user);
+
+        assertEquals(originalUser.getEmail(), user.getEmail());
+        assertEquals(originalUser.getName(), user.getName());
+        assertEquals(originalUser.getSurname(), user.getSurname());
+        assertEquals(originalUser.getPhone(), user.getPhone());
+        assertEquals(originalUser.getRole(), user.getRole());
+    }
+
+    @Test
+    void updateUserFromDto_partialUpdate_updatesOnlyProvidedFields() {
+        User user = createUser();
+        UserUpdateRequestDTO updateDto = new UserUpdateRequestDTO();
+        updateDto.setName("Updated Name");
+        updateDto.setEmail("updated@example.com");
+        // surname and phone are null
+
+        authMapper.updateUserFromDto(updateDto, user);
+
+        assertEquals("Updated Name", user.getName());
+        assertEquals("updated@example.com", user.getEmail());
+        assertEquals("Smith", user.getSurname()); // unchanged
+        assertEquals("+111111111", user.getPhone()); // unchanged
+    }
+
+    @Test
+    void updateUserFromDto_fullUpdate_updatesAllFields() {
+        User user = createUser();
+        UserUpdateRequestDTO updateDto = new UserUpdateRequestDTO();
+        updateDto.setName("Updated Name");
+        updateDto.setEmail("updated@example.com");
+        updateDto.setSurname("Updated Surname");
+        updateDto.setPhone("+999999999");
+        UserRole roleDto = UserRole.fromValue("ADMIN");
+        updateDto.setRole(roleDto);
+
+        com.innowise.swimdom.enums.UserRole entityRole = com.innowise.swimdom.enums.UserRole.valueOf("ADMIN");
+        when(userRoleMapper.toUserRoleEntity(roleDto)).thenReturn(entityRole);
+
+        authMapper.updateUserFromDto(updateDto, user);
+
+        assertEquals("Updated Name", user.getName());
+        assertEquals("updated@example.com", user.getEmail());
+        assertEquals("Updated Surname", user.getSurname());
+        assertEquals("+999999999", user.getPhone());
+        assertEquals(entityRole, user.getRole());
+
+        verify(userRoleMapper).toUserRoleEntity(roleDto);
+    }
+
+    @Test
+    void updateUserFromDto_withNullValues_ignoresNullFields() {
+        User user = createUser();
+        UserUpdateRequestDTO updateDto = new UserUpdateRequestDTO();
+        updateDto.setName("Updated Name");
+        updateDto.setEmail(null);
+        updateDto.setSurname(null);
+        updateDto.setPhone(null);
+        updateDto.setRole(null);
+
+        authMapper.updateUserFromDto(updateDto, user);
+
+        assertEquals("Updated Name", user.getName());
+        assertEquals("user@example.com", user.getEmail()); // unchanged
+        assertEquals("Smith", user.getSurname()); // unchanged
+        assertEquals("+111111111", user.getPhone()); // unchanged
+        assertEquals(com.innowise.swimdom.enums.UserRole.USER, user.getRole()); // unchanged
     }
 
     private UserResponseDTO createUserResponseDto() {

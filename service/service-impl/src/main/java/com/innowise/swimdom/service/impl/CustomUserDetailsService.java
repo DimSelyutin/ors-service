@@ -5,7 +5,6 @@ import com.innowise.swimdom.repository.UserRepository;
 import com.innowise.swimdom.util.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -44,8 +42,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     public static UserDetails build(User user) {
-        Set<GrantedAuthority> authorities =
-            Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
+        Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
         return new CustomUserDetails(user);
     }
 }

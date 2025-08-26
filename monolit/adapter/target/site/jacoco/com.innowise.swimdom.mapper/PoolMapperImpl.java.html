@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PoolMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">adapter</a> &gt; <a href="index.source.html" class="el_package">com.innowise.swimdom.mapper</a> &gt; <span class="el_source">PoolMapperImpl.java</span></div><h1>PoolMapperImpl.java</h1><pre class="source lang-java linenums">package com.innowise.swimdom.mapper;
+
+import com.innowise.swimdom.entity.Pool;
+import com.innowise.swimdom.entity.PoolWorkingHours;
+import com.innowise.swimdom.openapi.model.PoolDto;
+import com.innowise.swimdom.openapi.model.PoolWorkingHoursDto;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import javax.annotation.processing.Generated;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2025-08-19T18:03:58+0300&quot;,
+    comments = &quot;version: 1.6.3, compiler: javac, environment: Java 17.0.11 (Oracle Corporation)&quot;
+)
+@Component
+public class PoolMapperImpl implements PoolMapper {
+
+    private final PoolWorkingHoursMapper poolWorkingHoursMapper;
+
+    @Autowired
+<span class="fc" id="L26">    public PoolMapperImpl(PoolWorkingHoursMapper poolWorkingHoursMapper) {</span>
+
+<span class="fc" id="L28">        this.poolWorkingHoursMapper = poolWorkingHoursMapper;</span>
+<span class="fc" id="L29">    }</span>
+
+    @Override
+    public Pool toPool(PoolDto poolDto) {
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if ( poolDto == null ) {</span>
+<span class="nc" id="L34">            return null;</span>
+        }
+
+<span class="fc" id="L37">        Pool pool = new Pool();</span>
+
+<span class="fc" id="L39">        pool.setPoolWorkingHours( poolWorkingHoursDtoSetToPoolWorkingHoursSet( poolDto.getPoolWorkingHours() ) );</span>
+<span class="fc" id="L40">        pool.setName( poolDto.getName() );</span>
+<span class="fc" id="L41">        pool.setDescription( poolDto.getDescription() );</span>
+<span class="fc" id="L42">        pool.setLocation( poolDto.getLocation() );</span>
+<span class="fc" id="L43">        pool.setCapacity( poolDto.getCapacity() );</span>
+<span class="fc" id="L44">        pool.setCreatedAt( poolDto.getCreatedAt() );</span>
+<span class="fc" id="L45">        pool.setUpdatedAt( poolDto.getUpdatedAt() );</span>
+
+<span class="fc" id="L47">        return pool;</span>
+    }
+
+    @Override
+    public PoolDto toPoolDto(Pool pool) {
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if ( pool == null ) {</span>
+<span class="nc" id="L53">            return null;</span>
+        }
+
+<span class="fc" id="L56">        PoolDto poolDto = new PoolDto();</span>
+
+<span class="fc" id="L58">        poolDto.setId( pool.getId() );</span>
+<span class="fc" id="L59">        poolDto.setPoolWorkingHours( poolWorkingHoursMapper.toPoolWorkingHoursDtoList( pool.getPoolWorkingHours() ) );</span>
+<span class="fc" id="L60">        poolDto.setName( pool.getName() );</span>
+<span class="fc" id="L61">        poolDto.setDescription( pool.getDescription() );</span>
+<span class="fc" id="L62">        poolDto.setLocation( pool.getLocation() );</span>
+<span class="fc" id="L63">        poolDto.setCapacity( pool.getCapacity() );</span>
+<span class="fc" id="L64">        poolDto.setCreatedAt( pool.getCreatedAt() );</span>
+<span class="fc" id="L65">        poolDto.setUpdatedAt( pool.getUpdatedAt() );</span>
+
+<span class="fc" id="L67">        return poolDto;</span>
+    }
+
+    @Override
+    public List&lt;Pool&gt; toPools(List&lt;PoolDto&gt; poolsDto) {
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if ( poolsDto == null ) {</span>
+<span class="nc" id="L73">            return null;</span>
+        }
+
+<span class="fc" id="L76">        List&lt;Pool&gt; list = new ArrayList&lt;Pool&gt;( poolsDto.size() );</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        for ( PoolDto poolDto : poolsDto ) {</span>
+<span class="fc" id="L78">            list.add( toPool( poolDto ) );</span>
+<span class="fc" id="L79">        }</span>
+
+<span class="fc" id="L81">        return list;</span>
+    }
+
+    @Override
+    public List&lt;PoolDto&gt; toPoolsDto(List&lt;Pool&gt; pools) {
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if ( pools == null ) {</span>
+<span class="nc" id="L87">            return null;</span>
+        }
+
+<span class="fc" id="L90">        List&lt;PoolDto&gt; list = new ArrayList&lt;PoolDto&gt;( pools.size() );</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        for ( Pool pool : pools ) {</span>
+<span class="fc" id="L92">            list.add( toPoolDto( pool ) );</span>
+<span class="fc" id="L93">        }</span>
+
+<span class="fc" id="L95">        return list;</span>
+    }
+
+    @Override
+    public void updatePoolFromDto(PoolDto poolDto, Pool existingPool) {
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        if ( poolDto == null ) {</span>
+<span class="fc" id="L101">            return;</span>
+        }
+
+<span class="fc" id="L104">        existingPool.setId( poolDto.getId() );</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        if ( existingPool.getPoolWorkingHours() != null ) {</span>
+<span class="nc" id="L106">            Set&lt;PoolWorkingHours&gt; set = poolWorkingHoursDtoSetToPoolWorkingHoursSet( poolDto.getPoolWorkingHours() );</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">            if ( set != null ) {</span>
+<span class="nc" id="L108">                existingPool.getPoolWorkingHours().clear();</span>
+<span class="nc" id="L109">                existingPool.getPoolWorkingHours().addAll( set );</span>
+            }
+            else {
+<span class="nc" id="L112">                existingPool.setPoolWorkingHours( null );</span>
+            }
+<span class="nc" id="L114">        }</span>
+        else {
+<span class="fc" id="L116">            Set&lt;PoolWorkingHours&gt; set = poolWorkingHoursDtoSetToPoolWorkingHoursSet( poolDto.getPoolWorkingHours() );</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">            if ( set != null ) {</span>
+<span class="fc" id="L118">                existingPool.setPoolWorkingHours( set );</span>
+            }
+        }
+<span class="fc" id="L121">        existingPool.setName( poolDto.getName() );</span>
+<span class="fc" id="L122">        existingPool.setDescription( poolDto.getDescription() );</span>
+<span class="fc" id="L123">        existingPool.setLocation( poolDto.getLocation() );</span>
+<span class="fc" id="L124">        existingPool.setCapacity( poolDto.getCapacity() );</span>
+<span class="fc" id="L125">        existingPool.setCreatedAt( poolDto.getCreatedAt() );</span>
+<span class="fc" id="L126">        existingPool.setUpdatedAt( poolDto.getUpdatedAt() );</span>
+<span class="fc" id="L127">    }</span>
+
+    protected Set&lt;PoolWorkingHours&gt; poolWorkingHoursDtoSetToPoolWorkingHoursSet(Set&lt;PoolWorkingHoursDto&gt; set) {
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        if ( set == null ) {</span>
+<span class="nc" id="L131">            return null;</span>
+        }
+
+<span class="fc" id="L134">        Set&lt;PoolWorkingHours&gt; set1 = new LinkedHashSet&lt;PoolWorkingHours&gt;( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">        for ( PoolWorkingHoursDto poolWorkingHoursDto : set ) {</span>
+<span class="nc" id="L136">            set1.add( poolWorkingHoursMapper.toPoolWorkingHours( poolWorkingHoursDto ) );</span>
+<span class="nc" id="L137">        }</span>
+
+<span class="fc" id="L139">        return set1;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="maven-antrun-" default="copy-class-files ">
+  <target name="copy-class-files ">
+    <copy todir="C:\projects\innowise\ors-service\report\target/classes" overwrite="false">
+      <fileset dir="C:\projects\innowise\ors-service\report/../adapter/target/classes" />
+    </copy>
+    <copy todir="C:\projects\innowise\ors-service\report\target/classes" overwrite="false">
+      <fileset dir="C:\projects\innowise\ors-service\report/../config/target/classes" />
+    </copy>
+    <copy todir="C:\projects\innowise\ors-service\report\target/classes" overwrite="false">
+      <fileset dir="C:\projects\innowise\ors-service\report/../domain/target/classes" />
+    </copy>
+  </target>
+</project>

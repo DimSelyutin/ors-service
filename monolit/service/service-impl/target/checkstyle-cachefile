@@ -1,0 +1,17 @@
+#Tue Aug 19 18:04:21 MSK 2025
+C\:\\projects\\innowise\\ors-service\\service\\service-impl\\src\\main\\java\\com\\innowise\\swimdom\\service\\impl\\PoolServiceImpl.java=1754048244476
+configuration*?=B2717380CD95B370FD4601021756217B8D1C5EBC
+module-resource*?\:suppressions.xml=C47D62E1EE44582F63D54F0EDC28FB74CABD058B
+C\:\\projects\\innowise\\ors-service\\service\\service-impl\\src\\main\\java\\com\\innowise\\swimdom\\service\\impl\\AuthenticationServiceImpl.java=1754048532771
+C\:\\projects\\innowise\\ors-service\\service\\service-impl\\src\\main\\java\\com\\innowise\\swimdom\\util\\BookingValidator.java=1755074129769
+C\:\\projects\\innowise\\ors-service\\service\\service-impl\\src\\main\\java\\com\\innowise\\swimdom\\repository\\specification\\ScheduleSpecification.java=1754048244473
+C\:\\projects\\innowise\\ors-service\\service\\service-impl\\src\\main\\java\\com\\innowise\\swimdom\\repository\\specification\\BookingSpecification.java=1754048244472
+C\:\\projects\\innowise\\ors-service\\service\\service-impl\\src\\main\\java\\com\\innowise\\swimdom\\service\\impl\\JwtTokenProvider.java=1754048532774
+C\:\\projects\\innowise\\ors-service\\service\\service-impl\\src\\main\\java\\com\\innowise\\swimdom\\repository\\specification\\SubscriptionSpecification.java=1752477139489
+C\:\\projects\\innowise\\ors-service\\service\\service-impl\\src\\main\\java\\com\\innowise\\swimdom\\service\\impl\\CustomUserDetailsService.java=1754560947352
+C\:\\projects\\innowise\\ors-service\\service\\service-impl\\src\\main\\java\\com\\innowise\\swimdom\\service\\impl\\UserSubscriptionServiceImpl.java=1754983900490
+C\:\\projects\\innowise\\ors-service\\service\\service-impl\\src\\main\\java\\com\\innowise\\swimdom\\service\\impl\\UserServiceImpl.java=1754048532775
+module-resource*?\:checkstyle-xpath-suppressions.xml=890FE6831889FD9658D26FC59812153FFFC1042
+C\:\\projects\\innowise\\ors-service\\service\\service-impl\\src\\main\\java\\com\\innowise\\swimdom\\service\\impl\\SubscriptionServiceImpl.java=1754983900488
+C\:\\projects\\innowise\\ors-service\\service\\service-impl\\src\\main\\java\\com\\innowise\\swimdom\\repository\\specification\\PoolSpecification.java=1752046113928
+C\:\\projects\\innowise\\ors-service\\service\\service-impl\\src\\main\\java\\com\\innowise\\swimdom\\service\\impl\\ScheduleServiceImpl.java=1754302133279

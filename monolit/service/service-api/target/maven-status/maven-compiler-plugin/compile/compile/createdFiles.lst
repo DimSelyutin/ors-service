@@ -1,0 +1,14 @@
+com\innowise\swimdom\repository\BookingRepository.class
+com\innowise\swimdom\repository\PoolWorkingHoursRepository.class
+com\innowise\swimdom\service\UserSubscriptionService.class
+com\innowise\swimdom\service\PoolService.class
+com\innowise\swimdom\service\ScheduleService.class
+com\innowise\swimdom\repository\ScheduleRepository.class
+com\innowise\swimdom\service\SubscriptionService.class
+com\innowise\swimdom\repository\UserSubscriptionRepository.class
+com\innowise\swimdom\service\UserService.class
+com\innowise\swimdom\repository\UserRepository.class
+com\innowise\swimdom\repository\PoolRepository.class
+com\innowise\swimdom\service\BookingService.class
+com\innowise\swimdom\repository\SubscriptionRepository.class
+com\innowise\swimdom\service\AuthenticationService.class

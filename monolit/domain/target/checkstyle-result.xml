@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\entity\Booking.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\entity\Pool.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\entity\PoolWorkingHours.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\entity\Schedule.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\entity\Subscription.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\entity\User.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\entity\UserSubscription.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\enums\BookingStatus.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\enums\SubscriptionDuration.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\enums\UserRole.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\exception\AuthenticationException.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\exception\BookingConflictException.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\exception\BookingNotFoundException.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\exception\InvalidTimeSlotException.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\exception\PoolNotFoundException.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\exception\PoolWorkingHoursException.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\exception\ScheduleNotFoundException.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\exception\SubscriptionNotFoundException.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\exception\UserAlreadyExistsException.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\exception\UserNotFoundException.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\exception\UserSubscriptionNotFoundException.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\exception\UserTokenExpiredException.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\util\Constants.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\util\CustomUserDetails.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\util\OpenCloseTimeValidator.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\util\ValidateBooking.java">
+</file>
+<file name="C:\projects\innowise\ors-service\domain\src\main\java\com\innowise\swimdom\util\ValidOpenCloseTime.java">
+</file>
+</checkstyle>

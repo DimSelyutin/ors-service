@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="C:\projects\innowise\ors-service\service\service-impl\src\main\java\com\innowise\swimdom\repository\specification\BookingSpecification.java">
+</file>
+<file name="C:\projects\innowise\ors-service\service\service-impl\src\main\java\com\innowise\swimdom\repository\specification\PoolSpecification.java">
+</file>
+<file name="C:\projects\innowise\ors-service\service\service-impl\src\main\java\com\innowise\swimdom\repository\specification\ScheduleSpecification.java">
+</file>
+<file name="C:\projects\innowise\ors-service\service\service-impl\src\main\java\com\innowise\swimdom\repository\specification\SubscriptionSpecification.java">
+</file>
+<file name="C:\projects\innowise\ors-service\service\service-impl\src\main\java\com\innowise\swimdom\service\impl\AuthenticationServiceImpl.java">
+</file>
+<file name="C:\projects\innowise\ors-service\service\service-impl\src\main\java\com\innowise\swimdom\service\impl\BookingServiceImpl.java">
+<error line="4" column="8" severity="error" message="Unused import - com.innowise.swimdom.entity.Pool." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
+<error line="5" column="8" severity="error" message="Unused import - com.innowise.swimdom.entity.PoolWorkingHours." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
+<error line="33" column="8" severity="error" message="Unused import - java.time.LocalDateTime." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
+<error line="36" column="8" severity="error" message="Unused import - java.util.Optional." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
+</file>
+<file name="C:\projects\innowise\ors-service\service\service-impl\src\main\java\com\innowise\swimdom\service\impl\CustomUserDetailsService.java">
+</file>
+<file name="C:\projects\innowise\ors-service\service\service-impl\src\main\java\com\innowise\swimdom\service\impl\JwtTokenProvider.java">
+</file>
+<file name="C:\projects\innowise\ors-service\service\service-impl\src\main\java\com\innowise\swimdom\service\impl\PoolServiceImpl.java">
+</file>
+<file name="C:\projects\innowise\ors-service\service\service-impl\src\main\java\com\innowise\swimdom\service\impl\ScheduleServiceImpl.java">
+</file>
+<file name="C:\projects\innowise\ors-service\service\service-impl\src\main\java\com\innowise\swimdom\service\impl\SubscriptionServiceImpl.java">
+</file>
+<file name="C:\projects\innowise\ors-service\service\service-impl\src\main\java\com\innowise\swimdom\service\impl\UserServiceImpl.java">
+</file>
+<file name="C:\projects\innowise\ors-service\service\service-impl\src\main\java\com\innowise\swimdom\service\impl\UserSubscriptionServiceImpl.java">
+</file>
+<file name="C:\projects\innowise\ors-service\service\service-impl\src\main\java\com\innowise\swimdom\util\BookingValidator.java">
+</file>
+</checkstyle>

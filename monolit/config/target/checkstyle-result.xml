@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="C:\projects\innowise\ors-service\config\src\main\java\com\innowise\swimdom\Application.java">
+<error line="8" column="8" severity="error" message="Unused import - java.util.List." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
+<error line="9" column="8" severity="error" message="Unused import - java.util.concurrent.ForkJoinPool." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
+<error line="10" column="8" severity="error" message="Unused import - java.util.stream.IntStream." source="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck"/>
+</file>
+<file name="C:\projects\innowise\ors-service\config\src\main\java\com\innowise\swimdom\config\OpenApiConfig.java">
+</file>
+<file name="C:\projects\innowise\ors-service\config\src\main\java\com\innowise\swimdom\config\SecurityConfig.java">
+</file>
+<file name="C:\projects\innowise\ors-service\config\src\main\java\com\innowise\swimdom\security\JWTAuthenticationEntryPoint.java">
+</file>
+<file name="C:\projects\innowise\ors-service\config\src\main\java\com\innowise\swimdom\security\JWTAuthenticationFilter.java">
+</file>
+</checkstyle>

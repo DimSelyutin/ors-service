@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SubscriptionMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">adapter</a> &gt; <a href="index.source.html" class="el_package">com.innowise.swimdom.mapper</a> &gt; <span class="el_source">SubscriptionMapperImpl.java</span></div><h1>SubscriptionMapperImpl.java</h1><pre class="source lang-java linenums">package com.innowise.swimdom.mapper;
+
+import com.innowise.swimdom.entity.Subscription;
+import com.innowise.swimdom.enums.SubscriptionDuration;
+import com.innowise.swimdom.openapi.model.SubscriptionCreateDTO;
+import com.innowise.swimdom.openapi.model.SubscriptionDTO;
+import com.innowise.swimdom.openapi.model.SubscriptionUpdateDTO;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2025-08-19T18:03:59+0300&quot;,
+    comments = &quot;version: 1.6.3, compiler: javac, environment: Java 17.0.11 (Oracle Corporation)&quot;
+)
+@Component
+<span class="fc" id="L20">public class SubscriptionMapperImpl implements SubscriptionMapper {</span>
+
+    @Override
+    public Subscription toSubscriptionEntity(SubscriptionCreateDTO createDTO) {
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        if ( createDTO == null ) {</span>
+<span class="fc" id="L25">            return null;</span>
+        }
+
+<span class="fc" id="L28">        Subscription subscription = new Subscription();</span>
+
+<span class="fc" id="L30">        subscription.setName( createDTO.getName() );</span>
+<span class="fc" id="L31">        subscription.setDescription( createDTO.getDescription() );</span>
+<span class="fc" id="L32">        subscription.setDuration( durationEnumToSubscriptionDuration( createDTO.getDuration() ) );</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if ( createDTO.getPrice() != null ) {</span>
+<span class="fc" id="L34">            subscription.setPrice( BigDecimal.valueOf( createDTO.getPrice() ) );</span>
+        }
+
+<span class="fc" id="L37">        subscription.setUpdatedAt( java.time.LocalDateTime.now() );</span>
+
+<span class="fc" id="L39">        return subscription;</span>
+    }
+
+    @Override
+    public void updateSubscriptionFromDTO(SubscriptionUpdateDTO updateDTO, Subscription existingSubscription) {
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if ( updateDTO == null ) {</span>
+<span class="fc" id="L45">            return;</span>
+        }
+
+<span class="fc" id="L48">        existingSubscription.setName( updateDTO.getName() );</span>
+<span class="fc" id="L49">        existingSubscription.setDescription( updateDTO.getDescription() );</span>
+<span class="fc" id="L50">        existingSubscription.setDuration( durationEnumToSubscriptionDuration1( updateDTO.getDuration() ) );</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if ( updateDTO.getPrice() != null ) {</span>
+<span class="fc" id="L52">            existingSubscription.setPrice( BigDecimal.valueOf( updateDTO.getPrice() ) );</span>
+        }
+        else {
+<span class="fc" id="L55">            existingSubscription.setPrice( null );</span>
+        }
+
+<span class="fc" id="L58">        existingSubscription.setUpdatedAt( java.time.LocalDateTime.now() );</span>
+<span class="fc" id="L59">    }</span>
+
+    @Override
+    public SubscriptionDTO toSubscriptionDTO(Subscription subscription) {
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if ( subscription == null ) {</span>
+<span class="fc" id="L64">            return null;</span>
+        }
+
+<span class="fc" id="L67">        SubscriptionDTO subscriptionDTO = new SubscriptionDTO();</span>
+
+<span class="fc" id="L69">        subscriptionDTO.setId( subscription.getId() );</span>
+<span class="fc" id="L70">        subscriptionDTO.setName( subscription.getName() );</span>
+<span class="fc" id="L71">        subscriptionDTO.setDescription( subscription.getDescription() );</span>
+<span class="fc" id="L72">        subscriptionDTO.setDuration( subscriptionDurationToDurationEnum( subscription.getDuration() ) );</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        if ( subscription.getPrice() != null ) {</span>
+<span class="fc" id="L74">            subscriptionDTO.setPrice( subscription.getPrice().doubleValue() );</span>
+        }
+<span class="fc" id="L76">        subscriptionDTO.setCreatedAt( subscription.getCreatedAt() );</span>
+<span class="fc" id="L77">        subscriptionDTO.setUpdatedAt( subscription.getUpdatedAt() );</span>
+
+<span class="fc" id="L79">        return subscriptionDTO;</span>
+    }
+
+    @Override
+    public List&lt;SubscriptionDTO&gt; toSubscriptionDTOList(List&lt;Subscription&gt; subscriptions) {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if ( subscriptions == null ) {</span>
+<span class="fc" id="L85">            return null;</span>
+        }
+
+<span class="fc" id="L88">        List&lt;SubscriptionDTO&gt; list = new ArrayList&lt;SubscriptionDTO&gt;( subscriptions.size() );</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        for ( Subscription subscription : subscriptions ) {</span>
+<span class="fc" id="L90">            list.add( toSubscriptionDTO( subscription ) );</span>
+<span class="fc" id="L91">        }</span>
+
+<span class="fc" id="L93">        return list;</span>
+    }
+
+    protected SubscriptionDuration durationEnumToSubscriptionDuration(SubscriptionCreateDTO.DurationEnum durationEnum) {
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        if ( durationEnum == null ) {</span>
+<span class="fc" id="L98">            return null;</span>
+        }
+
+        SubscriptionDuration subscriptionDuration;
+
+<span class="pc bpc" id="L103" title="1 of 4 branches missed.">        switch ( durationEnum ) {</span>
+<span class="fc" id="L104">            case WEEK: subscriptionDuration = SubscriptionDuration.WEEK;</span>
+<span class="fc" id="L105">            break;</span>
+<span class="fc" id="L106">            case MONTH: subscriptionDuration = SubscriptionDuration.MONTH;</span>
+<span class="fc" id="L107">            break;</span>
+<span class="fc" id="L108">            case YEAR: subscriptionDuration = SubscriptionDuration.YEAR;</span>
+<span class="fc" id="L109">            break;</span>
+<span class="nc" id="L110">            default: throw new IllegalArgumentException( &quot;Unexpected enum constant: &quot; + durationEnum );</span>
+        }
+
+<span class="fc" id="L113">        return subscriptionDuration;</span>
+    }
+
+    protected SubscriptionDuration durationEnumToSubscriptionDuration1(SubscriptionUpdateDTO.DurationEnum durationEnum) {
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        if ( durationEnum == null ) {</span>
+<span class="fc" id="L118">            return null;</span>
+        }
+
+        SubscriptionDuration subscriptionDuration;
+
+<span class="pc bpc" id="L123" title="1 of 4 branches missed.">        switch ( durationEnum ) {</span>
+<span class="fc" id="L124">            case WEEK: subscriptionDuration = SubscriptionDuration.WEEK;</span>
+<span class="fc" id="L125">            break;</span>
+<span class="fc" id="L126">            case MONTH: subscriptionDuration = SubscriptionDuration.MONTH;</span>
+<span class="fc" id="L127">            break;</span>
+<span class="fc" id="L128">            case YEAR: subscriptionDuration = SubscriptionDuration.YEAR;</span>
+<span class="fc" id="L129">            break;</span>
+<span class="nc" id="L130">            default: throw new IllegalArgumentException( &quot;Unexpected enum constant: &quot; + durationEnum );</span>
+        }
+
+<span class="fc" id="L133">        return subscriptionDuration;</span>
+    }
+
+    protected SubscriptionDTO.DurationEnum subscriptionDurationToDurationEnum(SubscriptionDuration subscriptionDuration) {
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        if ( subscriptionDuration == null ) {</span>
+<span class="fc" id="L138">            return null;</span>
+        }
+
+        SubscriptionDTO.DurationEnum durationEnum;
+
+<span class="pc bpc" id="L143" title="1 of 4 branches missed.">        switch ( subscriptionDuration ) {</span>
+<span class="fc" id="L144">            case WEEK: durationEnum = SubscriptionDTO.DurationEnum.WEEK;</span>
+<span class="fc" id="L145">            break;</span>
+<span class="fc" id="L146">            case MONTH: durationEnum = SubscriptionDTO.DurationEnum.MONTH;</span>
+<span class="fc" id="L147">            break;</span>
+<span class="fc" id="L148">            case YEAR: durationEnum = SubscriptionDTO.DurationEnum.YEAR;</span>
+<span class="fc" id="L149">            break;</span>
+<span class="nc" id="L150">            default: throw new IllegalArgumentException( &quot;Unexpected enum constant: &quot; + subscriptionDuration );</span>
+        }
+
+<span class="fc" id="L153">        return durationEnum;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

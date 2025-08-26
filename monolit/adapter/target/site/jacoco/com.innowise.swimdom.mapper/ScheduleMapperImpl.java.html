@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScheduleMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">adapter</a> &gt; <a href="index.source.html" class="el_package">com.innowise.swimdom.mapper</a> &gt; <span class="el_source">ScheduleMapperImpl.java</span></div><h1>ScheduleMapperImpl.java</h1><pre class="source lang-java linenums">package com.innowise.swimdom.mapper;
+
+import com.innowise.swimdom.entity.Pool;
+import com.innowise.swimdom.entity.Schedule;
+import com.innowise.swimdom.openapi.model.ScheduleDto;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2025-08-19T18:03:59+0300&quot;,
+    comments = &quot;version: 1.6.3, compiler: javac, environment: Java 17.0.11 (Oracle Corporation)&quot;
+)
+@Component
+<span class="fc" id="L18">public class ScheduleMapperImpl implements ScheduleMapper {</span>
+
+    @Override
+    public Schedule toSchedule(ScheduleDto scheduleDto) {
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        if ( scheduleDto == null ) {</span>
+<span class="fc" id="L23">            return null;</span>
+        }
+
+<span class="fc" id="L26">        Schedule schedule = new Schedule();</span>
+
+<span class="fc" id="L28">        schedule.setPool( scheduleDtoToPool( scheduleDto ) );</span>
+<span class="fc" id="L29">        schedule.setStartDatetime( scheduleDto.getStartDatetime() );</span>
+<span class="fc" id="L30">        schedule.setEndDatetime( scheduleDto.getEndDatetime() );</span>
+
+<span class="fc" id="L32">        schedule.setUpdatedAt( java.time.LocalDateTime.now() );</span>
+
+<span class="fc" id="L34">        return schedule;</span>
+    }
+
+    @Override
+    public ScheduleDto toScheduleDto(Schedule schedule) {
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if ( schedule == null ) {</span>
+<span class="fc" id="L40">            return null;</span>
+        }
+
+<span class="fc" id="L43">        ScheduleDto scheduleDto = new ScheduleDto();</span>
+
+<span class="fc" id="L45">        scheduleDto.setPoolId( schedulePoolId( schedule ) );</span>
+<span class="fc" id="L46">        scheduleDto.setId( schedule.getId() );</span>
+<span class="fc" id="L47">        scheduleDto.setStartDatetime( schedule.getStartDatetime() );</span>
+<span class="fc" id="L48">        scheduleDto.setEndDatetime( schedule.getEndDatetime() );</span>
+<span class="fc" id="L49">        scheduleDto.setCreatedAt( schedule.getCreatedAt() );</span>
+<span class="fc" id="L50">        scheduleDto.setUpdatedAt( schedule.getUpdatedAt() );</span>
+
+<span class="fc" id="L52">        return scheduleDto;</span>
+    }
+
+    @Override
+    public List&lt;Schedule&gt; toSchedules(List&lt;ScheduleDto&gt; schedulesDto) {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if ( schedulesDto == null ) {</span>
+<span class="fc" id="L58">            return null;</span>
+        }
+
+<span class="fc" id="L61">        List&lt;Schedule&gt; list = new ArrayList&lt;Schedule&gt;( schedulesDto.size() );</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        for ( ScheduleDto scheduleDto : schedulesDto ) {</span>
+<span class="fc" id="L63">            list.add( toSchedule( scheduleDto ) );</span>
+<span class="fc" id="L64">        }</span>
+
+<span class="fc" id="L66">        return list;</span>
+    }
+
+    @Override
+    public List&lt;ScheduleDto&gt; toSchedulesDto(List&lt;Schedule&gt; schedules) {
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if ( schedules == null ) {</span>
+<span class="fc" id="L72">            return null;</span>
+        }
+
+<span class="fc" id="L75">        List&lt;ScheduleDto&gt; list = new ArrayList&lt;ScheduleDto&gt;( schedules.size() );</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        for ( Schedule schedule : schedules ) {</span>
+<span class="fc" id="L77">            list.add( toScheduleDto( schedule ) );</span>
+<span class="fc" id="L78">        }</span>
+
+<span class="fc" id="L80">        return list;</span>
+    }
+
+    @Override
+    public void updateScheduleFromDto(ScheduleDto scheduleDto, Schedule existingSchedule) {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if ( scheduleDto == null ) {</span>
+<span class="fc" id="L86">            return;</span>
+        }
+
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if ( existingSchedule.getPool() == null ) {</span>
+<span class="fc" id="L90">            existingSchedule.setPool( new Pool() );</span>
+        }
+<span class="fc" id="L92">        scheduleDtoToPool1( scheduleDto, existingSchedule.getPool() );</span>
+<span class="fc" id="L93">        existingSchedule.setStartDatetime( scheduleDto.getStartDatetime() );</span>
+<span class="fc" id="L94">        existingSchedule.setEndDatetime( scheduleDto.getEndDatetime() );</span>
+
+<span class="fc" id="L96">        existingSchedule.setUpdatedAt( java.time.LocalDateTime.now() );</span>
+<span class="fc" id="L97">    }</span>
+
+    protected Pool scheduleDtoToPool(ScheduleDto scheduleDto) {
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        if ( scheduleDto == null ) {</span>
+<span class="nc" id="L101">            return null;</span>
+        }
+
+<span class="fc" id="L104">        Pool pool = new Pool();</span>
+
+<span class="fc" id="L106">        pool.setId( scheduleDto.getPoolId() );</span>
+
+<span class="fc" id="L108">        return pool;</span>
+    }
+
+    private UUID schedulePoolId(Schedule schedule) {
+<span class="fc" id="L112">        Pool pool = schedule.getPool();</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        if ( pool == null ) {</span>
+<span class="fc" id="L114">            return null;</span>
+        }
+<span class="fc" id="L116">        return pool.getId();</span>
+    }
+
+    protected void scheduleDtoToPool1(ScheduleDto scheduleDto, Pool mappingTarget) {
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if ( scheduleDto == null ) {</span>
+<span class="nc" id="L121">            return;</span>
+        }
+
+<span class="fc" id="L124">        mappingTarget.setId( scheduleDto.getPoolId() );</span>
+<span class="fc" id="L125">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

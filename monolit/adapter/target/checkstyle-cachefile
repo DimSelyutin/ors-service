@@ -1,0 +1,18 @@
+#Tue Aug 19 18:03:54 MSK 2025
+configuration*?=6C0E92FB428F944BCC69546F0643F2F0CBB39A16
+C\:\\projects\\innowise\\ors-service\\adapter\\src\\main\\java\\com\\innowise\\swimdom\\controller\\ScheduleController.java=1754984280555
+C\:\\projects\\innowise\\ors-service\\adapter\\src\\main\\java\\com\\innowise\\swimdom\\util\\RestExceptionHandler.java=1754048532706
+module-resource*?\:suppressions.xml=C47D62E1EE44582F63D54F0EDC28FB74CABD058B
+C\:\\projects\\innowise\\ors-service\\adapter\\src\\main\\java\\com\\innowise\\swimdom\\mapper\\AuthMapper.java=1754048244415
+C\:\\projects\\innowise\\ors-service\\adapter\\src\\main\\java\\com\\innowise\\swimdom\\mapper\\type\\UserRoleMapper.java=1754048532704
+C\:\\projects\\innowise\\ors-service\\adapter\\src\\main\\java\\com\\innowise\\swimdom\\controller\\SubscriptionController.java=1754048244414
+C\:\\projects\\innowise\\ors-service\\adapter\\src\\main\\java\\com\\innowise\\swimdom\\mapper\\ScheduleMapper.java=1754048244418
+C\:\\projects\\innowise\\ors-service\\adapter\\src\\main\\java\\com\\innowise\\swimdom\\mapper\\PoolMapper.java=1752477139451
+C\:\\projects\\innowise\\ors-service\\adapter\\src\\main\\java\\com\\innowise\\swimdom\\controller\\AuthController.java=1754048532702
+C\:\\projects\\innowise\\ors-service\\adapter\\src\\main\\java\\com\\innowise\\swimdom\\controller\\BookingController.java=1755079411951
+module-resource*?\:checkstyle-xpath-suppressions.xml=890FE6831889FD9658D26FC59812153FFFC1042
+C\:\\projects\\innowise\\ors-service\\adapter\\src\\main\\java\\com\\innowise\\swimdom\\controller\\PoolController.java=1755005362534
+C\:\\projects\\innowise\\ors-service\\adapter\\src\\main\\java\\com\\innowise\\swimdom\\mapper\\BookingMapper.java=1754984280555
+C\:\\projects\\innowise\\ors-service\\adapter\\src\\main\\java\\com\\innowise\\swimdom\\mapper\\PoolWorkingHoursMapper.java=1754048244417
+C\:\\projects\\innowise\\ors-service\\adapter\\src\\main\\java\\com\\innowise\\swimdom\\mapper\\SubscriptionMapper.java=1754983900454
+C\:\\projects\\innowise\\ors-service\\adapter\\src\\main\\java\\com\\innowise\\swimdom\\mapper\\UserSubscriptionMapper.java=1754983900454

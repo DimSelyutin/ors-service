@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: "1"
+      author: DimSelyutin
+      changes:
+        - sql: CREATE TYPE user_role AS ENUM ('USER', 'ADMIN');
+      rollback:
+        - sql: DROP TYPE IF EXISTS user_role;

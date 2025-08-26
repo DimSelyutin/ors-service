@@ -1,0 +1,19 @@
+
+# --- Authentication & Authorization Specific Errors ---
+auth:
+  invalid_credentials: "Invalid email or password."
+  account_locked: "Your account is locked. Please contact support."
+  account_disabled: "Your account is disabled. Please contact support."
+  account_expired: "Your account has expired. Please contact support."
+  token_expired: "Your session has expired. Please log in again."
+  token_invalid: "Invalid authentication token."
+  token_missing: "Authentication token is missing."
+  role_insufficient: "You do not have the required permissions for this action."
+
+# --- Resource Specific Errors (e.g., User, Product) ---
+resource:
+  user_not_found: "User with ID {0} not found."
+  user_email_exists: "User with email '{0}' already exists."
+  product_not_found: "Product with ID {0} not found."
+  order_cannot_be_cancelled: "Order {0} cannot be cancelled at this stage."
+  item_out_of_stock: "Item '{0}' is out of stock."

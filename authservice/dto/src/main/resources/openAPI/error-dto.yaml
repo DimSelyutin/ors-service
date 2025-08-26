@@ -1,0 +1,58 @@
+openapi: 3.0.3
+info:
+  title: DTOs for systems error
+  description: Schema for system errors.
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    ErrorDto:
+      type: object
+      description: Answer when system faced with problem
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+          description: Error code
+        errorMessage:
+          type: string
+          description: Error name
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp
+      required:
+        - errorCode
+        - errorMessage
+        - timestamp
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDto'
+    NotFound:
+      description: Resource Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDto'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDto'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDto'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDto'

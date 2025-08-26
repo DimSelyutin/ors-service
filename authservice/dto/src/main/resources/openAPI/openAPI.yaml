@@ -1,0 +1,20 @@
+openapi: 3.0.3
+
+info:
+  title: Auth Service
+  description: Service for authentication.
+  version: 1.0.0
+
+paths:
+    /auth/login:
+        tags:
+            - Auth
+        $ref: './auth-dto.yaml#/auth'
+    /auth/register:
+        tags:
+            - Auth
+        $ref: './auth-dto.yaml#/register'
+    /auth/refresh:
+        tags:
+            - Auth
+        $ref: './auth-dto.yaml#/refresh'

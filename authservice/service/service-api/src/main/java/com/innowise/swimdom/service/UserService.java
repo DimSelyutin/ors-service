@@ -1,0 +1,13 @@
+package com.innowise.swimdom.service;
+
+import com.innowise.swimdom.entity.User;
+import com.innowise.swimdom.openapi.model.UserCreateRequestDTO;
+
+/**
+ * A service for managing users.
+ * Provides methods for creating, receiving, updating, and deleting user.
+ */
+public interface UserService {
+
+    User createUser(UserCreateRequestDTO userCreateRequestDTO);
+}

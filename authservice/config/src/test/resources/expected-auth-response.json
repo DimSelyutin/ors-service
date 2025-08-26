@@ -1,0 +1,13 @@
+{
+  "token": "mocked-jwt-token",
+  "user": {
+    "id": null,
+    "email": "user@example.com",
+    "name": null,
+    "surname": null,
+    "phone": null,
+    "role": null,
+    "createdAt": null,
+    "updatedAt": null
+  }
+}

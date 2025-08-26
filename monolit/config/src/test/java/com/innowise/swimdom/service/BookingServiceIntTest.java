@@ -8,6 +8,7 @@ import com.innowise.swimdom.entity.Subscription;
 import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.entity.UserSubscription;
 import com.innowise.swimdom.enums.SubscriptionDuration;
+import com.innowise.swimdom.exception.BookingConflictException;
 import com.innowise.swimdom.exception.BookingNotFoundException;
 import com.innowise.swimdom.openapi.model.BookingCreateRequestDTO;
 import com.innowise.swimdom.openapi.model.BookingResponseDTO;

@@ -1,8 +1,6 @@
 package com.innowise.swimdom.service.impl;
 
 import com.innowise.swimdom.entity.Booking;
-import com.innowise.swimdom.entity.Pool;
-import com.innowise.swimdom.entity.PoolWorkingHours;
 import com.innowise.swimdom.entity.Schedule;
 import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.entity.UserSubscription;
@@ -30,10 +28,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.domain.Specification;
@@ -69,7 +65,7 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new UserSubscriptionNotFoundException(Constants.USER_SUBSCRIPTION_NOT_FOUND));
         Schedule schedule = scheduleRepository.findById(bookingDTO.getScheduleId())
             .orElseThrow(() -> new ScheduleNotFoundException(Constants.SCHEDULE_NOT_FOUND));
-
+        userSubscription.reduceSessions();
         Booking booking = Booking.builder()
             .user(user)
             .userSubscription(userSubscription)
@@ -126,6 +122,7 @@ public class BookingServiceImpl implements BookingService {
     public void deleteBooking(UUID bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
             .orElseThrow(() -> new BookingNotFoundException(Constants.BOOKING_NOT_FOUND + bookingId));
+        booking.getUserSubscription().increaseSessions();
         bookingRepository.delete(booking);
     }
 
@@ -172,7 +169,7 @@ public class BookingServiceImpl implements BookingService {
         Schedule newSchedule = scheduleRepository.findById(bookingUpdateRequestDTO.getScheduleId())
             .orElseThrow(() -> new BookingNotFoundException("Schedule not found with ID: "
                 + bookingUpdateRequestDTO.getScheduleId()));
-        // Update booking fields
+
         existingBooking.setSchedule(newSchedule);
         existingBooking.setBookingDatetime(bookingUpdateRequestDTO.getBookingDatetime());
         existingBooking.setStatus(BookingStatus.valueOf(bookingUpdateRequestDTO.getStatus().toString()));
@@ -181,26 +178,5 @@ public class BookingServiceImpl implements BookingService {
         Booking updatedBooking = bookingRepository.save(existingBooking);
 
         return bookingMapper.toBookingResponseDTO(updatedBooking);
-    }
-
-    /**
-     * Checks if booking time is within pool operating hours.
-     */
-    private boolean isWorkingHours(Pool pool, LocalDateTime startTime, LocalDateTime endTime) {
-        LocalTime startTimeOfDay = startTime.toLocalTime();
-        LocalTime endTimeOfDay = endTime.toLocalTime();
-
-        int dayOfWeek = startTime.getDayOfWeek().getValue();
-
-        // Find working hours for this day of week
-        Optional<PoolWorkingHours> workingHours =
-            poolWorkingHoursRepository.findByPoolIdAndWeekday(pool.getId(), (short) dayOfWeek);
-
-        if (workingHours.isEmpty()) {
-            return true;
-        }
-
-        PoolWorkingHours hours = workingHours.get();
-        return startTimeOfDay.isAfter(hours.getOpenTime()) && endTimeOfDay.isBefore(hours.getCloseTime());
     }
 }

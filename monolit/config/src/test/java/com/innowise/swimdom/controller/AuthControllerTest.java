@@ -3,6 +3,7 @@ package com.innowise.swimdom.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.innowise.swimdom.openapi.model.AuthRequest;
 import com.innowise.swimdom.openapi.model.UserCreateRequestDTO;
+import com.innowise.swimdom.openapi.model.UserRole;
 import com.innowise.swimdom.repository.UserRepository;
 import com.innowise.swimdom.service.AuthenticationService;
 import com.innowise.swimdom.service.UserService;

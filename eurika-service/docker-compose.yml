@@ -1,0 +1,14 @@
+services:
+  eureka-service:
+    build: .
+    container_name: eureka-service
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - swimdom-network
+    restart: unless-stopped
+networks:
+  swimdom-network:
+    driver: bridge

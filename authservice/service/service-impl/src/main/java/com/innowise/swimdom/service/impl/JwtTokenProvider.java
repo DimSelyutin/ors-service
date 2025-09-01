@@ -48,10 +48,10 @@ public class JwtTokenProvider {
      * @param refreshExpirationDays   the refresh token is valid in days.
      */
     public JwtTokenProvider(
-        @Value("${jwt.secret.access}") String jwtAccessSecret,
-        @Value("${jwt.secret.refresh}") String jwtRefreshSecret,
-        @Value("${jwt.accessExpirationMinutes}") int accessExpirationMinutes,
-        @Value("${jwt.refreshExpirationDays}") int refreshExpirationDays
+        @Value("${token.secret.access}") String jwtAccessSecret,
+        @Value("${token.secret.refresh}") String jwtRefreshSecret,
+        @Value("${token.accessExpirationMinutes}") int accessExpirationMinutes,
+        @Value("${token.refreshExpirationDays}") int refreshExpirationDays
     ) {
         this.jwtAccessSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtAccessSecret));
         this.jwtRefreshSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtRefreshSecret));
@@ -149,7 +149,7 @@ public class JwtTokenProvider {
     }
 
     public Duration getRefreshTokenExpirationTime() {
-        return Duration.ofMillis(accessExpirationMinutes);
+        return Duration.ofDays(refreshExpirationDays);
     }
 
     /**

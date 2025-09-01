@@ -9,9 +9,9 @@ services:
       - "5432:5432"
     restart: 'always'
     healthcheck:
-      test: [ "CMD-SHELL", "sh -c 'pg_isready -U ors-service -d swimdom_auth'" ]
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U authservice -d swimdom_auth'" ]
 
-  ors-service:
+  authservice:
     build:
       dockerfile: ./Dockerfile
     ports:

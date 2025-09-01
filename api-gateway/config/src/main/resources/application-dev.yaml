@@ -1,0 +1,63 @@
+server:
+  port: ${GATEWAY_PORT:8762}
+spring:
+  data:
+    redis:
+      host: ${REDIS_HOST:172.17.1.3}
+      port: ${REDIS_PORT:30379}
+      key-prefix: "api-gateway"
+  cloud:
+    config:
+      enabled: false
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: card-service-route-add-cards
+          uri: lb://cardservice
+          predicates:
+            - Path=/api/v1/cardservice/cards
+            - Method=POST
+          filters:
+            - AccessTokenFilter
+            - RoleFilter=ADMIN;FRONT_OFFICE;FRONT_OFFICE_BOSS
+            - RemoveRequestHeader=Authorization
+
+        - id: card-service-route-check-cards
+          uri: lb://cardservice
+          predicates:
+            - Path=/api/v1/cardservice/cards/{id}
+            - Method=GET
+          filters:
+            - AccessTokenFilter
+            - RoleFilter=ADMIN;FRONT_OFFICE;FRONT_OFFICE_BOSS
+            - RemoveRequestHeader=Authorization
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG
+jwt:
+  secret:
+    access: qBTmv4oXFFR2GwjexDJ4t6fsIUIUhhXqlktXjXdkcyygs8nPVEwMfo29VDRRepYDVV5IkIxBMzr7OEHXEHd37w==
+    refresh: zL1HB3Pch05Avfynovxrf/kpF9O2m4NCWKJUjEp27s9J2jEG3ifiKCGylaZ8fDeoONSTJP/wAzKawB8F9rOMNg==
+  accessExpirationMinutes: 5
+  refreshExpirationDays: 30
+api-gateway:
+  isStubEnabled: ${IS_STUB_ENABLED:true}
+  isMasterTokenEnabled: ${IS_MASTER_TOKEN_ENABLED:false}
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: API Gateway Service

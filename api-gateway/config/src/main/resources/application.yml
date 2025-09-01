@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: api-gateway
+  data:
+    redis:
+      key-prefix: "api-gateway"
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG
+jwt:
+  secret:
+    access: qBTmv4oXFFR2GwjexDJ4t6fsIUIUhhXqlktXjXdkcyygs8nPVEwMfo29VDRRepYDVV5IkIxBMzr7OEHXEHd37w==
+    refresh: zL1HB3Pch05Avfynovxrf/kpF9O2m4NCWKJUjEp27s9J2jEG3ifiKCGylaZ8fDeoONSTJP/wAzKawB8F9rOMNg==
+  accessExpirationMinutes: 5
+  refreshExpirationDays: 30
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+api-gateway:
+  isStubEnabled: ${IS_STUB_ENABLED:true}
+  isMasterTokenEnabled: ${IS_MASTER_TOKEN_ENABLED:false}

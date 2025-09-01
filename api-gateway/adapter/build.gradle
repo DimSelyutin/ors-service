@@ -1,0 +1,21 @@
+plugins {
+    id 'java-library'
+    id 'io.spring.dependency-management'
+}
+
+group = parent.group
+version = parent.version
+
+dependencies {
+    api project(':service')
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+}
+
+apply {
+    plugin("org.springframework.boot")
+}
+
+bootJar {
+    mainClass = 'com.innowise.swimdom.ApiGatewayApplication'
+}

@@ -20,7 +20,7 @@
     </modules>
 
     <groupId>com.innowise.swimdom</groupId>
-    <artifactId>ors-service</artifactId>
+    <artifactId>authservice</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
@@ -61,6 +61,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <!-- Removed spring-cloud-starter-gateway to keep gateway functionality only in api-gateway module -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>4.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>

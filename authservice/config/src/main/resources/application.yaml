@@ -2,7 +2,7 @@ server:
     port: 8081
 spring:
   application:
-    name: ors-service
+    name: authservice
   datasource:
     driver-class-name: org.postgresql.Driver
     url: ${DB_URL:jdbc:postgresql://localhost:5432/swimdom_auth}
@@ -12,7 +12,7 @@ spring:
       redis:
         host: ${REDIS_HOST:127.0.0.1}
         port: ${REDIS_PORT:30379}
-        key-prefix: "api-gateway"
+        key-prefix: "authservice"
   jpa:
     properties:
       hibernate:
@@ -34,6 +34,12 @@ management:
     health.enabled: true
     prometheus.enabled: true
     loggers.enabled: true
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
 token:
     secret:
         access: "yF8nG7xvJ+2K0mZrTq6L3p9vX4Yw5Zs8QeRfU1aN6bH7jK0pLqMwNxYzVtRgSeDf"

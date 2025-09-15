@@ -39,10 +39,10 @@ public class JwtProvider {
     /**
      * The JwtProvider constructor.
      *
-     * @param jwtAccessSecret secret key for the access token.
-     * @param jwtRefreshSecret the secret key for the refresh token.
+     * @param jwtAccessSecret         secret key for the access token.
+     * @param jwtRefreshSecret        the secret key for the refresh token.
      * @param accessExpirationMinutes the validity period of the access token in minutes.
-     * @param refreshExpirationDays the refresh token is valid in days.
+     * @param refreshExpirationDays   the refresh token is valid in days.
      */
     public JwtProvider(
         @Value("${jwt.secret.access}") String jwtAccessSecret,

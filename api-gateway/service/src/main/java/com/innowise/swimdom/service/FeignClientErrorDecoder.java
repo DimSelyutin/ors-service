@@ -1,4 +1,4 @@
-package com.innowise.swimdom.config;
+package com.innowise.swimdom.service;
 
 import com.innowise.swimdom.exception.BadRequestException;
 import com.innowise.swimdom.exception.FeignClientException;
@@ -7,7 +7,6 @@ import com.innowise.swimdom.exception.NotFoundException;
 import com.innowise.swimdom.exception.ServiceUnavailableException;
 import com.innowise.swimdom.exception.UnauthorizedException;
 
-import com.innowise.swimdom.service.UserServiceFallbackFactory;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;

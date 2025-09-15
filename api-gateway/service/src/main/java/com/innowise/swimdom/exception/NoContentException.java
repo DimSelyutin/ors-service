@@ -8,7 +8,11 @@ public class NoContentException extends RuntimeException {
     /**
      * Creates a new exception with a predefined message.
      */
-    public NoContentException() {
-        super("User not found");
+    public NoContentException(String message) {
+        super(message);
+    }
+
+    public NoContentException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

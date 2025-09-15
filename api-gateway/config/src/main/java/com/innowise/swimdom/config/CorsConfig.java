@@ -1,6 +1,5 @@
 package com.innowise.swimdom.config;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -16,7 +15,6 @@ import reactor.core.publisher.Mono;
  * Allows configuring allowed origins, methods and headers for CORS requests.
  */
 @Configuration
-@RequiredArgsConstructor
 public class CorsConfig {
 
     /**

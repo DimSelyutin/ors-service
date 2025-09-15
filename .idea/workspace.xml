@@ -5,44 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b89c0d65-d0a9-40c7-8895-860710b0a94a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api-gateway/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/adapter/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/config/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/config/checkstyle/checkstyle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/config/checkstyle/suppressions.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/config/src/main/resources/application-dev.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/config/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/config/src/main/resources/logback-spring.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/config/src/test/resources/application-test.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/service/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/service/src/test/java/com/boomerang/AuthServiceTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/service/src/test/java/com/boomerang/JwtProviderTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/service/src/test/java/com/boomerang/util/TestConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/service/src/test/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/config/src/main/java/com/innowise/swimdom/config/RedisConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/dto/JwtResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/FeignClientErrorDecoder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/adapter/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/adapter/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/config/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/config/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/config/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/config/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/domain/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/domain/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/dto/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/dto/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/adapter/src/main/java/com/innowise/swimdom/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/adapter/src/main/java/com/innowise/swimdom/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/adapter/src/main/java/com/innowise/swimdom/mapper/JwtResponseMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/mapper/JwtResponseMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/config/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/config/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/config/src/main/java/com/innowise/swimdom/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/config/src/main/java/com/innowise/swimdom/config/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/config/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/config/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/config/src/test/java/com/innowise/swimdom/ApiGatewayApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/config/src/test/java/com/innowise/swimdom/ExpiredTokenTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/config/src/test/java/com/innowise/swimdom/config/EmbeddedRedisTestConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/config/src/test/resources/application-test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/config/src/test/resources/application-test.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/exception/IncorrectRefreshTokenException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/exception/IncorrectRefreshTokenException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/exception/NoContentException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/exception/NoContentException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/exception/RedisSaveException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/exception/RedisSaveException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/JwtProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/JwtProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/UserServiceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/UserServiceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/UserServiceFallbackFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/UserServiceFallbackFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/test/java/com/boomerang/AuthServiceTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/test/java/com/boomerang/JwtProviderTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/test/java/com/boomerang/util/TestConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/mvnw.cmd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/authservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/report/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/report/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/service/service-impl/src/main/java/com/innowise/swimdom/service/impl/JwtTokenProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/service/service-impl/src/main/java/com/innowise/swimdom/service/impl/JwtTokenProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-docker-compose.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eurika-service/src/test/java/com/innowise/swimdom/EurekaServiceApplicationTests.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +58,7 @@
     "git-widget-placeholder": "feature/SWM-7",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/projects/innowise/ors-service/authservice",
+    "last_opened_file_path": "C:/projects/innowise/ors-service",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -110,7 +101,10 @@
       <workItem from="1756281639054" duration="840000" />
       <workItem from="1756286673226" duration="15000" />
       <workItem from="1756392743331" duration="314000" />
-      <workItem from="1756725504535" duration="2878000" />
+      <workItem from="1756725504535" duration="3726000" />
+      <workItem from="1756979176077" duration="195000" />
+      <workItem from="1757065606060" duration="1624000" />
+      <workItem from="1757928386166" duration="404000" />
     </task>
     <servers />
   </component>

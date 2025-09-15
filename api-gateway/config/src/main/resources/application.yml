@@ -30,3 +30,9 @@ springdoc:
 api-gateway:
   isStubEnabled: ${IS_STUB_ENABLED:true}
   isMasterTokenEnabled: ${IS_MASTER_TOKEN_ENABLED:false}
+feign:
+  client:
+    config:
+      default:
+        errorDecoder:
+          com.innowise.swimdom.service.FeignClientErrorDecoder

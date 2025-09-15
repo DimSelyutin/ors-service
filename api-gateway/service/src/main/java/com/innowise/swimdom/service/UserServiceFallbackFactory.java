@@ -6,43 +6,42 @@ import com.innowise.swimdom.dto.UserInfoResponseDto;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import reactivefeign.FallbackFactory;
-import reactor.core.publisher.Mono;
+import org.springframework.stereotype.Service;
+import org.springframework.cloud.openfeign.FallbackFactory;
 
 /**
  * Backup implementation of UserServiceClient. Circuit Breaker.
  */
 @Slf4j
-@Component
+@Service
 public class UserServiceFallbackFactory implements FallbackFactory<UserServiceClient> {
 
     @Value("${api-gateway.isStubEnabled}")
     private boolean isEnable;
 
     @Override
-    public UserServiceClient apply(Throwable throwable) {
+    public UserServiceClient create(Throwable throwable) {
         return new UserServiceClient() {
             @Override
-            public Mono<UserInfoResponseDto> userAuthentication(
+            public UserInfoResponseDto userAuthentication(
                 AuthenticationRequestDto authenticationRequestDto) {
                 if (Boolean.TRUE.equals(isThrowError())) {
-                    return Mono.error(throwable);
+                    throwAsRuntime(throwable);
                 }
                 log.info(
                     "UserServiceClientFallback: userAuthorization fallback session with email: "
                         + authenticationRequestDto.email());
-                return createTestMap();
+                return createTestUser();
             }
 
             @Override
-            public Mono<UserInfoResponseDto> findByEmail(UserEmailRequestDto userEmailRequestDto) {
+            public UserInfoResponseDto findByEmail(UserEmailRequestDto userEmailRequestDto) {
                 if (Boolean.TRUE.equals(isThrowError())) {
-                    return Mono.error(throwable);
+                    throwAsRuntime(throwable);
                 }
                 log.info("UserServiceClientFallback: findByEmail fallback session with email: "
                     + userEmailRequestDto.email());
-                return createTestMap();
+                return createTestUser();
             }
 
             private Boolean isThrowError() {
@@ -51,11 +50,18 @@ public class UserServiceFallbackFactory implements FallbackFactory<UserServiceCl
         };
     }
 
-    private Mono<UserInfoResponseDto> createTestMap() {
-        return Mono.just(new UserInfoResponseDto(
+    private UserInfoResponseDto createTestUser() {
+        return new UserInfoResponseDto(
             "stepanov@mail.ru ",
             "Stepan",
             "Stepanov",
-            "ADMIN"));
+            "ADMIN");
+    }
+
+    private void throwAsRuntime(Throwable throwable) {
+        if (throwable instanceof RuntimeException runtime) {
+            throw runtime;
+        }
+        throw new RuntimeException(throwable);
     }
 }

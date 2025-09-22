@@ -20,6 +20,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A class for generating JWT tokens.
@@ -73,7 +74,7 @@ public class JwtProvider {
             .signWith(jwtAccessSecret)
             .claim("firstName", userInfo.firstname())
             .claim("lastName", userInfo.lastname())
-            .claim("roles", userInfo.access())
+            .claim("roles", List.of(userInfo.access()))
             .compact();
     }
 

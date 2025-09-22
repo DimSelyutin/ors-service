@@ -10,4 +10,4 @@ FROM openjdk:17-alpine3.14
 
 COPY --from=build config/build/libs/*.jar app.jar
 
-ENTRYPOINT ["java", "-jar", "api-gateway.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

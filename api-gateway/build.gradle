@@ -33,7 +33,7 @@ allprojects {
         implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client"
         implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
         implementation "org.springframework.cloud:spring-cloud-starter-config"
-        implementation "com.playtika.reactivefeign:feign-reactor-spring-cloud-starter:$feignVersion"
+        implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
         implementation 'com.google.code.gson:gson:2.9.0'
         implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.0.2'
         implementation 'org.mapstruct:mapstruct:1.5.5.Final'

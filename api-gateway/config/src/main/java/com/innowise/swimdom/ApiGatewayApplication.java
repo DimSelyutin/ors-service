@@ -3,13 +3,13 @@ package com.innowise.swimdom;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import reactivefeign.spring.config.EnableReactiveFeignClients;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * Main class API Gateway.
  */
 @SpringBootApplication
-@EnableReactiveFeignClients
+@EnableFeignClients
 @EnableDiscoveryClient
 public class ApiGatewayApplication {
 

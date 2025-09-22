@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 
 /**
@@ -53,17 +54,23 @@ public class AccessTokenFilter extends AbstractGatewayFilterFactory<AccessTokenF
             } else if (jwtProvider.isAccessTokenValid(accessToken)) {
                 login = jwtProvider.getAccessClaims(accessToken).getSubject();
                 Object rolesClaim = jwtProvider.getAccessClaims(accessToken).get("roles");
-                role = rolesClaim == null ? "" : rolesClaim.toString();
+                if (rolesClaim instanceof java.util.Collection<?> rolesCollection) {
+                    role = String.join(",", rolesCollection.stream().map(String::valueOf).toList());
+                } else if (rolesClaim == null) {
+                    role = "";
+                } else {
+                    role = rolesClaim.toString();
+                }
             } else {
                 throw new UnauthorizedException("Access token not valid");
             }
 
-            exchange.getRequest().mutate()
+            ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
                 .header(LOGIN_HEADER, login)
                 .header(ROLE_HEADER, role)
                 .build();
 
-            return chain.filter(exchange);
+            return chain.filter(exchange.mutate().request(mutatedRequest).build());
         };
     }
 

@@ -29,11 +29,21 @@ public class RoleFilter extends AbstractGatewayFilterFactory<Config> {
                 throw new UnauthorizedException("Role not found");
             }
 
-            config.getRoles().lines()
+            // Token may carry multiple roles as a comma-separated list
+            List<String> tokenRoles = Stream.of(roleFromToken.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
+
+            boolean hasAllowed = config.getRoles().lines()
                 .flatMap(line -> Stream.of(line.split(";")))
-                .filter(role -> role.equals(roleFromToken))
-                .findAny()
-                .orElseThrow(() -> new ForbiddenException("Access is denied"));
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .anyMatch(tokenRoles::contains);
+
+            if (!hasAllowed) {
+                throw new ForbiddenException("Access is denied");
+            }
 
             return chain.filter(exchange);
         };

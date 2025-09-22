@@ -3,7 +3,7 @@ server:
 spring:
   data:
     redis:
-      host: ${REDIS_HOST:172.17.1.3}
+      host: ${REDIS_HOST:127.0.0.1}
       port: ${REDIS_PORT:30379}
       key-prefix: "api-gateway"
   cloud:
@@ -15,25 +15,57 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        - id: card-service-route-add-cards
-          uri: lb://cardservice
+        # Registration goes to userservice (public)
+        - id: auth-register
+          uri: lb://userservice
           predicates:
-            - Path=/api/v1/cardservice/cards
+            - Path=/api/v1/auth/register
             - Method=POST
-          filters:
-            - AccessTokenFilter
-            - RoleFilter=ADMIN;FRONT_OFFICE;FRONT_OFFICE_BOSS
-            - RemoveRequestHeader=Authorization
+          # Public endpoint: no auth filters
+          filters: [ ]
 
-        - id: card-service-route-check-cards
-          uri: lb://cardservice
+        # Login goes to authservice (public)
+        - id: auth-login
+          uri: lb://authservice
           predicates:
-            - Path=/api/v1/cardservice/cards/{id}
-            - Method=GET
+            - Path=/api/v1/auth/login
+            - Method=POST
+          # Public endpoint: no auth filters
+          filters: [ ]
+
+        # Refresh goes to authservice (public)
+        - id: auth-refresh
+          uri: lb://authservice
+          predicates:
+            - Path=/api/v1/auth/refresh
+            - Method=POST
+          # Public endpoint: no auth filters
+          filters: [ ]
+
+        # Example of a secured route with role-based access control
+        # AccessTokenFilter validates JWT from Authorization header and injects X-User-* headers
+        # RoleFilter checks that at least one of the provided roles is present in X-User-Roles
+        - id: admin-users
+          uri: lb://userservice
+          predicates:
+            - Path=/api/v1/admin/**
+            - Method=GET,POST,PUT,DELETE
           filters:
             - AccessTokenFilter
-            - RoleFilter=ADMIN;FRONT_OFFICE;FRONT_OFFICE_BOSS
-            - RemoveRequestHeader=Authorization
+            # Single role required
+            - RoleFilter=roles: "ADMIN"
+
+        # Example: multiple roles allowed (any match grants access)
+        - id: managers-or-admins
+          uri: lb://userservice
+          predicates:
+            - Path=/api/v1/management/**
+          filters:
+            - AccessTokenFilter
+            # Multiple roles may be provided separated by ';' or newlines
+            - |
+              RoleFilter=roles: |
+                ADMIN;MANAGER
 eureka:
   client:
     service-url:

@@ -30,6 +30,9 @@ public class AuthService {
     @Value(value = "${jwt.refreshExpirationDays}")
     private Integer refreshExpirationDays;
 
+    @Value(value = "${spring.data.redis.key-prefix:api-gateway}")
+    private String redisKeyPrefix;
+
     private final JwtProvider jwtProvider;
 
     private final UserServiceClient userServiceClient;
@@ -46,8 +49,7 @@ public class AuthService {
      */
     public JwtResponse login(AuthenticationRequestDto authRequestDto) {
         UserInfoResponseDto user = userServiceClient.userAuthentication(
-            new AuthenticationRequestDto(authRequestDto.email(), authRequestDto.password()))
-            ;
+            new AuthenticationRequestDto(authRequestDto.email(), authRequestDto.password()));
         Map<String, Object> tokens = generateTokens(user);
         Map<String, Object> saved = saveRefreshTokenInRedis(tokens, authRequestDto.email());
         return jwtMapper.mapToDto(saved);
@@ -72,11 +74,12 @@ public class AuthService {
     }
 
     private Map<String, Object> saveRefreshTokenInRedis(Map<String, Object> map, String key) {
+        String namespacedKey = String.format("%s:refresh:%s", redisKeyPrefix, key);
         Boolean success = reactiveRedisTemplate.opsForValue()
-            .set(key, (String) map.get(REFRESH_TOKEN))
+            .set(namespacedKey, (String) map.get(REFRESH_TOKEN))
             .block();
         if (TRUE.equals(success)) {
-            reactiveRedisTemplate.expire(key, Duration.ofDays(refreshExpirationDays)).block();
+            reactiveRedisTemplate.expire(namespacedKey, Duration.ofDays(refreshExpirationDays)).block();
             return map;
         } else {
             throw new RedisSaveException("Failed to save refresh token to Redis");
@@ -84,7 +87,8 @@ public class AuthService {
     }
 
     private String getRefreshTokenFromRedis(String key) {
-        String token = reactiveRedisTemplate.opsForValue().get(key).block();
+        String namespacedKey = String.format("%s:refresh:%s", redisKeyPrefix, key);
+        String token = reactiveRedisTemplate.opsForValue().get(namespacedKey).block();
         if (token == null) {
             throw new IncorrectRefreshTokenException("Invalid refresh token");
         }

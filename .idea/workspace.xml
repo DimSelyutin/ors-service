@@ -6,20 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b89c0d65-d0a9-40c7-8895-860710b0a94a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/adapter/src/main/java/com/innowise/swimdom/controller/AuthController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/config/src/main/java/com/innowise/swimdom/ApiGatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/config/src/main/java/com/innowise/swimdom/ApiGatewayApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/config/src/main/java/com/innowise/swimdom/filter/AccessTokenFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/config/src/main/java/com/innowise/swimdom/filter/AccessTokenFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/config/src/main/java/com/innowise/swimdom/filter/RoleFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/config/src/main/java/com/innowise/swimdom/filter/RoleFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/config/src/main/resources/application-dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/config/src/main/resources/application-dev.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/exception/IncorrectRefreshTokenException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/exception/IncorrectRefreshTokenException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/JwtProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/JwtProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/UserServiceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/UserServiceClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/UserServiceFallbackFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/UserServiceFallbackFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/config/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/config/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/dto/AuthenticationRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/dto/AuthenticationRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/domain/src/main/java/com/innowise/swimdom/exception/IncorrectRefreshTokenException.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/domain/src/main/java/com/innowise/swimdom/exception/IncorrectRefreshTokenException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/domain/src/main/java/com/innowise/swimdom/util/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/domain/src/main/java/com/innowise/swimdom/util/Constants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,21 +27,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/SWM-7",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/projects/innowise/ors-service",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/SWM-7&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/projects/innowise/ors-service&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\projects\innowise\ors-service\authservice" />
@@ -88,7 +77,8 @@
       <workItem from="1756286673226" duration="15000" />
       <workItem from="1756392743331" duration="314000" />
       <workItem from="1756725504535" duration="2878000" />
-      <workItem from="1758527360832" duration="4496000" />
+      <workItem from="1758527360832" duration="4748000" />
+      <workItem from="1758612201461" duration="3706000" />
     </task>
     <servers />
   </component>

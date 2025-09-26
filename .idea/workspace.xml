@@ -6,9 +6,32 @@
   <component name="ChangeListManager">
     <list default="true" id="b89c0d65-d0a9-40c7-8895-860710b0a94a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/config/src/main/java/com/innowise/swimdom/ApiGatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/config/src/main/java/com/innowise/swimdom/ApiGatewayApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/config/src/main/java/com/innowise/swimdom/filter/AccessTokenFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/config/src/main/java/com/innowise/swimdom/filter/AccessTokenFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/config/src/main/resources/application-dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/config/src/main/resources/application-dev.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/config/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/config/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/gradle.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/dto/AuthenticationRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/dto/AuthenticationRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/domain/src/main/java/com/innowise/swimdom/exception/IncorrectRefreshTokenException.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/domain/src/main/java/com/innowise/swimdom/exception/IncorrectRefreshTokenException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/domain/src/main/java/com/innowise/swimdom/util/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/domain/src/main/java/com/innowise/swimdom/util/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/dto/UserEmailRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/dto/UserEmailRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/UserServiceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/service/src/main/java/com/innowise/swimdom/service/UserServiceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/config/src/main/java/com/innowise/swimdom/security/JWTAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/config/src/main/java/com/innowise/swimdom/security/JWTAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/config/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/config/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/config/src/test/java/com/innowise/swimdom/security/JWTAuthenticationFilterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/config/src/test/java/com/innowise/swimdom/security/JWTAuthenticationFilterTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eurika-service/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-service/.gitattributes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eurika-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-service/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eurika-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eurika-service/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-service/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eurika-service/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-service/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eurika-service/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-service/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eurika-service/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-service/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eurika-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eurika-service/src/main/java/com/innowise/swimdom/EurekaServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-service/src/main/java/com/innowise/swimdom/EurekaServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eurika-service/src/main/resources/application-docker.yml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-service/src/main/resources/application-docker.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eurika-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +101,14 @@
       <workItem from="1756392743331" duration="314000" />
       <workItem from="1756725504535" duration="2878000" />
       <workItem from="1758527360832" duration="4748000" />
-      <workItem from="1758612201461" duration="3706000" />
+      <workItem from="1758612201461" duration="4353000" />
+      <workItem from="1758699945728" duration="2719000" />
+      <workItem from="1758714979118" duration="303000" />
+      <workItem from="1758716041559" duration="3452000" />
+      <workItem from="1758791682726" duration="3983000" />
+      <workItem from="1758802152734" duration="1184000" />
+      <workItem from="1758807607537" duration="4068000" />
+      <workItem from="1758872936282" duration="8582000" />
     </task>
     <servers />
   </component>

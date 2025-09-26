@@ -1,3 +1,5 @@
+server:
+  port: ${GATEWAY_PORT:8762}
 spring:
   application:
     name: api-gateway
@@ -5,11 +7,41 @@ spring:
     redis:
       key-prefix: "api-gateway"
   cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
+     config:
+       enabled: false
+     gateway:
+       discovery:
+         locator:
+           enabled: true
+           lower-case-service-id: true
+       routes:
+         - id: auth-register
+           uri: lb://userservice
+           predicates:
+             - Path=/api/v1/auth/register
+             - Method=POST
+           filters: [ ]
+         - id: auth-login
+           uri: lb://authservice
+           predicates:
+             - Path=/api/v1/auth/login
+             - Method=POST
+
+           filters: [ ]
+         - id: auth-refresh
+           uri: lb://authservice
+           predicates:
+             - Path=/api/v1/auth/refresh
+             - Method=POST
+           # Public endpoint: no auth filters
+           filters: [ ]
+         - id: user-service
+           uri: lb://userservice
+           predicates:
+             - Path=/api/v1/userservice/**
+             - Method=GET,POST,PUT,DELETE
+           filters:
+             - AccessTokenFilter
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
@@ -36,3 +68,7 @@ feign:
       default:
         errorDecoder:
           com.innowise.swimdom.service.FeignClientErrorDecoder
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 /**
  * Interface for accessing the userservice.
  */
-@FeignClient(name = "userservice",
+@FeignClient(name = "user-service",
              fallbackFactory = UserServiceFallbackFactory.class,
              configuration = FeignClientErrorDecoder.class)
 public interface UserServiceClient {

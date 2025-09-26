@@ -62,14 +62,13 @@ spring:
             - Path=/api/v1/management/**
           filters:
             - AccessTokenFilter
-            # Multiple roles may be provided separated by ';' or newlines
             - |
               RoleFilter=roles: |
-                ADMIN;MANAGER
+                ADMIN;COACH
 eureka:
   client:
     service-url:
-      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG

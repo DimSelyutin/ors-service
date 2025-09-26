@@ -16,15 +16,22 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - 8080:8080
+      - 8762:8762
     environment:
-      - 'GATEWAY_PORT=8080'
+      - 'GATEWAY_PORT=8762'
       - 'REDIS_HOST=redis-service'
       - 'REDIS_PORT=6379'
+      - 'EUREKA_URL=http://eureka-service:8761/eureka/'
     depends_on:
       postgres-gateway:
         condition: service_healthy
+      eureka-service:
+        condition: service_healthy
+    networks:
+      - swimdom-network
   redis-service:
     image: redis:latest
     ports:
       - "6379:6379"
+    networks:
+      - swimdom-network

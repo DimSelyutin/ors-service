@@ -9,7 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * Main class API Gateway.
  */
 @SpringBootApplication
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.innowise.swimdom.service")
 @EnableDiscoveryClient
 public class ApiGatewayApplication {
 

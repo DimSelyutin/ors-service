@@ -48,10 +48,7 @@ public class AccessTokenFilter extends AbstractGatewayFilterFactory<AccessTokenF
             }
             String login;
             String role;
-            if (isMasterTokenEnabled && MASTER_ACCESS_TOKEN.equals(accessToken)) {
-                login = MASTER_ACCESS_TOKEN;
-                role = MASTER_ROLE;
-            } else if (jwtProvider.isAccessTokenValid(accessToken)) {
+            if (jwtProvider.isAccessTokenValid(accessToken)) {
                 login = jwtProvider.getAccessClaims(accessToken).getSubject();
                 Object rolesClaim = jwtProvider.getAccessClaims(accessToken).get("roles");
                 if (rolesClaim instanceof java.util.Collection<?> rolesCollection) {

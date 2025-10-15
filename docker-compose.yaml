@@ -38,3 +38,5 @@ include:
   - ./eureka-service/docker-compose.yml
   - ./authservice/docker-compose.yml
   - ./api-gateway/docker-compose.yml
+  - ./poolservice/docker-compose.yml
+  - ./userservice/docker-compose.yml

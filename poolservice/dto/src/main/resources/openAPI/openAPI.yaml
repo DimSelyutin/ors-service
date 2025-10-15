@@ -1,0 +1,62 @@
+openapi: 3.0.3
+
+info:
+  title: Swimming Service
+  description: Service for buying tickets at swimming pools.
+  version: 1.0.0
+
+paths:
+    /pools:
+        tags:
+          - Pools
+        $ref: './pool-dtos.yaml#/pools'
+    /pools/filter:
+        tags:
+          - Pools
+        $ref: './pool-dtos.yaml#/poolsFilter'
+    /subscriptions:
+        $ref: './subscriptions-dtos.yaml#/subscriptions'
+    /subscriptions/{id}:
+        $ref: './subscriptions-dtos.yaml#/subscriptionById'
+    /subscriptions/filter:
+        $ref: './subscriptions-dtos.yaml#/getSubscriptionByFilter'
+    /user/subscriptions:
+        $ref: './subscriptions-dtos.yaml#/userSubscriptions'
+    /user/subscriptions/{id}:
+        $ref: './subscriptions-dtos.yaml#/userSubscriptionById'
+    /users:
+        $ref: './user-dtos.yaml#/users'
+    /users/{id}:
+        $ref: './user-dtos.yaml#/usersId'
+    /bookings:
+        tags:
+            - Booking
+        $ref: './booking-dtos.yaml#/bookings'
+    /bookings/{id}:
+        tags:
+            - Booking
+        $ref: './booking-dtos.yaml#/bookingsId'
+    /bookings/by-user:
+        tags:
+            - Booking
+        $ref: './booking-dtos.yaml#/bookingsByUser'
+    /bookings/in-range:
+        tags:
+            - Booking
+        $ref: './booking-dtos.yaml#/bookingsInRange'
+    /bookings/availability:
+        tags:
+            - Booking
+        $ref: './booking-dtos.yaml#/bookingsAvailability'
+    /bookings/filter:
+        tags:
+            - Booking
+        $ref: './booking-dtos.yaml#/bookingsFilter'
+    /schedules:
+        tags:
+            - Schedules
+        $ref: './schedule-dtos.yaml#/schedules'
+    /schedules/filter:
+        tags:
+            - Schedules
+        $ref: './schedule-dtos.yaml#/schedulesFilter'

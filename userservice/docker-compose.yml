@@ -1,0 +1,19 @@
+services:
+  poolservice:
+    image: poolservice:latest
+    build:
+      context: .
+    environment:
+      EUREKA_URL: http://eureka-service:8761/eureka/
+      DB_URL: jdbc:postgresql://postgres:5432/swimdom_pool
+      DB_USERNAME: swimdom_admin
+      DB_PASSWORD: swimdom_pwd
+      POOL_SERVICE_PORT: 8083
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      topics.pool-events: pool.events
+      USER_EVENTS_TOPIC: user.events
+    depends_on:
+      - eureka-service
+    ports:
+      - "8083:8083"
+

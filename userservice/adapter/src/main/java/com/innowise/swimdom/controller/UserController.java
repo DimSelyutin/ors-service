@@ -1,6 +1,6 @@
 package com.innowise.swimdom.controller;
 
-import com.innowise.swimdom.user.domain.entity.User;
+import com.innowise.swimdom.entity.User;
 import com.innowise.swimdom.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
-public class UserController {
+public class UserController{
 
     private final UserService userService;
 

@@ -4,6 +4,9 @@ import jakarta.validation.constraints.Email;
 
 import java.util.UUID;
 
+/**
+ * Event for created user.
+ */
 public record UserCreatedEvent(
         UUID userId,
         @Email(message = "Email should be valid")

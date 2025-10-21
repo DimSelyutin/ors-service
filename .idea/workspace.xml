@@ -5,44 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b89c0d65-d0a9-40c7-8895-860710b0a94a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/poolservice/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/pool/controller/ScheduleController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/pool/controller/SubscriptionController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/pool/mapper/BookingMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/pool/mapper/PoolMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/pool/mapper/PoolWorkingHoursMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/pool/mapper/ScheduleMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/pool/mapper/SubscriptionMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/pool/mapper/UserSubscriptionMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/pool/util/RestExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/dto/src/main/resources/openAPI/booking-dtos.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/dto/src/main/resources/openAPI/error-dto.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/dto/src/main/resources/openAPI/openAPI.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/dto/src/main/resources/openAPI/pool-dtos.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/dto/src/main/resources/openAPI/schedule-dtos.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/dto/src/main/resources/openAPI/subscriptions-dtos.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/dto/src/main/resources/openAPI/user-dtos.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/service/service-api/src/main/java/com/innowise/swimdom/pool/repository/BookingRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/service/service-api/src/main/java/com/innowise/swimdom/pool/repository/PoolRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/service/service-api/src/main/java/com/innowise/swimdom/pool/repository/PoolWorkingHoursRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/service/service-api/src/main/java/com/innowise/swimdom/pool/repository/ScheduleRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/service/service-api/src/main/java/com/innowise/swimdom/pool/repository/SubscriptionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/service/service-api/src/main/java/com/innowise/swimdom/pool/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/service/service-api/src/main/java/com/innowise/swimdom/pool/repository/UserSubscriptionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/service/service-api/src/main/java/com/innowise/swimdom/pool/service/BookingService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/service/service-api/src/main/java/com/innowise/swimdom/pool/service/ScheduleService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/service/service-api/src/main/java/com/innowise/swimdom/pool/service/SubscriptionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/service/service-impl/src/main/java/com/innowise/swimdom/pool/service/impl/ScheduleServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poolservice/service/service-impl/src/main/java/com/innowise/swimdom/pool/service/impl/SubscriptionServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userservice/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userservice/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userservice/mvnw.cmd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-gateway/config/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/config/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/config/src/test/resources/application-test.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/config/src/test/resources/application-test.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authservice/service/service-impl/src/main/java/com/innowise/swimdom/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/service/service-impl/src/main/java/com/innowise/swimdom/service/impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolit/adapter/src/main/java/com/innowise/swimdom/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolit/adapter/src/main/java/com/innowise/swimdom/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolit/config/src/main/resources/logback-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/monolit/config/src/main/resources/logback-spring.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolit/service/service-impl/src/main/java/com/innowise/swimdom/service/impl/AuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolit/service/service-impl/src/main/java/com/innowise/swimdom/service/impl/AuthenticationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poolservice/adapter/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/poolservice/adapter/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/controller/PoolController.java" beforeDir="false" afterPath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/controller/PoolController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/controller/SubscriptionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/controller/SubscriptionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/kafka/UserEventsListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/poolservice/adapter/src/main/java/com/innowise/swimdom/kafka/UserEventsListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poolservice/config/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/poolservice/config/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poolservice/config/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/poolservice/config/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poolservice/config/src/main/resources/db/changelog/changelog-master.yml" beforeDir="false" afterPath="$PROJECT_DIR$/poolservice/config/src/main/resources/db/changelog/changelog-master.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poolservice/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/poolservice/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/adapter/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/adapter/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/adapter/src/main/java/com/innowise/swimdom/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/adapter/src/main/java/com/innowise/swimdom/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/config/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/config/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/config/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/config/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/domain/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/domain/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/domain/src/main/java/com/innowise/swimdom/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/domain/src/main/java/com/innowise/swimdom/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/domain/src/main/java/com/innowise/swimdom/enums/UserRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/domain/src/main/java/com/innowise/swimdom/enums/UserRole.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/dto/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/dto/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/dto/src/main/java/com/innowise/swimdom/event/PoolCreatedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/dto/src/main/java/com/innowise/swimdom/event/PoolCreatedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/dto/src/main/java/com/innowise/swimdom/event/UserCreatedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/dto/src/main/java/com/innowise/swimdom/event/UserCreatedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/dto/src/main/java/com/innowise/swimdom/event/UserDeletedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/dto/src/main/java/com/innowise/swimdom/event/UserDeletedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/dto/src/main/java/com/innowise/swimdom/event/UserUpdatedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/dto/src/main/java/com/innowise/swimdom/event/UserUpdatedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/service/service-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/service/service-api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userservice/service/service-impl/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/userservice/service/service-impl/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +59,7 @@
     "git-widget-placeholder": "feature/SWM-7",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/projects/innowise/ors-service/poolservice",
+    "last_opened_file_path": "C:/projects/innowise/ors-service",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -78,11 +70,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\projects\innowise\ors-service\userservice" />
       <recent name="C:\projects\innowise\ors-service\poolservice\service\service-impl\src\main\java\com\innowise\swimdom\pool\service\impl" />
       <recent name="C:\projects\innowise\ors-service\poolservice\service\service-api\src\main\java\com\innowise\swimdom\pool\service" />
       <recent name="C:\projects\innowise\ors-service\poolservice\service\service-api\src\main\java\com\innowise\swimdom\pool" />
       <recent name="C:\projects\innowise\ors-service\poolservice\adapter\src\main\java\com\innowise\swimdom\pool" />
-      <recent name="C:\projects\innowise\ors-service\poolservice\adapter\src\main\java\com\innowise\swimdom\pool\controller" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\projects\innowise\ors-service\api-gateway" />
@@ -128,6 +120,11 @@
       <workItem from="1760355466105" duration="3263000" />
       <workItem from="1760515937960" duration="26000" />
       <workItem from="1760515989568" duration="3557000" />
+      <workItem from="1760534343211" duration="2778000" />
+      <workItem from="1760612584717" duration="3064000" />
+      <workItem from="1760707255039" duration="607000" />
+      <workItem from="1761033304798" duration="843000" />
+      <workItem from="1761050728727" duration="64000" />
     </task>
     <servers />
   </component>

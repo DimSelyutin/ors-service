@@ -25,6 +25,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * User entity.
+ */
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)

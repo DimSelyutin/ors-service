@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5-create-subscription
+      author: swimdom
+      changes:
+        - createTable:
+            tableName: subscription
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(150)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  name: duration
+                  type: VARCHAR(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: NUMERIC(10,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+
+

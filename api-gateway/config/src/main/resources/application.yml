@@ -49,6 +49,20 @@ spring:
             - Method=GET,POST,PUT,DELETE
           filters:
             - AccessTokenFilter
+        - id: subscription-service
+          uri: lb://poolservice
+          predicates:
+            - Path=/api/v1/subscriptions/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - AccessTokenFilter
+        - id: user-subscription-service
+          uri: lb://poolservice
+          predicates:
+            - Path=/api/v1/user/subscriptions/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - AccessTokenFilter
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG

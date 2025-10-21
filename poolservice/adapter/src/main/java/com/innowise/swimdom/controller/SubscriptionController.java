@@ -80,9 +80,8 @@ public class SubscriptionController implements SubscriptionsApi {
      * GET /subscriptions : Get all subscriptions.
      */
     @GetMapping
-    public ResponseEntity<List<SubscriptionDTO>> getSubscriptions(SubscriptionFilterDTO subfilter) {
-        List<SubscriptionDTO> subscriptions =
-            subscriptionService.getAllSubscriptions(subfilter);
+    public ResponseEntity<List<SubscriptionDTO>> getSubscriptions(SubscriptionFilterDTO filter) {
+        List<SubscriptionDTO> subscriptions = subscriptionService.getAllSubscriptions(filter);
         return ResponseEntity.ok(subscriptions);
     }
 

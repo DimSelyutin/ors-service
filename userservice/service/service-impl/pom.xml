@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.innowise.swimdom</groupId>
         <artifactId>service</artifactId>
-        <version>0.0.1</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>service-impl</artifactId>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.innowise.swimdom</groupId>
             <artifactId>dto</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -37,12 +37,12 @@
         <dependency>
             <groupId>com.innowise.swimdom</groupId>
             <artifactId>domain</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.innowise.swimdom</groupId>
             <artifactId>service-api</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.kafka</groupId>

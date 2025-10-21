@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.innowise.swimdom</groupId>
         <artifactId>userservice</artifactId>
-        <version>0.0.1</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>adapter</artifactId>
     <dependencies>
@@ -26,12 +26,18 @@
         <dependency>
             <groupId>com.innowise.swimdom</groupId>
             <artifactId>dto</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.innowise.swimdom</groupId>
             <artifactId>service-api</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.innowise.swimdom</groupId>
+            <artifactId>domain</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

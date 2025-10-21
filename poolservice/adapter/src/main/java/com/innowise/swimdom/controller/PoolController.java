@@ -1,7 +1,7 @@
-package com.innowise.swimdom.pool.controller;
+package com.innowise.swimdom.controller;
 
 import com.innowise.swimdom.openapi.model.PoolDto;
-import com.innowise.swimdom.pool.service.PoolService;
+import com.innowise.swimdom.service.PoolService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

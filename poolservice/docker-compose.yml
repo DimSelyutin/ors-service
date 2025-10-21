@@ -1,0 +1,28 @@
+services:
+  postgres-pool:
+    image: "postgres:17.5"
+    environment:
+      POSTGRES_DB: "poolservice"
+      POSTGRES_USER: "swimdom_admin"
+      POSTGRES_PASSWORD: "swimdom_pwd"
+    ports:
+      - "5434:5434"
+    restart: 'always'
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U swimdom_admin -d poolservice'" ]
+
+  poolservice:
+    build:
+      dockerfile: ./Dockerfile
+    environment:
+      - 'DB_URL=jdbc:postgresql://postgres-pool/poolservice'
+      - 'DB_USERNAME=swimdom_admin'
+      - 'DB_PASSWORD=swimdom_pwd'
+      - 'EUREKA_URL=http://eureka-service:8761/eureka/'
+      - 'KAFKA_BOOTSTRAP_SERVERS=kafka:29092'
+      - 'topics.pool-events=pool.events'
+      - 'USER_EVENTS_TOPIC=user.events'
+    depends_on:
+      postgres-pool:
+        condition: service_healthy
+

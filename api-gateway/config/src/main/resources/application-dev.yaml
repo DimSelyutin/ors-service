@@ -1,0 +1,94 @@
+server:
+  port: ${GATEWAY_PORT:8762}
+spring:
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:30379}
+      key-prefix: "api-gateway"
+  cloud:
+    config:
+      enabled: false
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        # Registration goes to userservice (public)
+        - id: auth-register
+          uri: lb://userservice
+          predicates:
+            - Path=/api/v1/auth/register
+            - Method=POST
+          # Public endpoint: no auth filters
+          filters: [ ]
+
+        # Login goes to authservice (public)
+        - id: auth-login
+          uri: lb://authservice
+          predicates:
+            - Path=/api/v1/auth/login
+            - Method=POST
+          # Public endpoint: no auth filters
+          filters: [ ]
+
+        # Refresh goes to authservice (public)
+        - id: auth-refresh
+          uri: lb://authservice
+          predicates:
+            - Path=/api/v1/auth/refresh
+            - Method=POST
+          # Public endpoint: no auth filters
+          filters: [ ]
+
+        # Example of a secured route with role-based access control
+        # AccessTokenFilter validates JWT from Authorization header and injects X-User-* headers
+        # RoleFilter checks that at least one of the provided roles is present in X-User-Roles
+        - id: admin-users
+          uri: lb://userservice
+          predicates:
+            - Path=/api/v1/admin/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - AccessTokenFilter
+            # Single role required
+            - RoleFilter=roles: "ADMIN"
+
+        # Example: multiple roles allowed (any match grants access)
+        - id: managers-or-admins
+          uri: lb://userservice
+          predicates:
+            - Path=/api/v1/management/**
+          filters:
+            - AccessTokenFilter
+            - |
+              RoleFilter=roles: |
+                ADMIN;COACH
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG
+jwt:
+  secret:
+    access: qBTmv4oXFFR2GwjexDJ4t6fsIUIUhhXqlktXjXdkcyygs8nPVEwMfo29VDRRepYDVV5IkIxBMzr7OEHXEHd37w==
+    refresh: zL1HB3Pch05Avfynovxrf/kpF9O2m4NCWKJUjEp27s9J2jEG3ifiKCGylaZ8fDeoONSTJP/wAzKawB8F9rOMNg==
+  accessExpirationMinutes: 5
+  refreshExpirationDays: 30
+api-gateway:
+  isStubEnabled: ${IS_STUB_ENABLED:true}
+  isMasterTokenEnabled: ${IS_MASTER_TOKEN_ENABLED:false}
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: API Gateway Service

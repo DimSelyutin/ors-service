@@ -1,0 +1,95 @@
+server:
+  port: ${GATEWAY_PORT:8762}
+spring:
+  application:
+    name: api-gateway
+  data:
+    redis:
+      key-prefix: "api-gateway"
+  cloud:
+     config:
+       enabled: false
+     gateway:
+       discovery:
+         locator:
+           enabled: true
+           lower-case-service-id: true
+       routes:
+         - id: auth-register
+           uri: lb://userservice
+           predicates:
+             - Path=/api/v1/auth/register
+             - Method=POST
+           filters: [ ]
+         - id: auth-login
+           uri: lb://authservice
+           predicates:
+             - Path=/api/v1/auth/login
+             - Method=POST
+
+           filters: [ ]
+         - id: auth-refresh
+           uri: lb://authservice
+           predicates:
+             - Path=/api/v1/auth/refresh
+             - Method=POST
+           # Public endpoint: no auth filters
+           filters: [ ]
+         - id: user-service
+           uri: lb://userservice
+           predicates:
+             - Path=/api/v1/userservice/**
+             - Method=GET,POST,PUT,DELETE
+           filters:
+             - AccessTokenFilter
+        - id: pool-service
+          uri: lb://poolservice
+          predicates:
+            - Path=/api/v1/pools/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - AccessTokenFilter
+        - id: subscription-service
+          uri: lb://poolservice
+          predicates:
+            - Path=/api/v1/subscriptions/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - AccessTokenFilter
+        - id: user-subscription-service
+          uri: lb://poolservice
+          predicates:
+            - Path=/api/v1/user/subscriptions/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - AccessTokenFilter
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG
+jwt:
+  secret:
+    access: qBTmv4oXFFR2GwjexDJ4t6fsIUIUhhXqlktXjXdkcyygs8nPVEwMfo29VDRRepYDVV5IkIxBMzr7OEHXEHd37w==
+    refresh: zL1HB3Pch05Avfynovxrf/kpF9O2m4NCWKJUjEp27s9J2jEG3ifiKCGylaZ8fDeoONSTJP/wAzKawB8F9rOMNg==
+  accessExpirationMinutes: 5
+  refreshExpirationDays: 30
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+api-gateway:
+  isStubEnabled: ${IS_STUB_ENABLED:true}
+  isMasterTokenEnabled: ${IS_MASTER_TOKEN_ENABLED:false}
+feign:
+  client:
+    config:
+      default:
+        errorDecoder:
+          com.innowise.swimdom.service.FeignClientErrorDecoder
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}

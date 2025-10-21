@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+    id 'io.spring.dependency-management'
+}
+
+group = parent.group
+version = parent.version
+
+dependencies {
+    implementation project(":adapter")
+    testImplementation('com.github.tomakehurst:wiremock-standalone:3.0.1') {
+        exclude group: 'org.slf4j', module: 'slf4j-simple'
+    }
+    testImplementation("it.ozimov:embedded-redis:0.7.3") {
+        exclude group: 'org.slf4j', module: 'slf4j-simple'
+    }
+    implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
+}
+
+apply {
+    plugin("org.springframework.boot")
+}

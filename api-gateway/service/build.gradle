@@ -1,0 +1,19 @@
+plugins {
+    id 'java-library'
+    id 'io.spring.dependency-management'
+}
+
+group = parent.group
+version = parent.version
+
+dependencies {
+    api "io.jsonwebtoken:jjwt:$jjwtVersion"
+}
+
+apply {
+    plugin("org.springframework.boot")
+}
+
+bootJar {
+    mainClass = 'com.innowise.swimdom.ApiGatewayApplication'
+}

@@ -10,6 +10,6 @@ public class IncorrectRefreshTokenException extends RuntimeException {
      *
      */
     public IncorrectRefreshTokenException() {
-        super("Incorrect refresh token");
+
     }
 }

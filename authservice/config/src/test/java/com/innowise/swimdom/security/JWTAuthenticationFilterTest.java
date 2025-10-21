@@ -33,9 +33,6 @@ class JWTAuthenticationFilterTest {
     private JwtTokenProvider jwtTokenProvider;
 
     @Mock
-    private CustomUserDetailsService customUserDetailsService;
-
-    @Mock
     private HttpServletRequest request;
 
     @Mock
@@ -55,7 +52,7 @@ class JWTAuthenticationFilterTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        filter = new JWTAuthenticationFilter(jwtTokenProvider, customUserDetailsService);
+        filter = new JWTAuthenticationFilter(jwtTokenProvider);
 
         setField(filter, "headerString", "Authorization");
         setField(filter, "tokenPrefix", "Bearer ");

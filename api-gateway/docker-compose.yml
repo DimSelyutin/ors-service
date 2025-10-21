@@ -1,0 +1,37 @@
+services:
+  postgres-gateway:
+    image: "postgres:17.5"
+    environment:
+      POSTGRES_DB: "swimdom_auth"
+      POSTGRES_USER: "swimdom_admin"
+      POSTGRES_PASSWORD: "swimdom_pwd"
+    ports:
+      - "5432:5432"
+    restart: 'always'
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U swimdom_admin -d swimdom_auth'" ]
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8762:8762
+    environment:
+      - 'GATEWAY_PORT=8762'
+      - 'REDIS_HOST=redis-service'
+      - 'REDIS_PORT=6379'
+      - 'EUREKA_URL=http://eureka-service:8761/eureka/'
+    depends_on:
+      postgres-gateway:
+        condition: service_healthy
+      eureka-service:
+        condition: service_healthy
+    networks:
+      - swimdom-network
+  redis-service:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - swimdom-network

@@ -6,24 +6,31 @@ services:
       POSTGRES_USER: "swimdom_admin"
       POSTGRES_PASSWORD: "swimdom_pwd"
     ports:
-      - "5432:5432"
+      - "5433:5432"
     restart: 'always'
     healthcheck:
-      test: [ "CMD-SHELL", "sh -c 'pg_isready -U ors-service -d swimdom_auth'" ]
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U swimdom_admin -d swimdom_auth'" ]
+    networks:
+      - swimdom-network
 
-  ors-service:
+  authservice:
     build:
       dockerfile: ./Dockerfile
-    ports:
-      - 8080:8080
     environment:
       - 'DB_URL=jdbc:postgresql://postgres/swimdom_auth'
       - 'DB_USERNAME=swimdom_admin'
       - 'DB_PASSWORD=swimdom_pwd'
+      - 'EUREKA_URL=http://eureka-service:8761/eureka/'
     depends_on:
       postgres:
         condition: service_healthy
+      eureka-service:
+        condition: service_healthy
+    networks:
+      - swimdom-network
   redis-service:
     image: redis:latest
     ports:
       - "6379:6379"
+    networks:
+      - swimdom-network
